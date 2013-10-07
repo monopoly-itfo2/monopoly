@@ -1,15 +1,23 @@
 package de.itfo2.ui;
 
-import de.itfo2.objects.Spieler;
-import de.itfo2.objects.Spielfeld;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import de.itfo2.objects.Spieler;
+import de.itfo2.objects.Spielfeld;
 
 public class GUISpielfeld extends JFrame implements MouseMotionListener{
 

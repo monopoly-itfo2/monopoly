@@ -1,14 +1,12 @@
 package de.itfo2.util;
 
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import java.io.IOException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 import de.itfo2.ui.CardButton;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class ButtonCreator {
     public static JButton getIconButton(ImageIcon icon, ImageIcon rolloverIcon, ImageIcon clickIcon) throws IOException {

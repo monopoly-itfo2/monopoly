@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 import de.itfo2.event.EventBus;
-import de.itfo2.event.MonopolyEvent;
-import de.itfo2.network.Connector;
 
 /**
  * 

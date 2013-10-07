@@ -1,10 +1,9 @@
 package de.itfo2.ui;
 
-import de.itfo2.objects.InitSpielfeld;
+import java.io.IOException;
+
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Spielfeld;
-
-import java.io.IOException;
 
 public class MonopolyGUI implements MonopolyGUIInterface {
 

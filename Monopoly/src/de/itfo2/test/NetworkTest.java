@@ -1,6 +1,5 @@
 package de.itfo2.test;
 
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -13,7 +12,6 @@ import javax.swing.JTextField;
 import de.itfo2.event.EventBus;
 import de.itfo2.event.WuerfelEvent;
 import de.itfo2.event.listeners.WuerfelEventListener;
-import de.itfo2.objects.Spieler;
 
 public class NetworkTest {
 	public static void main(String[] args) throws InterruptedException {
