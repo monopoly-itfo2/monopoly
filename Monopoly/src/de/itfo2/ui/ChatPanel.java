@@ -1,22 +1,15 @@
 package de.itfo2.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 
 public class ChatPanel extends JPanel {
 
     JTextField textfield;
     JScrollPane scrollpanel;
-    Container messagepanel;
+    Container messagepanel; //umbauen zu Textarea
     public ChatPanel(int x, int y){
         setPreferredSize(new Dimension(x, y));
         setLayout(new BorderLayout());

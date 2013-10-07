@@ -1,14 +1,12 @@
 package de.itfo2.ui;
 
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import de.itfo2.objects.Spieler;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
-import de.itfo2.objects.Spieler;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Spielfigur extends JLabel {
     Spieler spieler;
@@ -16,7 +14,7 @@ public class Spielfigur extends JLabel {
         BufferedImage image = null;
         this.spieler = spieler;
         try {
-            image = ImageIO.read(this.getClass().getResource("/GUI/bilder/figur.jpg"));
+            image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur.jpg"));
         } catch (IOException e) {}
         ImageIcon spielfigur = new ImageIcon(image);
         setIcon(spielfigur);

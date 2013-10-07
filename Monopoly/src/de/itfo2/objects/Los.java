@@ -1,5 +1,7 @@
 package de.itfo2.objects;
 
+import java.io.IOException;
+
 public class Los implements Feld
 {
 	String bezeichnung;
@@ -21,7 +23,11 @@ public class Los implements Feld
 
 	@Override
 	public void handleFieldEffect() {
-		// TODO Auto-generated method stub
+		try{
+			Verwalter.getInstance().getCurSpieler().addMoney(4000);
+		}catch(IOException ex){
+			System.out.println("FieldEffect Los Probleme");
+		}
 		
 	}
 }

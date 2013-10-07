@@ -5,7 +5,7 @@ import java.io.IOException;
 import de.itfo2.objects.Spieler;
 
 public interface MonopolyGUIInterface {
-    void rueckeVor(int spieler, int anzahl);
+    void rueckeVor(int spieler, int anzahl) throws IOException;
     void geheInsGefaengnis(int spieler);
     void baueHaus(GUIFeld feld);
     void kaufeFeld(int spieler, GUIFeld feld);

@@ -1,7 +1,6 @@
 package de.itfo2.ui;
 
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -11,10 +10,11 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import de.itfo2.objects.Feld;
-import de.itfo2.objects.Freiparken;
-import de.itfo2.objects.Grundstueck;
-import de.itfo2.objects.Strasse;
+import de.itfo2.fields.Feld;
+import de.itfo2.fields.Freiparken;
+import de.itfo2.fields.Grundstueck;
+import de.itfo2.fields.Strasse;
+import de.itfo2.objects.Spieler;
 
 public class GUIFeld extends PicturePanel implements MouseListener {
 
@@ -23,6 +23,7 @@ public class GUIFeld extends PicturePanel implements MouseListener {
     MenuPanel menuPanel;
     int gebaut = 0;
     JLabel [] labelHaus = new JLabel[5];
+    JLabel [] figuren = new JLabel[4];
     Feld feld;
 
     public GUIFeld(Feld feld, BufferedImage image) throws IOException {
@@ -63,6 +64,39 @@ public class GUIFeld extends PicturePanel implements MouseListener {
         labelHaus[4].setBounds(3, 3, 18, 17);
         this.add(labelHaus[4], 2);
         labelHaus[4].setVisible(false);
+
+        figuren[0] = new JLabel();
+        BufferedImage image = null;
+        image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur.jpg"));
+        ImageIcon spielfigur = new ImageIcon(image);
+        figuren[0].setIcon(spielfigur);
+        figuren[0].setBounds(3, 40, 18, 17);
+        this.add(figuren[0], 2);
+        figuren[0].setVisible(false);
+
+        figuren[1] = new JLabel();
+        image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur.jpg"));
+        spielfigur = new ImageIcon(image);
+        figuren[1].setIcon(spielfigur);
+        figuren[1].setBounds(24, 40, 18, 17);
+        this.add(figuren[1], 2);
+        figuren[1].setVisible(false);
+
+        figuren[2] = new JLabel();
+        image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur.jpg"));
+        spielfigur = new ImageIcon(image);
+        figuren[2].setIcon(spielfigur);
+        figuren[2].setBounds(45, 40, 18, 17);
+        this.add(figuren[2], 2);
+        figuren[2].setVisible(false);
+
+        figuren[3] = new JLabel();
+        image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur.jpg"));
+        spielfigur = new ImageIcon(image);
+        figuren[3].setIcon(spielfigur);
+        figuren[3].setBounds(66, 40, 18, 17);
+        this.add(figuren[3], 2);
+        figuren[3].setVisible(false);
 
         labelName = new JLabel(feld.getBezeichnung());
         labelName.setBounds(0, 20, 90, 10);
@@ -109,6 +143,10 @@ public class GUIFeld extends PicturePanel implements MouseListener {
             labelHaus[gebaut].setVisible(true);
             gebaut++;
         }
+    }
+
+    public void setSpielerVisible(int pos, boolean visible){
+        figuren[pos].setVisible(visible);
     }
 
     public Feld getFeld(){

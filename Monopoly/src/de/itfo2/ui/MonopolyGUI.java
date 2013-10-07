@@ -1,9 +1,11 @@
 package de.itfo2.ui;
 
-import java.io.IOException;
-
+import de.itfo2.objects.InitSpielfeld;
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Spielfeld;
+import de.itfo2.objects.Verwalter;
+
+import java.io.IOException;
 
 public class MonopolyGUI implements MonopolyGUIInterface {
 
@@ -26,8 +28,10 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     }
 
     @Override
-    public void rueckeVor(int spieler, int anzahl) {
-
+    public void rueckeVor(int spieler, int anzahl) throws IOException {
+        Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
+        spielfeld.setSpielerVisible(curSpieler.getPlatz(), Verwalter.getInstance().getSpielerAmZug(), false);
+        spielfeld.setSpielerVisible(curSpieler.getPlatz()+anzahl, Verwalter.getInstance().getSpielerAmZug(), true);
     }
 
     @Override

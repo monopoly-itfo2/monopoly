@@ -1,23 +1,15 @@
 package de.itfo2.ui;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import de.itfo2.objects.Spieler;
+import de.itfo2.objects.Spielfeld;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
-import de.itfo2.objects.Spieler;
-import de.itfo2.objects.Spielfeld;
 
 public class GUISpielfeld extends JFrame implements MouseMotionListener{
 
@@ -31,7 +23,6 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
     int lastX, lastY;
     private static final float SCROLLSPEED = 1.2f;
     private Spielfeld spielfeld;
-    ArrayList<Spielfigur> figuren = new ArrayList<Spielfigur>();
     ArrayList<GUIFeld> felder = new ArrayList<GUIFeld>();
 
     public GUISpielfeld(Spielfeld spielfeld) throws IOException {
@@ -309,11 +300,13 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
     }
 
     public void addSpieler(int pos, Spieler spieler) throws IOException {
-        Spielfigur figur = new Spielfigur(spieler);
-        //felder.add(figur);
-
+        setSpielerVisible(0, pos, true);
         //Statuspanel befüllen
         middlePanel.getStatuspanel(pos).setSpieler(spieler);
+    }
+
+    public void setSpielerVisible(int feld, int pos, boolean visible){
+        getFeld(feld).setSpielerVisible(pos, visible);
     }
 
     public void updateFeld(){
@@ -333,5 +326,9 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
     public void mouseMoved(MouseEvent e) {
         lastY = e.getY();
         lastX = e.getX();
+    }
+
+    public GUIFeld getFeld(int pos){
+        return felder.get(pos%40);
     }
 }

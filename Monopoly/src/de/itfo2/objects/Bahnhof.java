@@ -1,6 +1,8 @@
 package de.itfo2.objects;
 import java.awt.Color;
 
+import javax.swing.text.AttributeSet.ColorAttribute;
+
 
 public class Bahnhof implements Grundstueck
 {

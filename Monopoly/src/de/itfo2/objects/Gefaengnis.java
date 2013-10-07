@@ -1,5 +1,7 @@
 package de.itfo2.objects;
 
+import java.io.IOException;
+
 public class Gefaengnis implements Feld
 {
 	String bezeichnung;
@@ -21,7 +23,12 @@ public class Gefaengnis implements Feld
 
 	@Override
 	public void handleFieldEffect() {
-		// TODO Auto-generated method stub
+		try{
+			Verwalter.getInstance().getCurSpieler().setImGef√§ngnis(true);
+			Verwalter.getInstance().getCurSpieler().setPlatz(10);
+		}catch(IOException ex){
+			System.out.println("FieldEffect Gef‰ngnis Probleme");
+		}
 		
 	}
 
