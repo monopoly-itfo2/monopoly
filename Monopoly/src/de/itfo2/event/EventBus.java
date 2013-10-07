@@ -3,6 +3,7 @@ package de.itfo2.event;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.itfo2.event.listeners.WuerfelEventListener;
 import de.itfo2.network.Connector;
 
 /**
@@ -27,21 +28,13 @@ public final class EventBus {
 
 	private List<WuerfelEventListener> listerners_wuerfel = new ArrayList<WuerfelEventListener>();
 
-	@SuppressWarnings("unchecked")
-	public void sinkNetworkEvent(String token) {
-//		System.out.println("sink event from Network: " + token);
-		try {
-			if (token.contains("WuerfelEvent")) {
-				triggerWuerfelEvent(WuerfelEvent.Tokenizer.class.newInstance()
-						.getEvent(token));
-			}
-		} catch (InstantiationException | IllegalAccessException e) {
-			System.err.println(token + " not constructable: " + e);
+	public void sinkNetworkEvent(Object event) {
+		if (event instanceof WuerfelEvent) {
+			triggerWuerfelEvent((WuerfelEvent) event);
 		}
 	}
 
 	public void sinkClientEvent(MonopolyEvent event) {
-//		System.out.println("sink event from Client: " + event.toString());
 		Connector.getInstance().sentEvent(event);
 	}
 

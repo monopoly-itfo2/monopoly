@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +30,8 @@ public final class Connector {
 	protected Connector() {
 	}
 
-	BufferedReader in;
-	DataOutputStream out;
+	ObjectInputStream in;
+	ObjectOutputStream out;
 
 	public void ensureConnected() {
 		Socket socket = null;
@@ -46,6 +48,7 @@ public final class Connector {
 			while (notConnected) { // wartet bis ein Client connected hat und
 									// holt den Socket
 				socket = server.getClientSocket();
+				System.out.println(socket);
 				if (socket != null) {
 					notConnected = false;
 				}
@@ -57,19 +60,17 @@ public final class Connector {
 	private void ensureIO(Socket socket) { // stellt die input/output
 											// verbindungen sicher
 		try {
-			out = new DataOutputStream(socket.getOutputStream());
-			in = new BufferedReader(new InputStreamReader(
-					socket.getInputStream()));
+			out = new ObjectOutputStream(socket.getOutputStream());
+			in = new ObjectInputStream(socket.getInputStream());
 			Thread reader = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					String token;
+					Object event;
 					while (true) {
 						try {
-							token = in.readLine();
-//							System.out.println(token+ " on Connector Read Thread");
-							EventBus.getInstance().sinkNetworkEvent(token);
-						} catch (IOException e) {
+							event = in.readObject();
+							EventBus.getInstance().sinkNetworkEvent(event);
+						} catch (IOException | ClassNotFoundException e) {
 							e.printStackTrace();
 						}
 					}
@@ -122,7 +123,7 @@ public final class Connector {
 
 	public void sentEvent(MonopolyEvent event) {
 		try {
-			out.writeUTF(event.getTokenizer().getToken(event) + "\n");
+			out.writeObject(event);
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();

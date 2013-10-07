@@ -1,4 +1,7 @@
-package de.itfo2.event;
+package de.itfo2.event.listeners;
+
+import de.itfo2.event.WuerfelEvent;
+
 /**
  * 
  * @author Marco Ernst

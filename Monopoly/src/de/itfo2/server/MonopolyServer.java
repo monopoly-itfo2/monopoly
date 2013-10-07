@@ -20,9 +20,6 @@ public class MonopolyServer extends Thread {
         	try{
      			clientSocket = serverSocket.accept();
                 System.out.println("accepted: " +clientSocket.getInetAddress());
-                ServerThread mini = new ServerThread(clientSocket);
-                mini.start();
-                System.out.println("serverthread gestartet");
         	}catch (IOException e) {
 				System.err.println(e);
 			}
