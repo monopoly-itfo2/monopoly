@@ -8,14 +8,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import de.itfo2.objects.Spieler;
 import de.itfo2.event.EventBus;
 import de.itfo2.event.WuerfelEvent;
-import de.itfo2.event.WuerfelEventListener;
+import de.itfo2.event.listeners.WuerfelEventListener;
+import de.itfo2.objects.Spieler;
 
 public class NetworkTest {
 	public static void main(String[] args) throws InterruptedException {
