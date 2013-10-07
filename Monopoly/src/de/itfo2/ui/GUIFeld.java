@@ -1,6 +1,7 @@
 package de.itfo2.ui;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -10,11 +11,10 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import de.itfo2.fields.Feld;
-import de.itfo2.fields.Freiparken;
-import de.itfo2.fields.Grundstueck;
-import de.itfo2.fields.Strasse;
-import de.itfo2.objects.Spieler;
+import de.itfo2.objects.Feld;
+import de.itfo2.objects.Freiparken;
+import de.itfo2.objects.Grundstueck;
+import de.itfo2.objects.Strasse;
 
 public class GUIFeld extends PicturePanel implements MouseListener {
 
