@@ -1,6 +1,8 @@
 package de.itfo2.objects;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -16,10 +18,12 @@ public class Verwalter {
     private static Verwalter instance = null;
     int spielerAmZug = -1;
     Spielfeld spielfeld;
+    MonopolyGUI gui = MonopolyGUI.getInstance();
 
     public Verwalter() throws IOException {
         spielerAmZug = 1;
-        play();
+        init();
+        //play();
 
 //		System.out.println(spielfeld.ereignis.length);
 //		for(int i = 1;i<=spielfeld.ereignis.length;i++){
@@ -62,7 +66,7 @@ public class Verwalter {
         	int wuerfelZahl = wuerfeln();
         	
         	if(pasch==3){
-        		//geheInsGefängnis
+        		//geheInsGefÃ¤ngnis
         		pasch=0;
         		
         	}else{
@@ -102,15 +106,15 @@ public class Verwalter {
     private void init() throws IOException {
 
         spielfeld = new Spielfeld(InitSpielfeld.getfelder());
-        MonopolyGUI.getInstance().setSpielfeld(spielfeld);
+        gui.setSpielfeld(spielfeld);
 
 //        Spieler spieler1 = new Spieler("Spieler 1", 10000, Color.getHSBColor(269f, 35f, 96f));
         Spieler spieler1 = new Spieler("Spieler 1", 10000, Color.getHSBColor(0.9f, 0.1f, 0.7f));
         Spieler spieler2 = new Spieler("Spieler 2", 10000, Color.getHSBColor(0.3f, 0.1f, 0.9f));
         spieler.add(spieler1);
-        MonopolyGUI.getInstance().addSpieler(0, spieler1);
+        gui.addSpieler(0, spieler1);
         spieler.add(spieler2);
-        MonopolyGUI.getInstance().addSpieler(1, spieler2);
+        gui.addSpieler(1, spieler2);
 //        MonopolyGUI.getInstance().updateFeld();
     }
 
@@ -120,5 +124,38 @@ public class Verwalter {
 
 	public int getSpielerAmZug(){
         return spielerAmZug;
+    }
+
+    public void initGuiButtonFunctions(){
+        gui.setRollDiceButtonActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        gui.setEreigniskartenButtonActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        gui.setGemeinschaftskartenButtonActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        gui.setBuyButtonActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        gui.setBuildHouseButtonActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 }

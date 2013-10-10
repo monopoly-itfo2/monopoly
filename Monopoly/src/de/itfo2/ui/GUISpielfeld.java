@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class GUISpielfeld extends JFrame implements MouseMotionListener{
 
-    JScrollPane scrollPane;
-    MiddlePanel middlePanel;
+    private JScrollPane scrollPane;
+    private MiddlePanel middlePanel;
     Container pane;
     GridBagConstraints c;
     BufferedImage image;
@@ -330,5 +330,13 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
 
     public GUIFeld getFeld(int pos){
         return felder.get(pos%40);
+    }
+
+    public MiddlePanel getMiddlePanel() {
+        return middlePanel;
+    }
+
+    public ArrayList<GUIFeld> getFelder() {
+        return felder;
     }
 }

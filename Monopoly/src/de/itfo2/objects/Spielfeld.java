@@ -1,5 +1,7 @@
 package de.itfo2.objects;
 
+import de.itfo2.fields.Feld;
+
 import java.util.ArrayList;
 
 public class Spielfeld {

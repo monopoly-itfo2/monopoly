@@ -1,8 +1,14 @@
 package de.itfo2.ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import de.itfo2.fields.Grundstueck;
+import de.itfo2.objects.Spieler;
+import de.itfo2.objects.Verwalter;
+import de.itfo2.util.DialogCreator;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -10,20 +16,11 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import de.itfo2.objects.Grundstueck;
-import de.itfo2.objects.Spieler;
-import de.itfo2.objects.Verwalter;
-
 public class MenuPanel extends JPanel implements MouseListener{
 
-    JButton bBuy, bBuild;
+    private JButton bBuy, bBuild;
     private GUIFeld parent;
-    boolean haus;
+    private boolean haus;
     public MenuPanel(GUIFeld feld, boolean haus) throws IOException {
         parent = feld;
         this.haus = haus;
@@ -117,5 +114,13 @@ public class MenuPanel extends JPanel implements MouseListener{
     @Override
     public void mouseExited(MouseEvent e) {
         this.setVisible(false);
+    }
+
+    public JButton getbBuy() {
+        return bBuy;
+    }
+
+    public JButton getbBuild() {
+        return bBuild;
     }
 }

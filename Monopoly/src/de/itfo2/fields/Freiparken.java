@@ -1,4 +1,6 @@
-package de.itfo2.objects;
+package de.itfo2.fields;
+
+import de.itfo2.objects.Verwalter;
 
 import java.io.IOException;
 

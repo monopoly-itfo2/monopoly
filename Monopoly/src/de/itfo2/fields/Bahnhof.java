@@ -1,15 +1,20 @@
-package de.itfo2.objects;
+package de.itfo2.fields;
+import de.itfo2.objects.Spieler;
+
 import java.awt.Color;
 
 
-public class Werk implements Grundstueck
+public class Bahnhof implements Grundstueck
 {
 	String bezeichnung = null;
 	Spieler besitzer = null;
 	private int preis = 0;
-    private Color farbe = null;
+    private int miete = 0;
 
-    public Werk(String bezeichnung, int preis){
+    Color farbe = Color.black;
+
+    public Bahnhof(String bezeichnung, int preis, int miete)
+    {
         this.bezeichnung = bezeichnung;
         this.preis = preis;
     }
@@ -48,6 +53,14 @@ public class Werk implements Grundstueck
 	public int getHypothek() {
 		return preis/2;
 	}
+
+    public int getMiete() {
+        return miete;
+    }
+
+    public void setMiete(int miete) {
+        this.miete = miete;
+    }
 	
 	@Override
 	public void handleFieldEffect() {

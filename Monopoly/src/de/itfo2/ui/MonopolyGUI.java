@@ -5,6 +5,7 @@ import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Spielfeld;
 import de.itfo2.objects.Verwalter;
 
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class MonopolyGUI implements MonopolyGUIInterface {
@@ -61,5 +62,29 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 
     public void updateFeld(){
         spielfeld.updateFeld();
+    }
+
+    public void setRollDiceButtonActionListener(ActionListener listener){
+        spielfeld.getMiddlePanel().getRollDiceButton().addActionListener(listener);
+    }
+
+    public void setGemeinschaftskartenButtonActionListener(ActionListener listener){
+        spielfeld.getMiddlePanel().getGemeinschaftskartenButton().addActionListener(listener);
+    }
+
+    public void setEreigniskartenButtonActionListener(ActionListener listener){
+        spielfeld.getMiddlePanel().getEreigniskartenButton().addActionListener(listener);
+    }
+
+    public void setBuyButtonActionListener(ActionListener listener){
+        for(int i=0;i<=spielfeld.getFelder().size();i++){
+            spielfeld.getFelder().get(i).getMenuPanel().getbBuy().addActionListener(listener);
+        }
+    }
+
+    public void setBuildHouseButtonActionListener(ActionListener listener){
+        for(int i=0;i<=spielfeld.getFelder().size();i++){
+            spielfeld.getFelder().get(i).getMenuPanel().getbBuild().addActionListener(listener);
+        }
     }
 }

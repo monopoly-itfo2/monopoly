@@ -1,4 +1,6 @@
-package de.itfo2.objects;
+package de.itfo2.fields;
+
+import de.itfo2.objects.Verwalter;
 
 import java.io.IOException;
 
@@ -27,7 +29,7 @@ public class Gefaengnis implements Feld
 			Verwalter.getInstance().getCurSpieler().setImGefängnis(true);
 			Verwalter.getInstance().getCurSpieler().setPlatz(10);
 		}catch(IOException ex){
-			System.out.println("FieldEffect Gef�ngnis Probleme");
+			System.out.println("FieldEffect Geä�ngnis Probleme");
 		}
 		
 	}

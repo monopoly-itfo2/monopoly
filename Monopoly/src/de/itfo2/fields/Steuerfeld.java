@@ -1,4 +1,4 @@
-package de.itfo2.objects;
+package de.itfo2.fields;
 public class Steuerfeld implements Feld
 {
 	String bezeichnung;

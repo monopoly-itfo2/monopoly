@@ -1,4 +1,6 @@
-package de.itfo2.objects;
+package de.itfo2.fields;
+import de.itfo2.objects.Spieler;
+
 import java.awt.Color;
 
 public class Strasse implements Grundstueck {

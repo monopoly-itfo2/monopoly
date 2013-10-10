@@ -1,10 +1,14 @@
-package de.itfo2.objects;
+package de.itfo2.fields;
 
-public class Ereignisfeld implements Feld
+import de.itfo2.objects.Verwalter;
+
+import java.io.IOException;
+
+public class Los implements Feld
 {
 	String bezeichnung;
 
-    public Ereignisfeld(String bezeichnung){
+    public Los(String bezeichnung){
         this.bezeichnung = bezeichnung;
     }
 
@@ -21,7 +25,11 @@ public class Ereignisfeld implements Feld
 
 	@Override
 	public void handleFieldEffect() {
-		// TODO Auto-generated method stub
+		try{
+			Verwalter.getInstance().getCurSpieler().addMoney(4000);
+		}catch(IOException ex){
+			System.out.println("FieldEffect Los Probleme");
+		}
 		
 	}
 }

@@ -14,9 +14,9 @@ import java.io.IOException;
 
 public class MiddlePanel extends JPanel {
 
-    JButton rollDiceButton;
-    CardButton gemeinschaftskartenButton, ereigniskartenButton;
-    GridBagConstraints c;
+    private JButton rollDiceButton;
+    private CardButton gemeinschaftskartenButton, ereigniskartenButton;
+    private GridBagConstraints c;
 
     private StatusPanel[] statuspanel = new StatusPanel[4];
 
@@ -70,7 +70,7 @@ public class MiddlePanel extends JPanel {
         icon = new ImageIcon(getClass().getResource("/de/itfo2/ui/resources/wuerfel.gif"));
         rollDiceButton = ButtonCreator.getIconButton(new ImageIcon(img), icon, icon);
 
-        rollDiceButton.addActionListener(new ActionListener() {
+        /*rollDiceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int wuerfel01 = getRandom();
@@ -97,6 +97,7 @@ public class MiddlePanel extends JPanel {
                 dialog.setVisible(true);
             }
         });
+        */
         rollDiceButton.setHorizontalAlignment(JButton.CENTER);
         this.add(rollDiceButton, c);
 
@@ -138,4 +139,17 @@ public class MiddlePanel extends JPanel {
     public StatusPanel getStatuspanel(int pos) {
         return statuspanel[pos];
     }
+
+    public JButton getRollDiceButton() {
+        return rollDiceButton;
+    }
+
+    public CardButton getGemeinschaftskartenButton() {
+        return gemeinschaftskartenButton;
+    }
+
+    public CardButton getEreigniskartenButton() {
+        return ereigniskartenButton;
+    }
+
 }
