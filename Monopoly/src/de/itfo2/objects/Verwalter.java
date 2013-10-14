@@ -47,9 +47,11 @@ public class Verwalter {
 
 		if (ersterWert == zweiterWert)
 			pasch++;
+		else
+			pasch = 0;
 
 		wuerfelZahl = ersterWert + zweiterWert;
-		// System.out.println("###### "+ersterWert+" / "+zweiterWert);
+		 System.out.println("###### "+ersterWert+" / "+zweiterWert);
 	}
 
 	public void play() throws IOException {
@@ -64,10 +66,13 @@ public class Verwalter {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				wuerfeln();
+				//TODO curSPieler = spieler.get(spielerAmZug);
 				// hier die Rune rein
 				System.out.println("Sopieler an der Reihe: "+spielerAmZug);
-				if (pasch == 3) {
-					// geheInsGefÃ¤ngnis
+				if (pasch == 3) {//TODO spieler.get(spielerAmZug) ersetzen durh curSpieler am Anfang jeder "Schleife"
+					// geheInsGefaengnis
+					spieler.get(spielerAmZug).setImGefaengnis(true);
+					gui.geheInsGefaengnis(spielerAmZug);
 					pasch = 0;
 
 				} else {
@@ -79,7 +84,7 @@ public class Verwalter {
 					System.out.println("Würfel ergebnis: "+wuerfelZahl);
 
 					try {
-						MonopolyGUI.getInstance().rueckeVor(0, wuerfelZahl);
+						gui.rueckeVor(0, wuerfelZahl);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -100,7 +105,7 @@ public class Verwalter {
 				}
 				if (pasch != 0) {
 					// gleicher.spieler
-				} else {
+				} else {// TODO: nextPlayerButtonEventListener und oben noh startTheHoleFukingGameEventListener
 					if (spielerAmZug == (spieler.size()-1)) {
 						spielerAmZug = 0;
 					} else {
