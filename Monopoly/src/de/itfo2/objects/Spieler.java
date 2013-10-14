@@ -17,8 +17,8 @@ public class Spieler {
 		this.color = color;
 	}
 
-	public void addMoney(int money) {
-		konto += money;
+	public void addGeld(int geld) {
+		konto += geld;
 	}
 
 	public void addPlatz(int anzahl) {

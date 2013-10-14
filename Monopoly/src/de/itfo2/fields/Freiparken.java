@@ -38,7 +38,7 @@ public class Freiparken implements Feld{
 	@Override
 	public void handleFieldEffect() {
 		try{
-			Verwalter.getInstance().getCurSpieler().addMoney(geldImPott);
+			Verwalter.getInstance().getCurSpieler().addGeld(geldImPott);
 		}catch(IOException ex){
 			System.out.println("FieldEffect Freiparken Probleme");
 		}

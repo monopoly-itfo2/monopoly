@@ -26,7 +26,7 @@ public class Los implements Feld
 	@Override
 	public void handleFieldEffect() {
 		try{
-			Verwalter.getInstance().getCurSpieler().addMoney(4000);
+			Verwalter.getInstance().getCurSpieler().addGeld(4000);
 		}catch(IOException ex){
 			System.out.println("FieldEffect Los Probleme");
 		}
