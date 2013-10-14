@@ -6,156 +6,168 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import de.itfo2.event.EventBus;
 import de.itfo2.ui.MonopolyGUI;
 
-
-
 public class Verwalter {
-    public int wert;
-    public int pasch = 0;
-    public boolean spielAmLaufen = true;
-    ArrayList<Spieler> spieler = new ArrayList<Spieler>();
-    private static Verwalter instance = null;
-    int spielerAmZug = -1;
-    Spielfeld spielfeld;
-    MonopolyGUI gui = MonopolyGUI.getInstance();
+	public int wuerfelZahl;
+	public int pasch = 0;
+	public boolean spielAmLaufen = true;
+	ArrayList<Spieler> spieler = new ArrayList<Spieler>();
+	private static Verwalter instance = null;
+	int spielerAmZug;
+	Spielfeld spielfeld;
+	MonopolyGUI gui = MonopolyGUI.getInstance();
+	boolean gewuerfelt;
+//	final EventBus bus = EventBus.getInstance();//temporary disabled
 
-    public Verwalter() throws IOException {
-        spielerAmZug = 1;
-        init();
-        //play();
+	public Verwalter() throws IOException {
+		spielerAmZug = 0;
+		play();
 
-//		System.out.println(spielfeld.ereignis.length);
-//		for(int i = 1;i<=spielfeld.ereignis.length;i++){
-//			System.out.println( i);
-//		}
-    }
+		// System.out.println(spielfeld.ereignis.length);
+		// for(int i = 1;i<=spielfeld.ereignis.length;i++){
+		// System.out.println( i);
+		// }
+	}
 
-    public static Verwalter getInstance() throws IOException {
-        if(instance == null){
-            instance = new Verwalter();
-        }
-        return instance;
-    }
+	public static Verwalter getInstance() throws IOException {
+		if (instance == null) {
+			instance = new Verwalter();
+		}
+		return instance;
+	}
 
-    public int wuerfeln() {
-        int ersterWert;
-        int zweiterWert;
-        Wuerfel wuerfel = new Wuerfel();
-        ersterWert = wuerfel.getWert();
-        zweiterWert = wuerfel.getWert();
-        
-        if (ersterWert == zweiterWert)
-            pasch++;
+	public void wuerfeln() {
+		int ersterWert;
+		int zweiterWert;
+		Wuerfel wuerfel = new Wuerfel();
+		ersterWert = wuerfel.getWert();
+		zweiterWert = wuerfel.getWert();
 
-        wert = ersterWert + zweiterWert;
-//		System.out.println("###### "+ersterWert+" / "+zweiterWert);
-        return wert;
-    }
+		if (ersterWert == zweiterWert)
+			pasch++;
 
-    public void play() throws IOException {
+		wuerfelZahl = ersterWert + zweiterWert;
+		// System.out.println("###### "+ersterWert+" / "+zweiterWert);
+	}
 
-        System.out.println("Start");
+	public void play() throws IOException {
 
-        init();
+		System.out.println("Start");
 
-        while(spielAmLaufen){
+		init();
 
-            //Wuerfeln
+		gui.setRollDiceButtonActionListener(new ActionListener() {// dummi, muss ersetzt werden durch einen neuen Button "Runde fertig"
 
-        	int wuerfelZahl = wuerfeln();
-        	
-        	if(pasch==3){
-        		//geheInsGefängnis
-        		pasch=0;
-        		
-        	}else{
-	        	
-	            //Ziehen
-	
-	            spieler.get(spielerAmZug).addPlatz(wuerfelZahl);
-	
-	            //Feld behandeln
-	
-	            int actualPlayerPosition = spieler.get(spielerAmZug).getPlatz();
-	            
-	            spielfeld.getFeld(actualPlayerPosition).handleFieldEffect();
-	            
-	            //MainPhase
-	
-	
-	            //Spieler-wechsel
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				wuerfeln();
+				// hier die Rune rein
+				System.out.println("Sopieler an der Reihe: "+spielerAmZug);
+				if (pasch == 3) {
+					// geheInsGefängnis
+					pasch = 0;
 
-	            //wenn ein Pasch gewuerfelt wurde
-        	}
-            if(pasch != 0) {
-                //gleicher.spieler
-            } else {
-                if(spielerAmZug == spieler.size()){
-                	spielerAmZug = 0;
-                }else{
-                	spielerAmZug++;
-                }
-              	 
-            }
+				} else {
 
-//    		 if(gewonnen)
-//          	 spiel = false;
-        }
-    }
-    private void init() throws IOException {
+					// Ziehen
 
-        spielfeld = new Spielfeld(InitSpielfeld.getfelder());
-        gui.setSpielfeld(spielfeld);
+					spieler.get(spielerAmZug).addPlatz(wuerfelZahl);
 
-//        Spieler spieler1 = new Spieler("Spieler 1", 10000, Color.getHSBColor(269f, 35f, 96f));
-        Spieler spieler1 = new Spieler("Spieler 1", 10000, Color.getHSBColor(0.9f, 0.1f, 0.7f));
-        Spieler spieler2 = new Spieler("Spieler 2", 10000, Color.getHSBColor(0.3f, 0.1f, 0.9f));
-        spieler.add(spieler1);
-        gui.addSpieler(0, spieler1);
-        spieler.add(spieler2);
-        gui.addSpieler(1, spieler2);
-//        MonopolyGUI.getInstance().updateFeld();
-    }
+					System.out.println("W�rfel ergebnis: "+wuerfelZahl);
 
-    public Spieler getCurSpieler(){
-        return spieler.get(spielerAmZug);
-    }
+					try {
+						MonopolyGUI.getInstance().rueckeVor(0, wuerfelZahl);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
-	public int getSpielerAmZug(){
-        return spielerAmZug;
-    }
+					// Feld behandeln
 
-    public void initGuiButtonFunctions(){
-        gui.setRollDiceButtonActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+					int actualPlayerPosition = spieler.get(spielerAmZug)
+							.getPlatz();
 
-            }
-        });
-        gui.setEreigniskartenButtonActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+					spielfeld.getFeld(actualPlayerPosition).handleFieldEffect();
 
-            }
-        });
-        gui.setGemeinschaftskartenButtonActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+					// MainPhase
 
-            }
-        });
-        gui.setBuyButtonActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+					// Spieler-wechsel
 
-            }
-        });
-        gui.setBuildHouseButtonActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+					// wenn ein Pasch gewuerfelt wurde
+				}
+				if (pasch != 0) {
+					// gleicher.spieler
+				} else {
+					if (spielerAmZug == (spieler.size()-1)) {
+						spielerAmZug = 0;
+					} else {
+						spielerAmZug++;
+					}
+				}
+			}
+		});
+	}
 
-            }
-        });
-    }
+	private void init() throws IOException {
+
+		spielfeld = new Spielfeld(InitSpielfeld.getfelder());
+		gui.setSpielfeld(spielfeld);
+
+		// Spieler spieler1 = new Spieler("Spieler 1", 10000,
+		// Color.getHSBColor(269f, 35f, 96f));
+		Spieler spieler1 = new Spieler("Spieler 1", 10000, Color.getHSBColor(
+				0.9f, 0.1f, 0.7f));
+		Spieler spieler2 = new Spieler("Spieler 2", 10000, Color.getHSBColor(
+				0.3f, 0.1f, 0.9f));
+		spieler.add(spieler1);
+		gui.addSpieler(0, spieler1);
+		spieler.add(spieler2);
+		gui.addSpieler(1, spieler2);
+		// MonopolyGUI.getInstance().updateFeld();
+
+	}
+
+	public Spieler getCurSpieler() {
+		return spieler.get(spielerAmZug);
+	}
+
+	public int getSpielerAmZug() {
+		return spielerAmZug;
+	}
+
+	public void initGuiButtonFunctions() {
+		gui.setRollDiceButtonActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		gui.setEreigniskartenButtonActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		gui.setGemeinschaftskartenButtonActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		gui.setBuyButtonActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		gui.setBuildHouseButtonActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+	}
 }

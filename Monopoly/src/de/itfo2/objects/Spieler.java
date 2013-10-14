@@ -22,7 +22,7 @@ public class Spieler {
 	}
 
 	public void addPlatz(int anzahl) {
-		platz += anzahl;
+		platz = (anzahl+platz)%40;
 	}
 
 	public String getName() {
@@ -49,12 +49,12 @@ public class Spieler {
 		this.platz = platz;
 	}
 
-	public boolean isImGefängnis() {
+	public boolean isImGefaengnis() {
 		return imGefaengnis;
 	}
 
-	public void setImGefängnis(boolean imGefängnis) {
-				this.imGefaengnis = imGefängnis;
+	public void setImGefaengnis(boolean imGefaengnis) {
+				this.imGefaengnis = imGefaengnis;
 	}
 
 	public int getGefaengnisFrei() {

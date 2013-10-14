@@ -26,10 +26,10 @@ public class Gefaengnis implements Feld
 	@Override
 	public void handleFieldEffect() {
 		try{
-			Verwalter.getInstance().getCurSpieler().setImGefängnis(true);
+			Verwalter.getInstance().getCurSpieler().setImGefaengnis(true);
 			Verwalter.getInstance().getCurSpieler().setPlatz(10);
 		}catch(IOException ex){
-			System.out.println("FieldEffect Geä�ngnis Probleme");
+			System.out.println("FieldEffect Geaengnis Probleme");
 		}
 		
 	}
