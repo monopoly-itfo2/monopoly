@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import de.itfo2.event.EventBus;
 import de.itfo2.event.WuerfelEvent;
@@ -41,5 +42,6 @@ public class NetworkTest {
 		testramen.add(pnl);
 		testramen.setSize(800, 600);
 		testramen.setVisible(true);
+		testramen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 }
