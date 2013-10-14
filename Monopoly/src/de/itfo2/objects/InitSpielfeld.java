@@ -43,7 +43,7 @@ public class InitSpielfeld {
         Steuerfeld feld4 = new Steuerfeld("Einkommenssteuer", 2000);
         feldArray.add(feld4);
 
-        Bahnhof feld5 = new Bahnhof("Südbahnhof", 4000, 500);
+        Bahnhof feld5 = new Bahnhof("Suedbahnhof", 4000, 500);
         feldArray.add(feld5);
 		
 		Strasse feld6 = new Strasse();
@@ -76,7 +76,7 @@ public class InitSpielfeld {
 		feld9.setFarbe(Color.MAGENTA);
 		feldArray.add(feld9);
 
-        Gefaengnis feld10 = new Gefaengnis("Gefängnis");
+        Gefaengnis feld10 = new Gefaengnis("Gefaengnis");
         feldArray.add(feld10);
 		
 		Strasse feld11 = new Strasse();
@@ -88,7 +88,7 @@ public class InitSpielfeld {
 		feld11.setFarbe(Color.PINK);
 		feldArray.add(feld11);
 
-        Werk feld12 = new Werk("Elektrizitätswerk", 3000);
+        Werk feld12 = new Werk("Elektrizitaetswerk", 3000);
         feldArray.add(feld12);
 		
 		Strasse feld13 = new Strasse();
@@ -113,7 +113,7 @@ public class InitSpielfeld {
         feldArray.add(feld15);
 		
 		Strasse feld16 = new Strasse();
-		feld16.setBezeichnung("M�chner Strasse");
+		feld16.setBezeichnung("Muechner Strasse");
 		feld16.setPreis(3600);
 		feld16.setHausKosten(2000);
 		int[] miete16 = {280, 1400, 4000, 11000, 15000, 19000};
@@ -146,7 +146,7 @@ public class InitSpielfeld {
         feldArray.add(feld20);
 
         Strasse feld21 = new Strasse();
-        feld21.setBezeichnung("Theaterstra�e");
+        feld21.setBezeichnung("Theaterstrasse");
         feld21.setPreis(4400);
         feld21.setHausKosten(3000);
         int[] miete21 = {360, 1800, 5000, 14000, 17500, 21000};
@@ -158,7 +158,7 @@ public class InitSpielfeld {
         feldArray.add(feld22);
 
         Strasse feld23 = new Strasse();
-        feld23.setBezeichnung("Museumsstra�e");
+        feld23.setBezeichnung("Museumsstrasse");
         feld23.setPreis(4400);
         feld23.setHausKosten(3000);
         int[] miete23 = {360, 1800, 5000, 14000, 17500, 21000};
@@ -179,7 +179,7 @@ public class InitSpielfeld {
         feldArray.add(feld25);
 
         Strasse feld26 = new Strasse();
-        feld26.setBezeichnung("Lessingstraße");
+        feld26.setBezeichnung("Lessingstrasse");
         feld26.setPreis(5200);
         feld26.setHausKosten(3000);
         int[] miete26 = {440, 2200, 6600, 16000, 19500, 23000};
@@ -188,7 +188,7 @@ public class InitSpielfeld {
         feldArray.add(feld26);
 
         Strasse feld27 = new Strasse();
-        feld27.setBezeichnung("Schillerstraße");
+        feld27.setBezeichnung("Schillerstrasse");
         feld27.setPreis(5200);
         feld27.setHausKosten(3000);
         int[] miete27 = {440, 2200, 6600, 16000, 19500, 23000};
@@ -200,7 +200,7 @@ public class InitSpielfeld {
         feldArray.add(feld28);
 
         Strasse feld29 = new Strasse();
-        feld29.setBezeichnung("Goethestraße");
+        feld29.setBezeichnung("Goethestrasse");
         feld29.setPreis(5600);
         feld29.setHausKosten(3000);
         int[] miete29 = {440, 2400, 7200, 17000, 20500, 24000};
@@ -208,7 +208,7 @@ public class InitSpielfeld {
         feld29.setFarbe(Color.YELLOW);
         feldArray.add(feld29);
 
-        GeheGefaengnis feld30 = new GeheGefaengnis("Gehe ins Gefängnis");
+        GeheGefaengnis feld30 = new GeheGefaengnis("Gehe ins Gefaengnis");
         feldArray.add(feld30);
 
         Strasse feld31 = new Strasse();
@@ -221,7 +221,7 @@ public class InitSpielfeld {
         feldArray.add(feld31);
 
         Strasse feld32 = new Strasse();
-        feld32.setBezeichnung("Hauptstraße");
+        feld32.setBezeichnung("Hauptstrasse");
         feld32.setPreis(6000);
         feld32.setHausKosten(4000);
         int[] miete32 = {520, 2600, 7800, 18000, 22000, 25500};
@@ -233,7 +233,7 @@ public class InitSpielfeld {
         feldArray.add(feld33);
 
         Strasse feld34 = new Strasse();
-        feld34.setBezeichnung("Bahnhofsstraße");
+        feld34.setBezeichnung("Bahnhofsstrasse");
         feld34.setPreis(6400);
         feld34.setHausKosten(4000);
         int[] miete34 = {560, 3000, 9000, 20000, 24000, 28000};
@@ -248,7 +248,7 @@ public class InitSpielfeld {
         feldArray.add(feld36);
 
         Strasse feld37 = new Strasse();
-        feld37.setBezeichnung("Parkstraße");
+        feld37.setBezeichnung("Parkstrasse");
         feld37.setPreis(7000);
         feld37.setHausKosten(4000);
         int[] miete37 = {700, 3500, 10000, 22000, 26000, 30000};
