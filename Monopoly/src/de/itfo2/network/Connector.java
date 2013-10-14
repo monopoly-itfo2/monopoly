@@ -33,6 +33,8 @@ public final class Connector {
 		Socket socket = null;
 		List<Socket> sockets = null;
 		sockets = discoverNetwork();
+//			sockets = new ArrayList<Socket>();
+//			sockets.add(new Socket("10.0.7.12", 28000));
 		if (sockets.size() > 0) {
 			socket = sockets.get(0); // nimmt erstmal die erste gefundene
 										// Verbindung
@@ -44,7 +46,11 @@ public final class Connector {
 			while (notConnected) { // wartet bis ein Client connected hat und
 									// holt den Socket
 				socket = server.getClientSocket();
-				System.out.println(socket);
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				if (socket != null) {
 					notConnected = false;
 				}
@@ -100,20 +106,25 @@ public final class Connector {
 			}
 		} catch (IOException e) {
 			System.err.println("Error during 'discoverNetwork' : " + e);
-		}
+		} 
 
 		for (int i = 1; i < addresses.size() - 1; i++) {
 			ConnectionTester discover = new ConnectionTester();
 			discover.setAdress(addresses.get(i));
 			discover.setConnectionsList(con);
 			discover.start();
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		System.out.println(con.size() + "connections found");
+		System.out.println(con.size() + " connections found");
 		return con;
 	}
 

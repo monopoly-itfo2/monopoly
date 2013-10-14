@@ -16,7 +16,7 @@ public class ConnectionTester extends Thread {
 	public void run() {
 		try {
 			Socket s = new Socket();
-			s.connect(new InetSocketAddress(address, 28000),500);
+			s.connect(new InetSocketAddress(address, 28000),5000);
 			connections.add(s);
 			System.out.println("added : " + address);
 		} catch (IOException e) {}
