@@ -2,10 +2,10 @@ package de.itfo2.event;
 
 import de.itfo2.objects.Spieler;
 
-public class SpieleranmeldungEvent implements MonopolyEvent {
+public class LoginEvent implements MonopolyEvent {
 	private Spieler player = null;
 
-	public SpieleranmeldungEvent(Spieler spieler) {
+	public LoginEvent(Spieler spieler) {
 		player = spieler;
 	}
 	

@@ -1,5 +1,6 @@
 package de.itfo2.network;
 
+import java.awt.Label;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.itfo2.event.EventBus;
+import de.itfo2.event.LoginEvent;
 import de.itfo2.event.MonopolyEvent;
+import de.itfo2.event.UpdateSpielerlisteEvent;
+import de.itfo2.objects.Spieler;
 import de.itfo2.server.MonopolyServer;
 
 /**
@@ -28,7 +32,13 @@ public final class Connector {
 
 	ObjectInputStream in;
 	ObjectOutputStream out;
+	List<Spieler> spielerliste = new ArrayList<Spieler>();
 
+	public void login(Spieler spieler){
+		addSpieler(spieler);
+		EventBus.getInstance().sinkClientEvent(new LoginEvent(spieler));
+	}
+	
 	public void ensureConnected() {
 		Socket socket = null;
 		List<Socket> sockets = null;
@@ -136,4 +146,19 @@ public final class Connector {
 			e.printStackTrace();
 		}
 	}
+
+	public void addSpieler(Spieler player) {
+		if (spielerliste.contains(player)){
+			spielerliste.add(player);
+		}
+		sentEvent(new UpdateSpielerlisteEvent());
+	}
+	
+	public void setSpielerliste (List<Spieler> spielerliste) {
+		this.spielerliste = spielerliste;
+	}
+	
+	public List<Spieler> getSpielerliste () {
+		return spielerliste;
+	}	
 }

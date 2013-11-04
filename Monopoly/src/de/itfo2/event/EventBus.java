@@ -3,7 +3,6 @@ package de.itfo2.event;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.itfo2.event.listeners.SpieleranmeldungEventListener;
 import de.itfo2.event.listeners.WuerfelEventListener;
 import de.itfo2.network.Connector;
 
@@ -23,18 +22,17 @@ public final class EventBus {
 	}
 
 	protected EventBus() {
-		Connector.getInstance().ensureConnected();
-		System.out.println("eventbus instatiation complete");
 	};
 
 	private List<WuerfelEventListener> listerners_wuerfel = new ArrayList<WuerfelEventListener>();
-	private List<SpieleranmeldungEventListener> listerners_spieleranmeldung = new ArrayList<SpieleranmeldungEventListener>();
 
 	public void sinkNetworkEvent(Object event) {
 		if (event instanceof WuerfelEvent) {
 			triggerWuerfelEvent((WuerfelEvent) event);
-		} else if(event instanceof SpieleranmeldungEvent) {
-			triggerSpieleranmeldungEvent((SpieleranmeldungEvent) event);
+		} else if(event instanceof LoginEvent) {
+			triggerLoginEvent((LoginEvent) event);
+		} else if(event instanceof UpdateSpielerlisteEvent) {
+			triggerUpdateSpielerlisteEvent((UpdateSpielerlisteEvent) event);
 		}
 	}
 
@@ -56,13 +54,12 @@ public final class EventBus {
 	
 	
 	// SpieleranmeldungEvent
-	private void triggerSpieleranmeldungEvent(SpieleranmeldungEvent event) {
-		for (int i = 0; i < listerners_spieleranmeldung.size(); i++) {
-			listerners_spieleranmeldung.get(i).onEvent(event);
-		}
+	private void triggerLoginEvent(LoginEvent event) {
+		Connector.getInstance().addSpieler(event.getPlayer());
 	}
-
-	public void addSpieleranmeldungEventListener(SpieleranmeldungEventListener listener) {
-		listerners_spieleranmeldung.add(listener);
+	
+	// SpieleranmeldungEvent
+	private void triggerUpdateSpielerlisteEvent(UpdateSpielerlisteEvent event) {
+		Connector.getInstance().setSpielerliste(event.getSpielerListe());
 	}
 }
