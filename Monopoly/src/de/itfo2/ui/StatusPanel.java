@@ -20,11 +20,10 @@ public class StatusPanel extends PicturePanel implements Observer{
     JLabel lab_name, lab_geld;
     BufferedImage img;
 
-    public StatusPanel() throws IOException {
+    public StatusPanel() {
         setPreferredSize(new Dimension(150, 200));
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
-        img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/statuspanel_test.png"));
         try {
             BufferedImage img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/statuspanel_test.png"));
             setBackgroundImage(img);

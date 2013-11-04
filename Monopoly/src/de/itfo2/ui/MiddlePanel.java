@@ -25,13 +25,17 @@ public class MiddlePanel extends JPanel {
     private StatusPanel[] statuspanel = new StatusPanel[4];
     private ChatPanel chatpanel;
 
-    public MiddlePanel() throws IOException {
+    public MiddlePanel() {
         setLayout(new GridBagLayout());
         setBackground(Color.WHITE);
         c = new GridBagConstraints();
         setPreferredSize(new Dimension(720, 720));
 
-        build();
+        try {
+			build();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     public void build() throws IOException {
