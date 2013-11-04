@@ -1,10 +1,9 @@
 package de.itfo2.fields;
+import java.awt.Color;
+
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
-
-import java.awt.Color;
-import java.io.IOException;
 
 public class Strasse implements Grundstueck {
 	
@@ -100,14 +99,8 @@ public class Strasse implements Grundstueck {
     @Override
 	public void handleFieldEffect() {
 
-        Spieler curSpieler = null;
-        MonopolyGUI gui = null;
-        try {
-            gui = MonopolyGUI.getInstance();
-            curSpieler = Verwalter.getInstance().getCurSpieler();
-        } catch (IOException e) {
-        }
-
+        Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
+        MonopolyGUI gui = MonopolyGUI.getInstance();
 
         if(besitzer != null){
             if(besitzer != curSpieler){

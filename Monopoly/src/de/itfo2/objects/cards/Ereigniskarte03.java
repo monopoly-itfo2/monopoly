@@ -4,8 +4,6 @@ package de.itfo2.objects.cards;
 import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
 
-import java.io.IOException;
-
 public class Ereigniskarte03 extends Karte{
 
     final String text = "Rücke vor bis auf LOS";
@@ -15,7 +13,7 @@ public class Ereigniskarte03 extends Karte{
     }
 
     @Override
-    public void effect() throws IOException {
+    public void effect() {
        // TODO Gefängnisfreikarte
         Verwalter.getInstance().getCurSpieler().setPlatz(0); 
         MonopolyGUI.getInstance().rueckeAuf(0);

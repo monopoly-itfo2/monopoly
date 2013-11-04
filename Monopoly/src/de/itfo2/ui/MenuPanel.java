@@ -1,10 +1,7 @@
 package de.itfo2.ui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -17,15 +14,13 @@ import javax.swing.JPanel;
 
 import de.itfo2.fields.Grundstueck;
 import de.itfo2.fields.Strasse;
-import de.itfo2.objects.Spieler;
-import de.itfo2.objects.Verwalter;
-import de.itfo2.util.DialogCreator;
 
+@SuppressWarnings("serial")
 public class MenuPanel extends JPanel implements MouseListener{
 
     private JButton bBuy, bBuild;
     private GUIFeld parent;
-    private boolean haus;
+    private boolean haus; 
     public MenuPanel(GUIFeld feld, boolean haus) throws IOException {
         parent = feld;
         this.haus = haus;
@@ -97,8 +92,9 @@ public class MenuPanel extends JPanel implements MouseListener{
         icon = new ImageIcon(img);
         bBuild.setPressedIcon(icon);
 
-        if(haus)
+        if(this.haus){
             add(bBuild);
+        }
     }
 
     @Override

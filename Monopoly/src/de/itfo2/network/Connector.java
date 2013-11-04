@@ -1,6 +1,5 @@
 package de.itfo2.network;
 
-import java.awt.Label;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

@@ -2,6 +2,7 @@ package de.itfo2.event;
 
 import de.itfo2.objects.Spieler;
 
+@SuppressWarnings("serial")
 public class LoginEvent implements MonopolyEvent {
 	private Spieler player = null;
 

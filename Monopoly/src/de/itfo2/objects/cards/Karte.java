@@ -1,6 +1,5 @@
 package de.itfo2.objects.cards;
 
-import java.io.IOException;
 
 public abstract class Karte {
     private String text;
@@ -12,7 +11,7 @@ public abstract class Karte {
         return text;
     }
 
-    public void effect() throws IOException {
+    public void effect() {
 
     }
 

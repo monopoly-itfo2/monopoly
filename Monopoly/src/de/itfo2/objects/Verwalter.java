@@ -3,11 +3,8 @@ package de.itfo2.objects;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import de.itfo2.event.EventBus;
-import de.itfo2.fields.Feld;
 import de.itfo2.fields.Grundstueck;
 import de.itfo2.fields.Strasse;
 import de.itfo2.ui.MonopolyGUI;
@@ -24,12 +21,12 @@ public class Verwalter {
 	boolean gewuerfelt;
 //	final EventBus bus = EventBus.getInstance();//temporary disabled
 
-	public Verwalter() throws IOException {
+	public Verwalter() {
 		play();
 
 	}
 
-	public static Verwalter getInstance() throws IOException {
+	public static Verwalter getInstance() {
 		if (instance == null) {
 			instance = new Verwalter();
 		}
@@ -55,7 +52,7 @@ public class Verwalter {
         gewuerfelt = true;
 	}
 
-	public void play() throws IOException {
+	public void play() {
 
 		init();
 
@@ -64,7 +61,7 @@ public class Verwalter {
         
 	}
 
-	private void init() throws IOException {
+	private void init() {
 
 		spielfeld = new Spielfeld(InitSpielfeld.getfelder(), InitSpielfeld.getEreigniskarten(), InitSpielfeld.getEreigniskarten());
 		gui.setSpielfeld(spielfeld);
@@ -122,11 +119,7 @@ public class Verwalter {
 
                 } else {
 
-                    // Ziehen
-                    try {
-                        gui.rueckeVor(wuerfelZahl);
-                    } catch (IOException e1) {
-                    }
+                    gui.rueckeVor(wuerfelZahl);
                     spieler.get(spielerAmZug).addPlatz(wuerfelZahl);
 
                     System.out.println("Wrfel ergebnis: "+wuerfelZahl);
@@ -172,10 +165,7 @@ public class Verwalter {
         gui.setNextButtonActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    gui.naechsterSpieler();
-                } catch (IOException e1) {
-                }
+                gui.naechsterSpieler();
                 spielerAmZug = (spielerAmZug+1)%getSpieleranzahl();
                 gui.setRollDiceButtonEnabled(true);
             }
@@ -252,8 +242,8 @@ public class Verwalter {
     	int anzahlHauser = 0;
     	for(int i = 0; i < 40; i++){
     		Strasse strasse = (Strasse)spielfeld.getFeld(i);
-    		if(strasse != null){    			
-    			Spieler besitzer = strasse.getBesitzer();
+    		if(strasse != null){   
+    			Spieler besitzer = strasse.getBesitzer(); //Warum wird diese Variable nicht genutzt ? Fabian
     			if(aktuellerSpieler.equals(aktuellerSpieler)){
     				anzahlHauser += strasse.getHausAnzahl();
     			}

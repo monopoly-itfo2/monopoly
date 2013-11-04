@@ -4,8 +4,6 @@ package de.itfo2.objects.cards;
 import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
 
-import java.io.IOException;
-
 public class Gemeinschaftskarte08 extends Karte{
 
     final String text = "Gehe in das Gefängnis. Begib dich direkt dorthin, gehe nicht über LOS, ziehe nicht 4000 DM ein";
@@ -15,7 +13,7 @@ public class Gemeinschaftskarte08 extends Karte{
     }
 
     @Override
-    public void effect() throws IOException {
+    public void effect() {
         MonopolyGUI.getInstance().createPopupDialog(getText()); //Hiermit erstellt man diese tollen Popups zum BestÃ¤tigen.
         Verwalter.getInstance().getCurSpieler().setPlatz(10);
         System.out.println(text);

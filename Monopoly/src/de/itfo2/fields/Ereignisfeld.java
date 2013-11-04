@@ -2,8 +2,6 @@ package de.itfo2.fields;
 
 import de.itfo2.objects.Verwalter;
 
-import java.io.IOException;
-
 public class Ereignisfeld implements Feld
 {
 	String bezeichnung;
@@ -26,10 +24,7 @@ public class Ereignisfeld implements Feld
 
 	@Override
 	public void handleFieldEffect() {
-        try {
-            Verwalter.getInstance().getSpielfeld().getEreigniskarten().get(pointer).effect();
-            pointer = (pointer+1)% Verwalter.getInstance().getSpielfeld().getEreigniskarten().size();
-        } catch (IOException e) {
-        }
+        Verwalter.getInstance().getSpielfeld().getEreigniskarten().get(pointer).effect();
+		pointer = (pointer+1)% Verwalter.getInstance().getSpielfeld().getEreigniskarten().size();
     }
 }

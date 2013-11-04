@@ -1,16 +1,20 @@
 package de.itfo2.ui;
 
-import de.itfo2.objects.Spieler;
-
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.imageio.ImageIO;
+import javax.swing.JLabel;
+
+import de.itfo2.objects.Spieler;
+
+@SuppressWarnings("serial")
 public class StatusPanel extends PicturePanel implements Observer{
 
     JLabel lab_name, lab_geld;

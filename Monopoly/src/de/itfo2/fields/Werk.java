@@ -1,7 +1,7 @@
 package de.itfo2.fields;
-import de.itfo2.objects.Spieler;
-
 import java.awt.Color;
+
+import de.itfo2.objects.Spieler;
 
 
 public class Werk implements Grundstueck
@@ -9,7 +9,7 @@ public class Werk implements Grundstueck
 	String bezeichnung = null;
 	Spieler besitzer = null;
 	private int preis = 0;
-    private Color farbe = null;
+    private Color farbe = null; //Warum wird diese Variable nicht genutzt ? Fabian
 
     public Werk(String bezeichnung, int preis){
         this.bezeichnung = bezeichnung;

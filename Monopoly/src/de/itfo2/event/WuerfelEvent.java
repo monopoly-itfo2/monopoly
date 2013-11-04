@@ -7,6 +7,7 @@ package de.itfo2.event;
  * @author Marco Ernst
  *
  */
+@SuppressWarnings("serial")
 public class WuerfelEvent implements MonopolyEvent {
 
 	private int value = 0;

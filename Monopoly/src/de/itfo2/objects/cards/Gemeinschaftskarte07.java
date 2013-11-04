@@ -1,10 +1,7 @@
 package de.itfo2.objects.cards;
 
 
-import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
-
-import java.io.IOException;
 
 public class Gemeinschaftskarte07 extends Karte{
 
@@ -15,7 +12,7 @@ public class Gemeinschaftskarte07 extends Karte{
     }
 
     @Override
-    public void effect() throws IOException {
+    public void effect() {
         MonopolyGUI.getInstance().createPopupDialog(getText()); //Hiermit erstellt man diese tollen Popups zum Best√§tigen.
        // TODO Gef‰ngnisfreikarte
 //        Verwalter.getInstance().getCurSpieler().setPlatz(11); 

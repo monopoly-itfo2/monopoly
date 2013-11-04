@@ -1,29 +1,26 @@
 package de.itfo2.ui;
 
-import de.itfo2.objects.InitSpielfeld;
+import java.awt.event.ActionListener;
+
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Spielfeld;
 import de.itfo2.objects.Verwalter;
 import de.itfo2.util.DialogCreator;
-
-import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class MonopolyGUI implements MonopolyGUIInterface {
 
     private static MonopolyGUI instance = null;
     GUISpielfeld spielfeld;
 
-    public MonopolyGUI() throws IOException {
+    public MonopolyGUI(){
 
     }
 
-    public void setSpielfeld(Spielfeld spielfeld) throws IOException {
+    public void setSpielfeld(Spielfeld spielfeld) {
         this.spielfeld = new GUISpielfeld(spielfeld);
     }
 
-    public static MonopolyGUI getInstance() throws IOException {
+    public static MonopolyGUI getInstance() {
         if(instance == null){
             instance = new MonopolyGUI();
         }
@@ -31,7 +28,7 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     }
 
     @Override
-    public void rueckeVor(int anzahl) throws IOException {
+    public void rueckeVor(int anzahl) {
         Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
         spielfeld.setSpielerVisible(curSpieler.getPlatz(), Verwalter.getInstance().getSpielerAmZug(), false);
         spielfeld.setSpielerVisible(curSpieler.getPlatz()+anzahl, Verwalter.getInstance().getSpielerAmZug(), true);
@@ -46,7 +43,7 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     }
 
     @Override
-    public void rueckeAuf(int platz) throws IOException {
+    public void rueckeAuf(int platz) {
         Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
         spielfeld.setSpielerVisible(curSpieler.getPlatz(), Verwalter.getInstance().getSpielerAmZug(), false);
         spielfeld.setSpielerVisible(platz, Verwalter.getInstance().getSpielerAmZug(), true);
@@ -60,7 +57,7 @@ public class MonopolyGUI implements MonopolyGUIInterface {
         }
     }
 
-    public void naechsterSpieler() throws IOException {
+    public void naechsterSpieler() {
         Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
         if(spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel()!=null){
             spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().setVisible(false);
@@ -80,7 +77,7 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     }
 
     @Override
-    public void addSpieler(int pos, Spieler spieler) throws IOException {
+    public void addSpieler(int pos, Spieler spieler) {
         spielfeld.addSpieler(pos, spieler);
     }
 
@@ -132,17 +129,11 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     }
 
     public void kaufeFeld(){
-        try {
-            spielfeld.getFelder().get(Verwalter.getInstance().getCurSpieler().getPlatz()).faerbeFeld(Verwalter.getInstance().getCurSpieler().getColor());
-        } catch (IOException e) {
-        }
+        spielfeld.getFelder().get(Verwalter.getInstance().getCurSpieler().getPlatz()).faerbeFeld(Verwalter.getInstance().getCurSpieler().getColor());
     }
 
     public void baueHaus(){
-        try {
-            spielfeld.getFelder().get(Verwalter.getInstance().getCurSpieler().getPlatz()).addHouse();
-        } catch (IOException e) {
-        }
+        spielfeld.getFelder().get(Verwalter.getInstance().getCurSpieler().getPlatz()).addHouse();
     }
 
     public StatusPanel getStatusPanel(int pos){

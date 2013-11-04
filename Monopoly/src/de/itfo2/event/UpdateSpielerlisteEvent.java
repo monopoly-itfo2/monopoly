@@ -6,6 +6,7 @@ import java.util.List;
 import de.itfo2.objects.Spieler;
 
 
+@SuppressWarnings("serial")
 public class UpdateSpielerlisteEvent implements MonopolyEvent {
 	private List<Spieler> spielerListe = new ArrayList<Spieler>();
 

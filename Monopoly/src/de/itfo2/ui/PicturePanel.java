@@ -1,8 +1,11 @@
 package de.itfo2.ui;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Graphics;
+import java.awt.Image;
 
+import javax.swing.JLayeredPane;
+
+@SuppressWarnings("serial")
 public class PicturePanel extends JLayeredPane {
     private Image image;
 

@@ -1,6 +1,8 @@
 package de.itfo2.ui;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -16,9 +18,8 @@ import de.itfo2.fields.Feld;
 import de.itfo2.fields.Freiparken;
 import de.itfo2.fields.Grundstueck;
 import de.itfo2.fields.Strasse;
-import de.itfo2.objects.Spieler;
-import de.itfo2.objects.Verwalter;
 
+@SuppressWarnings("serial")
 public class GUIFeld extends PicturePanel implements MouseListener, Observer {
 
     private JLabel labelName;
@@ -29,13 +30,17 @@ public class GUIFeld extends PicturePanel implements MouseListener, Observer {
     private JLabel [] figuren = new JLabel[4];
     private Feld feld;
 
-    public GUIFeld(Feld feld, BufferedImage image) throws IOException {
+    public GUIFeld(Feld feld, BufferedImage image) {
         addMouseListener(this);
         setBackgroundImage(image);
         this.setLayout(null);
         this.feld = feld;
         //setSize(image.getWidth(this), image.getHeight(this));
-        init();
+        try {
+			init();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         setPreferredSize(new Dimension(90, 90));
     }
 

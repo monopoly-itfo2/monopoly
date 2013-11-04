@@ -1,13 +1,16 @@
 package de.itfo2.ui;
 
 
-import de.itfo2.objects.Spieler;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
+import de.itfo2.objects.Spieler;
+
+@SuppressWarnings("serial")
 public class Spielfigur extends JLabel {
     Spieler spieler;
     public Spielfigur(Spieler spieler){
