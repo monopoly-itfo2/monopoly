@@ -1,19 +1,22 @@
 package de.itfo2.fields;
 import de.itfo2.objects.Spieler;
+import de.itfo2.objects.Verwalter;
+import de.itfo2.ui.MonopolyGUI;
 
 import java.awt.Color;
+import java.io.IOException;
 
 public class Strasse implements Grundstueck {
 	
 	//Hyothek = preis / 2 //methode f�r amchen
-	String bezeichnung = null;
-	Spieler besitzer = null;
-	int preis = 0;
-	Color farbe = null;
-	int miete[] = new int[6];
-	boolean alleFarben = false;
-	int hausKosten = 0;
-	int position = 0;
+	private String bezeichnung = null;
+	private Spieler besitzer = null;
+	private int preis = 0;
+	private Color farbe = null;
+	private int miete[] = new int[6];
+    private int mietePointer = 0;
+	private boolean alleFarben = false;
+	private int hausKosten = 0;
 
 	@Override
 	public String getBezeichnung() {
@@ -53,6 +56,10 @@ public class Strasse implements Grundstueck {
 		this.farbe = farbe;
 	}
 
+    public void addMietePointer(){
+        mietePointer++;
+    }
+
 	public int[] getMiete() {
 		return miete;
 	}
@@ -76,22 +83,41 @@ public class Strasse implements Grundstueck {
 	public void setHausKosten(int hausKosten) {
 		this.hausKosten = hausKosten;
 	}
-
-	public int getPosition() {
-		return position;
-	}
-
-	public void setPosition(int position) {
-		this.position = position;
-	}
 	
 	@Override
 	public int getHypothek () {
 		return preis/2;
 	}
-	@Override
+
+    public int getMietePointer() {
+        return mietePointer;
+    }
+
+    @Override
 	public void handleFieldEffect() {
-	
-	}
+
+        Spieler curSpieler = null;
+        MonopolyGUI gui = null;
+        try {
+            gui = MonopolyGUI.getInstance();
+            curSpieler = Verwalter.getInstance().getCurSpieler();
+        } catch (IOException e) {
+        }
+
+
+        if(besitzer != null){
+            if(besitzer != curSpieler){
+                //1. Fall - Spieler kann bezahlen
+                if(curSpieler.getKonto() >= miete[0]){
+                    besitzer.addGeld(miete[0]);
+                    curSpieler.addGeld(miete[0]);
+                    gui.addLogMessage(curSpieler.getName() + " hat blubb " + preis + "€ bezahlt.");
+                }
+                else{
+                    //2. Fall - Spieler kann nicht bezahlen
+                }
+            }
+        }
+    }
 	
 }

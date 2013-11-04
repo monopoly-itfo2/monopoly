@@ -8,8 +8,9 @@ import java.awt.event.KeyListener;
 public class ChatPanel extends JPanel {
 
     JTextField textfield;
+    JTextArea textarea;
     JScrollPane scrollpanel;
-    Container messagepanel; //umbauen zu Textarea
+
     public ChatPanel(int x, int y){
         setPreferredSize(new Dimension(x, y));
         setLayout(new BorderLayout());
@@ -40,24 +41,24 @@ public class ChatPanel extends JPanel {
         scrollpanel = new JScrollPane();
         scrollpanel.setBounds(10, 10, (int)this.getPreferredSize().getWidth()-20, (int)this.getPreferredSize().getHeight()-50);
 
-        messagepanel = new JPanel();
-        messagepanel.setPreferredSize(new Dimension(scrollpanel.getWidth(), scrollpanel.getHeight()));
-        messagepanel.setSize((int)scrollpanel.getPreferredSize().getWidth(), (int)scrollpanel.getPreferredSize().getHeight());
-        messagepanel.setLayout(new FlowLayout());
-        scrollpanel.setViewportView(messagepanel);
+        textarea = new JTextArea();
+        //textarea.setEnabled(false);
+        textarea.setFocusable(false);
+        textarea.setForeground(Color.black);
+        scrollpanel.setViewportView(textarea);
         add(scrollpanel, BorderLayout.CENTER);
-
-        addUsermessage("Micha", "Hallo erste Nachricht!");
-        addUsermessage("Micha", "Hallo zweite! Nachricht!");
     }
 
     public void addUsermessage(String user, String text){
-        JLabel label = new JLabel(user + ": " + text);
-        label.setSize((int)this.getPreferredSize().getWidth()-20, 30);
-        messagepanel.add(label);
-        messagepanel.revalidate();
-        messagepanel.repaint();
+        textarea.append(user + ": " + text + "\n");
+        autoScroll();
         scrollpanel.revalidate();
         scrollpanel.repaint();
+
+    }
+
+    public void autoScroll(){
+        Point point = new Point( 0, (int)(textarea.getSize().getHeight()) );
+        scrollpanel.getViewport().setViewPosition( point );
     }
 }

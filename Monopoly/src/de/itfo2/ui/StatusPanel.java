@@ -8,11 +8,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
-public class StatusPanel extends PicturePanel {
+public class StatusPanel extends PicturePanel implements Observer{
 
     JLabel lab_name, lab_geld;
-    Spieler spieler;
     BufferedImage img;
 
     public StatusPanel() throws IOException {
@@ -40,10 +41,6 @@ public class StatusPanel extends PicturePanel {
         add(lab_geld);
     }
 
-    public void setSpieler(Spieler spieler){
-        this.spieler = spieler;
-    }
-
     //mit änderungslistener realisieren, sonst stackoverflow!
     @Override
     public void repaint(){
@@ -63,4 +60,11 @@ public class StatusPanel extends PicturePanel {
     }
 
 
+    @Override
+    public void update(Observable o, Object arg) {
+        Spieler spieler = (Spieler)o;
+        //lab_name.setForeground(spieler.getColor());
+        lab_name.setText(spieler.getName());
+        lab_geld.setText(""+spieler.getKonto()+"€");
+    }
 }

@@ -1,5 +1,6 @@
 package de.itfo2.ui;
 
+import de.itfo2.fields.Freiparken;
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Spielfeld;
 
@@ -169,6 +170,7 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
         c.gridy = 0;
         image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/feld_template.jpg"));
         felder.add(new GUIFeld(spielfeld.getFeld(20), image));
+        ((Freiparken)spielfeld.getFeld(20)).addObserver(felder.get(20)); //damit der Pott aktualisiert wird
         pane.add(felder.get(20), c);
 
         c.gridx = 1;
@@ -301,8 +303,6 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
 
     public void addSpieler(int pos, Spieler spieler) throws IOException {
         setSpielerVisible(0, pos, true);
-        //Statuspanel befüllen
-        middlePanel.getStatuspanel(pos).setSpieler(spieler);
     }
 
     public void setSpielerVisible(int feld, int pos, boolean visible){
@@ -339,4 +339,5 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
     public ArrayList<GUIFeld> getFelder() {
         return felder;
     }
+
 }

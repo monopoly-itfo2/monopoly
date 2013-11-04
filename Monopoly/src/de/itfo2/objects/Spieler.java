@@ -1,8 +1,9 @@
 package de.itfo2.objects;
 
 import java.awt.*;
+import java.util.Observable;
 
-public class Spieler {
+public class Spieler extends Observable{
 
 	private String name;
 	private int konto;
@@ -19,6 +20,8 @@ public class Spieler {
 
 	public void addGeld(int geld) {
 		konto += geld;
+        setChanged();
+        notifyObservers();
 	}
 
 	public void addPlatz(int anzahl) {
@@ -31,6 +34,8 @@ public class Spieler {
 
 	public void setName(String name) {
 		this.name = name;
+        setChanged();
+        notifyObservers();
 	}
 
 	public int getKonto() {

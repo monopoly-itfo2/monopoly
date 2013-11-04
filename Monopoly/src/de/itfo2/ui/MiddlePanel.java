@@ -14,11 +14,12 @@ import java.io.IOException;
 
 public class MiddlePanel extends JPanel {
 
-    private JButton rollDiceButton;
+    private JButton rollDiceButton, startButton, nextButton;
     private CardButton gemeinschaftskartenButton, ereigniskartenButton;
     private GridBagConstraints c;
 
     private StatusPanel[] statuspanel = new StatusPanel[4];
+    private ChatPanel chatpanel;
 
     public MiddlePanel() throws IOException {
         setLayout(new GridBagLayout());
@@ -101,6 +102,25 @@ public class MiddlePanel extends JPanel {
         rollDiceButton.setHorizontalAlignment(JButton.CENTER);
         this.add(rollDiceButton, c);
 
+        c.gridx = 0;
+        c.gridy = 0;
+        img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/startbutton.png"));
+        icon = new ImageIcon(img);
+        startButton = ButtonCreator.getIconButton(icon, icon, icon);
+        startButton.setHorizontalAlignment(JButton.CENTER);
+        this.add(startButton, c);
+
+        c.gridx = 1;
+        c.gridy = 0;
+        img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/sanduhr.png"));
+        icon = new ImageIcon(img);
+        nextButton = ButtonCreator.getIconButton(icon, icon, icon);
+        nextButton.setHorizontalAlignment(JButton.CENTER);
+        img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/sanduhr_inactive.png"));
+        nextButton.setDisabledIcon(new ImageIcon(img));
+        this.add(nextButton, c);
+
+        c.gridy = 1;
         c.gridx = 3;
         statuspanel[2] = new StatusPanel();
         add(statuspanel[2], c);
@@ -114,7 +134,7 @@ public class MiddlePanel extends JPanel {
         c.gridy = 2;
         c.fill = GridBagConstraints.CENTER;
         //c.fill = GridBagConstraints.HORIZONTAL;
-        ChatPanel chatpanel = new ChatPanel(300, 200);
+        chatpanel = new ChatPanel(300, 200);
         add(chatpanel, c);
     }
 
@@ -144,6 +164,14 @@ public class MiddlePanel extends JPanel {
         return rollDiceButton;
     }
 
+    public JButton getStartButton() {
+        return startButton;
+    }
+
+    public JButton getNextButton() {
+        return nextButton;
+    }
+
     public CardButton getGemeinschaftskartenButton() {
         return gemeinschaftskartenButton;
     }
@@ -152,4 +180,7 @@ public class MiddlePanel extends JPanel {
         return ereigniskartenButton;
     }
 
+    public ChatPanel getChatpanel() {
+        return chatpanel;
+    }
 }

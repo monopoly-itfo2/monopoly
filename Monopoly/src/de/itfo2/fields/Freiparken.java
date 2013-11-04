@@ -1,10 +1,12 @@
 package de.itfo2.fields;
 
 import de.itfo2.objects.Verwalter;
+import de.itfo2.ui.MonopolyGUI;
 
 import java.io.IOException;
+import java.util.Observable;
 
-public class Freiparken implements Feld{
+public class Freiparken extends Observable implements Feld{
 
 	String bezeichnung;
     private int geldImPott;
@@ -33,12 +35,17 @@ public class Freiparken implements Feld{
 
     public void addMoney(int money){
         this.geldImPott += money;
+        notifyObservers();
     }
 
 	@Override
 	public void handleFieldEffect() {
 		try{
+            MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() + " erhält " + geldImPott + "€");
 			Verwalter.getInstance().getCurSpieler().addGeld(geldImPott);
+            geldImPott = 0;
+            notifyObservers();
+
 		}catch(IOException ex){
 			System.out.println("FieldEffect Freiparken Probleme");
 		}

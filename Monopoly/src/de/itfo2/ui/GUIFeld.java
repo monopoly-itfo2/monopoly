@@ -5,6 +5,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -17,7 +19,7 @@ import de.itfo2.fields.Strasse;
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Verwalter;
 
-public class GUIFeld extends PicturePanel implements MouseListener {
+public class GUIFeld extends PicturePanel implements MouseListener, Observer {
 
     private JLabel labelName;
     private JLabel labelPreis;
@@ -68,7 +70,7 @@ public class GUIFeld extends PicturePanel implements MouseListener {
 
         figuren[0] = new JLabel();
         BufferedImage image = null;
-        image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur_template.png"));
+        image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur_green.png"));
         ImageIcon spielfigur = new ImageIcon(ColorChanger.changeColor(image, Color.WHITE, Color.getHSBColor(0.9f, 0.1f, 0.7f)));
         figuren[0].setIcon(spielfigur);
         figuren[0].setBounds(3, 40, 18, 17);
@@ -76,7 +78,7 @@ public class GUIFeld extends PicturePanel implements MouseListener {
         figuren[0].setVisible(false);
 
         figuren[1] = new JLabel();
-        image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur_template.png"));
+        image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur_yellow.png"));
         spielfigur = new ImageIcon(ColorChanger.changeColor(image, Color.WHITE, Color.getHSBColor(0.9f, 0.1f, 0.7f)));
         figuren[1].setIcon(spielfigur);
         figuren[1].setBounds(24, 40, 18, 17);
@@ -171,19 +173,32 @@ public class GUIFeld extends PicturePanel implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        if(menuPanel!=null)
+        /*if(menuPanel!=null){
             menuPanel.setVisible(true);
+        }*/
         //this.setBackgroundImage(ColorChanger.changeColor((BufferedImage) getImage(), Color.WHITE, Color.YELLOW));
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        if(menuPanel!=null)
+        /*if(menuPanel!=null){
             menuPanel.setVisible(false);
+        }*/
         //this.setBackgroundImage(ColorChanger.changeColor((BufferedImage)getImage(), Color.YELLOW, Color.WHITE));
     }
 
     public MenuPanel getMenuPanel() {
         return menuPanel;
+    }
+
+    public void faerbeFeld(Color color){
+        this.setBackgroundImage(ColorChanger.changeColor((BufferedImage) getImage(), Color.WHITE, color));
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(feld instanceof Freiparken){
+            labelPreis.setText(((Freiparken) feld).getSumme() + "€ im Pott");
+        }
     }
 }
