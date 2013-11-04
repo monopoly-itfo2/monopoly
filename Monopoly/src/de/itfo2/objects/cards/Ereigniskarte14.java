@@ -1,0 +1,26 @@
+package de.itfo2.objects.cards;
+
+
+import de.itfo2.objects.Verwalter;
+import de.itfo2.ui.MonopolyGUI;
+
+import java.io.IOException;
+
+public class Ereigniskarte14 extends Karte{
+
+    final String text = "Rücke vor bis zum Opernplatz, wenn du über LOS kommst, ziehe DM 4000 ein";
+
+    public Ereigniskarte14() {
+
+    }
+
+    @Override
+    public void effect() throws IOException {
+        MonopolyGUI.getInstance().createPopupDialog(getText()); //Hiermit erstellt man diese tollen Popups zum BestÃ¤tigen.
+        //TODO LOS 4000DM
+//        Verwalter.getInstance().getCurSpieler().addGeld(-3000);
+        Verwalter.getInstance().getCurSpieler().setPlatz(24);
+        System.out.println(text);
+        MonopolyGUI.getInstance().createPopupDialog(text);
+    }
+}
