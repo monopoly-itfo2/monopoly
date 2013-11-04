@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class Ereigniskarte08 extends Karte{
 
-    final String text = "Miete und Anleihezinsen werden f‰llig. Die Bank zahlt dir 3000 DM";
+    final String text = "Miete und Anleihezinsen werden f‰llig. Zahle der Bank 3000 DM";
 
     public Ereigniskarte08() {
 
@@ -16,7 +16,6 @@ public class Ereigniskarte08 extends Karte{
 
     @Override
     public void effect() throws IOException {
-        MonopolyGUI.getInstance().createPopupDialog(getText()); //Hiermit erstellt man diese tollen Popups zum Best√§tigen.
         Verwalter.getInstance().getCurSpieler().addGeld(-3000);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);

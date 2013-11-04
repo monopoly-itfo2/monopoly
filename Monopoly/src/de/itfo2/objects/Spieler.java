@@ -67,7 +67,7 @@ public class Spieler extends Observable{
 	}
 
 	public void setGefaengnisFrei(int gefaengnisFrei) {
-		this.gefaengnisFrei = gefaengnisFrei;
+		this.gefaengnisFrei += gefaengnisFrei;
 	}
 
 	public Color getColor() {

@@ -49,6 +49,7 @@ public class Verwalter {
 			pasch = 0;
 
 		wuerfelZahl = ersterWert + zweiterWert;
+		wuerfelZahl = 7;
         //wuerfelZahl = 1;
 		 System.out.println("###### "+ersterWert+" / "+zweiterWert);
         gewuerfelt = true;
@@ -59,6 +60,8 @@ public class Verwalter {
 		init();
 
         initGuiButtonFunctions();
+        
+        
 	}
 
 	private void init() throws IOException {
@@ -234,5 +237,28 @@ public class Verwalter {
 
     public Spielfeld getSpielfeld() {
         return spielfeld;
+    }
+    
+    public int calculateToGo(int feldPosition){
+    	int aktuellePosition = getCurSpieler().getPlatz();
+    	if(aktuellePosition > feldPosition){    		
+    		return((feldPosition + 40) - aktuellePosition);
+    	} else {
+    		return(feldPosition-aktuellePosition);
+    	}
+    }
+    
+    public int getAlleHaeuser(Spieler aktuellerSpieler) {
+    	int anzahlHauser = 0;
+    	for(int i = 0; i < 40; i++){
+    		Strasse strasse = (Strasse)spielfeld.getFeld(i);
+    		if(strasse != null){    			
+    			Spieler besitzer = strasse.getBesitzer();
+    			if(aktuellerSpieler.equals(aktuellerSpieler)){
+    				anzahlHauser += strasse.getHausAnzahl();
+    			}
+    		}
+    	}
+    	return anzahlHauser;
     }
 }

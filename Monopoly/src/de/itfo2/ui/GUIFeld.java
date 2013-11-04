@@ -110,7 +110,7 @@ public class GUIFeld extends PicturePanel implements MouseListener, Observer {
 
         if(feld instanceof Grundstueck)
         {
-            labelPreis = new JLabel(((Grundstueck) feld).getPreis() + "â‚¬");
+            labelPreis = new JLabel(((Grundstueck) feld).getPreis() + "€");
             labelPreis.setBounds(0, 30, 90, 10);
             labelPreis.setOpaque(false);
             labelPreis.setFont(new Font("Calibri", 0, 10));

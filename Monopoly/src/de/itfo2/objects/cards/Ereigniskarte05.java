@@ -16,10 +16,9 @@ public class Ereigniskarte05 extends Karte{
 
     @Override
     public void effect() throws IOException {
-        MonopolyGUI.getInstance().createPopupDialog(getText()); //Hiermit erstellt man diese tollen Popups zum Bestätigen.
        // TODO LOS ziehe 4000 DM ein
-        Verwalter.getInstance().getCurSpieler().setPlatz(11); 
-        MonopolyGUI.getInstance().rueckeAuf(11);
+    	Verwalter.getInstance().getCurSpieler().addPlatz(Verwalter.getInstance().calculateToGo(11));
+    	MonopolyGUI.getInstance().rueckeAuf(11);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
     }

@@ -88,8 +88,12 @@ public class Strasse implements Grundstueck {
 	public int getHypothek () {
 		return preis/2;
 	}
-
-    public int getMietePointer() {
+	
+	public int getMietePointer() {
+        return mietePointer;
+    }
+	
+    public int getHausAnzahl() {
         return mietePointer;
     }
 
