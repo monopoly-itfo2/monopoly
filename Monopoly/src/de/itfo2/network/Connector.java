@@ -147,7 +147,7 @@ public final class Connector {
 	}
 
 	public void addSpieler(Spieler player) {
-		if (spielerliste.contains(player)){
+		if (!spielerliste.contains(player)){
 			spielerliste.add(player);
 		}
 		sentEvent(new UpdateSpielerlisteEvent());
