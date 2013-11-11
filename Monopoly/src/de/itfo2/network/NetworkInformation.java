@@ -5,7 +5,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 /**
- * Diese Klasse liefert statische Methoden um Informationen über die Netzwerkumgebung zu bekommen.<br><br>
+ * Diese Klasse liefert statische Methoden um Informationen ueber die Netzwerkumgebung zu bekommen.<br><br>
  * Das Format einer IP-Adresse ist eine Integer-Array mit 4 Elementen: <br>
  * <b>Beispiel:</b> 192.168.1.1 == {192,168,1,1}  <br><b>also:</b> adresse[2] == 168
  * 

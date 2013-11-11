@@ -5,7 +5,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte13 extends Karte{
 
-    final String text = "Du wirst zu Strassenausbesserungsarbeiten herangezogen. Zahle für deine Häuser und Hotels DM 800 pro Haus und DM 2300 je Hotel";
+    final String text = "Du wirst zu Strassenausbesserungsarbeiten herangezogen. Zahle fuer deine Haeuser und Hotels DM 800 pro Haus und DM 2300 je Hotel";
 
     public Ereigniskarte13() {
 
@@ -15,7 +15,7 @@ public class Ereigniskarte13 extends Karte{
     public void effect() {
         MonopolyGUI.getInstance().createPopupDialog(getText()); //Hiermit erstellt man diese tollen Popups zum BestÃ¤tigen.
 //        Verwalter.getInstance().getCurSpieler().addGeld(-3000);
-//        TODO Zahle an die Bank, für jedes Haus 800 DM, für jedes Hotel 2300 DM
+//        TODO Zahle an die Bank, fuer jedes Haus 800 DM, fuer jedes Hotel 2300 DM
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
     }

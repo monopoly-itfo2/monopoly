@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte10 extends Karte{
 
-    final String text = "Rücke vor bis auf LOS";
+    final String text = "Ruecke vor bis auf LOS";
 
     public Gemeinschaftskarte10() {
 

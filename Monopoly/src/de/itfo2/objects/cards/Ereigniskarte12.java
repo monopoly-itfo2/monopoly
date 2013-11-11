@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte12 extends Karte{
 
-    final String text = "Lass alle deine Häuser renovieren. Zahle an die Bank, für jedes Haus 500 DM, für jedes Hotel 2000 DM";
+    final String text = "Lass alle deine Haeuser renovieren. Zahle an die Bank, fuer jedes Haus 500 DM, fuer jedes Hotel 2000 DM";
 
     public Ereigniskarte12() {
 
@@ -15,7 +15,7 @@ public class Ereigniskarte12 extends Karte{
     @Override
     public void effect() {
 //        Verwalter.getInstance().getCurSpieler().addGeld(-3000);
-//        TODO Zahle an die Bank, für jedes Haus 500 DM, für jedes Hotel 2000 DM
+//        TODO Zahle an die Bank, fuer jedes Haus 500 DM, fuer jedes Hotel 2000 DM
     	
     	//Warum wird diese Variable nicht genutzt ? Fabian
     	int anzahlHaeuser = Verwalter.getInstance().getAlleHaeuser(Verwalter.getInstance().getCurSpieler());

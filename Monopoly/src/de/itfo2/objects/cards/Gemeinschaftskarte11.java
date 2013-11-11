@@ -18,7 +18,7 @@ public class Gemeinschaftskarte11 extends Karte{
         if(t == true){
         	Verwalter.getInstance().getCurSpieler().addGeld(-200);
         }else{
-        	//TODO Ereigniskarte auslösen
+        	//TODO Ereigniskarte ausloesen
         }
         
         System.out.println(text);

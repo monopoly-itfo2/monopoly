@@ -7,7 +7,7 @@ import de.itfo2.event.listeners.WuerfelEventListener;
 import de.itfo2.network.Connector;
 
 /**
- * Der Eventbus verarbeitet die Events der Spieler und bietet die Möglichkeiten
+ * Der Eventbus verarbeitet die Events der Spieler und bietet die Moeglichkeiten
  * ein Event zu setzen ({@link sinkClientEvent()}) und auf Events zu warten (
  * {@link add...Listener()}).
  * 
@@ -41,7 +41,7 @@ public final class EventBus {
 	}
 
 	
-	// WürfelEvent
+	// WuerfelEvent
 	private void triggerWuerfelEvent(WuerfelEvent event) {
 		for (int i = 0; i < listerners_wuerfel.size(); i++) {
 			listerners_wuerfel.get(i).onEvent(event);

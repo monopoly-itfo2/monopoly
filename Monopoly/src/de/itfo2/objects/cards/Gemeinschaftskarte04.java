@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte04 extends Karte{
 
-    final String text = "Einkommenssteuer-Rückzahlung. Ziehe 400 DM ein";
+    final String text = "Einkommenssteuer-Rueckzahlung. Ziehe 400 DM ein";
 
     public Gemeinschaftskarte04() {
 

@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte06 extends Karte{
 
-    final String text = "Aus Lagerverkäufen erhälst du 100 DM";
+    final String text = "Aus Lagerverkaeufen erhaelst du 100 DM";
 
     public Gemeinschaftskarte06() {
 

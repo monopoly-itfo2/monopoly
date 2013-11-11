@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte06 extends Karte{
 
-    final String text = "Mache einen Ausflug zu dem Westbahnhof, wenn du über LOS kommst, ziehe 4000 DM ein";
+    final String text = "Mache einen Ausflug zu dem Westbahnhof, wenn du ueber LOS kommst, ziehe 4000 DM ein";
 
     public Ereigniskarte06() {
 

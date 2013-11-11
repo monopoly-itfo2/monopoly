@@ -26,7 +26,7 @@ public class NetworkTest {
 		bus.addWuerfelEventListener(new WuerfelEventListener() {
 			@Override
 			public void onEvent(WuerfelEvent event) {
-				System.out.println(event.getPlayer() + " würfelt " + event.getValue() + "\n");
+				System.out.println(event.getPlayer() + " wuerfelt " + event.getValue() + "\n");
 			}
 		});
 

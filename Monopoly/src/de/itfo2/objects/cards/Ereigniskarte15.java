@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte15 extends Karte{
 
-    final String text = "Gehe 3 Felder zurück";
+    final String text = "Gehe 3 Felder zurueck";
 
     public Ereigniskarte15() {
 

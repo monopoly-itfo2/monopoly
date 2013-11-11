@@ -5,7 +5,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte07 extends Karte{
 
-    final String text = "Du kommst aus dem Gef‰ngnis frei. Diese Karte kann verkauft werden";
+    final String text = "Du kommst aus dem Gefaengnis frei. Diese Karte kann verkauft werden";
 
     public Gemeinschaftskarte07() {
 
@@ -14,7 +14,7 @@ public class Gemeinschaftskarte07 extends Karte{
     @Override
     public void effect() {
         MonopolyGUI.getInstance().createPopupDialog(getText()); //Hiermit erstellt man diese tollen Popups zum Best√§tigen.
-       // TODO Gef‰ngnisfreikarte
+       // TODO Gefaengnisfreikarte
 //        Verwalter.getInstance().getCurSpieler().setPlatz(11); 
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);

@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte08 extends Karte{
 
-    final String text = "Miete und Anleihezinsen werden fällig. Zahle der Bank 3000 DM";
+    final String text = "Miete und Anleihezinsen werden faellig. Zahle der Bank 3000 DM";
 
     public Ereigniskarte08() {
 

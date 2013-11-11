@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte07 extends Karte{
 
-    final String text = "Du hast in einem Kreutzworträtselwettbewerb gewonnen. Ziehe 2000 DM ein";
+    final String text = "Du hast in einem Kreutzwortraetselwettbewerb gewonnen. Ziehe 2000 DM ein";
 
     public Ereigniskarte07() {
 

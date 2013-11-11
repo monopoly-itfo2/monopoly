@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte08 extends Karte{
 
-    final String text = "Gehe in das Gefängnis. Begib dich direkt dorthin, gehe nicht über LOS, ziehe nicht 4000 DM ein";
+    final String text = "Gehe in das Gefaengnis. Begib dich direkt dorthin, gehe nicht ueber LOS, ziehe nicht 4000 DM ein";
 
     public Gemeinschaftskarte08() {
 

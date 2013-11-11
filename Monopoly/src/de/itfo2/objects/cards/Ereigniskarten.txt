@@ -1,16 +1,16 @@
 - Die Bank zahlt dir eine Dividende von 1000 DM
-- Du kommst aus dem Gefängnis frei. Diese Karte kann verkauft werden
-- Rücke vor bis auf LOS
-- Gehe in das Gefängnis, gehe direkt dorthin, gehe nicht über LOS. Ziehe nicht 4000 DM ein
-- Rücke vor bis zur Seestrasse. Wenn du über LOS kommst, ziehe 4000 DM ein
-- Mache einen Ausflug zu dem Westbahnhof, wenn du über LOS kommst, ziehe 4000 DM ein
-- Du hast in einem Kreutzworträtselwettbewerb gewonnen. Ziehe 2000 DM ein
-- Miete und Anleihezinsen werden fällig. Die Bank zahlt dir 3000 DM
-- Strafe für zu schnelles fahren, 300 DM
+- Du kommst aus dem Gefaengnis frei. Diese Karte kann verkauft werden
+- Ruecke vor bis auf LOS
+- Gehe in das Gefaengnis, gehe direkt dorthin, gehe nicht ueber LOS. Ziehe nicht 4000 DM ein
+- Ruecke vor bis zur Seestrasse. Wenn du ueber LOS kommst, ziehe 4000 DM ein
+- Mache einen Ausflug zu dem Westbahnhof, wenn du ueber LOS kommst, ziehe 4000 DM ein
+- Du hast in einem Kreutzwortraetselwettbewerb gewonnen. Ziehe 2000 DM ein
+- Miete und Anleihezinsen werden faellig. Die Bank zahlt dir 3000 DM
+- Strafe fuer zu schnelles fahren, 300 DM
 - Betrunken im Dienst, zahle 400 DM Strafe
 - Zahle Schulgeld, 3000 DM
-- Lass alle deine Häuser renovieren. Zahle an die Bank, für jedes Haus 500 DM, für jedes Hotel 2000 DM
-- Du wirst zu Strassenausbesserungsarbeiten herangezogen. Zahle für deine Häuser und Hotels DM 800 pro Haus und DM 2300 je Hotel
-- Rücke vor bis zum Opernplatz, wenn du über LOS kommst, ziehe DM 4000 ein
-- Gehe 3 Felder zurück
-- Rücke vor bis zur Schlossallee
+- Lass alle deine Haeuser renovieren. Zahle an die Bank, fuer jedes Haus 500 DM, fuer jedes Hotel 2000 DM
+- Du wirst zu Strassenausbesserungsarbeiten herangezogen. Zahle fuer deine Haeuser und Hotels DM 800 pro Haus und DM 2300 je Hotel
+- Ruecke vor bis zum Opernplatz, wenn du ueber LOS kommst, ziehe DM 4000 ein
+- Gehe 3 Felder zurueck
+- Ruecke vor bis zur Schlossallee

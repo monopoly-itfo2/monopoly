@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte05 extends Karte{
 
-    final String text = "Rücke vor bis zur Seestrasse. Wenn du über LOS kommst, ziehe 4000 DM ein";
+    final String text = "Ruecke vor bis zur Seestrasse. Wenn du ueber LOS kommst, ziehe 4000 DM ein";
 
     public Ereigniskarte05() {
 

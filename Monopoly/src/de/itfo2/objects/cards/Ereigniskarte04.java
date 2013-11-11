@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte04 extends Karte{
 
-    final String text = "Gehe in das Gefängnis, gehe direkt dorthin, gehe nicht über LOS. Ziehe nicht 4000 DM ein";
+    final String text = "Gehe in das Gefaengnis, gehe direkt dorthin, gehe nicht ueber LOS. Ziehe nicht 4000 DM ein";
 
     public Ereigniskarte04() {
 

@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte09 extends Karte{
 
-    final String text = "Strafe für zu schnelles fahren, 300 DM";
+    final String text = "Strafe fuer zu schnelles fahren, 300 DM";
 
     public Ereigniskarte09() {
 

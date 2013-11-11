@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte03 extends Karte{
 
-    final String text = "Du erhälst aus Vorzugsaktien 7% Dividende -  500 DM";
+    final String text = "Du erhaelst aus Vorzugsaktien 7% Dividende -  500 DM";
 
     public Gemeinschaftskarte03() {
 

@@ -1,13 +1,13 @@
-- Die Jahresrente wird fällig. Zihe 2000 DM ein
+- Die Jahresrente wird faellig. Zihe 2000 DM ein
 - Du erbst 2000 DM
-- Du erhälst aus Vorzugsaktien 7% Dividende -  500 DM
-- Einkommenssteuer-Rückzahlung. Ziehe 400 DM ein
-- Du hast den 2. Platz in einem Schönheitswettbewerb gewonnen. Ziehe 200 DM ein
-- Aus Lagerverkäufen erhälst du 100 DM
-- Du kommst aus dem Gefängnis frei. Diese Karte kann verkauft werden
-- Gehe in das Gefängnis. Begib dich direkt dorthin, gehe nicht über LOS, ziehe nicht 4000 DM ein
-- Gehe zurück nach der Badstrasse
-- Rücke vor bis auf LOS
+- Du erhaelst aus Vorzugsaktien 7% Dividende -  500 DM
+- Einkommenssteuer-Rueckzahlung. Ziehe 400 DM ein
+- Du hast den 2. Platz in einem Schoenheitswettbewerb gewonnen. Ziehe 200 DM ein
+- Aus Lagerverkaeufen erhaelst du 100 DM
+- Du kommst aus dem Gefaengnis frei. Diese Karte kann verkauft werden
+- Gehe in das Gefaengnis. Begib dich direkt dorthin, gehe nicht ueber LOS, ziehe nicht 4000 DM ein
+- Gehe zurueck nach der Badstrasse
+- Ruecke vor bis auf LOS
 - Zahle eine Strafe von 200 DM oder nimm eine Ereigniskarte
 - Zahle an das Krankenhaus 2000 DM
 - Zahle deine Versicherungssumme 1000 DM

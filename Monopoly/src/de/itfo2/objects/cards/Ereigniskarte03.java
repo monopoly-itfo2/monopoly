@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte03 extends Karte{
 
-    final String text = "Rücke vor bis auf LOS";
+    final String text = "Ruecke vor bis auf LOS";
 
     public Ereigniskarte03() {
 
@@ -14,7 +14,7 @@ public class Ereigniskarte03 extends Karte{
 
     @Override
     public void effect() {
-       // TODO Gefängnisfreikarte
+       // TODO Gefaengnisfreikarte
         Verwalter.getInstance().getCurSpieler().setPlatz(0); 
         MonopolyGUI.getInstance().rueckeAuf(0);
         System.out.println(text);
