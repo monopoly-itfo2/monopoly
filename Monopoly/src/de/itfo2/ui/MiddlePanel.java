@@ -1,21 +1,17 @@
 package de.itfo2.ui;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import de.itfo2.util.ButtonCreator;
 
-@SuppressWarnings("serial")
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.IOException;
+
 public class MiddlePanel extends JPanel {
 
     private JButton rollDiceButton, startButton, nextButton;
@@ -25,22 +21,18 @@ public class MiddlePanel extends JPanel {
     private StatusPanel[] statuspanel = new StatusPanel[4];
     private ChatPanel chatpanel;
 
-    public MiddlePanel() {
+    public MiddlePanel() throws IOException {
         setLayout(new GridBagLayout());
         setBackground(Color.WHITE);
         c = new GridBagConstraints();
         setPreferredSize(new Dimension(720, 720));
 
-        try {
-			build();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        build();
     }
 
     public void build() throws IOException {
 
-        final MiddlePanel mp = this; //Warum wird diese Variable nicht genutzt ? Fabian
+        final MiddlePanel mp = this;
 
         c.gridx = 3;
         c.gridy = 0;

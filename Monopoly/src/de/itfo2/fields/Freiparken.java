@@ -1,9 +1,10 @@
 package de.itfo2.fields;
 
-import java.util.Observable;
-
 import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
+
+import java.io.IOException;
+import java.util.Observable;
 
 public class Freiparken extends Observable implements Feld{
 
@@ -30,18 +31,22 @@ public class Freiparken extends Observable implements Feld{
 
     public void setSumme(int summe) {
         this.geldImPott = summe;
+        setChanged();
+        notifyObservers();
     }
 
     public void addMoney(int money){
         this.geldImPott += money;
+        setChanged();
         notifyObservers();
     }
 
 	@Override
 	public void handleFieldEffect() {
-		MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() + " erhält " + geldImPott + "€");
-		Verwalter.getInstance().getCurSpieler().addGeld(geldImPott);
-		geldImPott = 0;
-		notifyObservers();
-	}
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() + " erhält " + geldImPott + "€");
+        Verwalter.getInstance().getCurSpieler().addGeld(geldImPott);
+        geldImPott = 0;
+        notifyObservers();
+        setChanged();
+    }
 }

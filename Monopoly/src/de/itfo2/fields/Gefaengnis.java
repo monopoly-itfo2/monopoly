@@ -2,6 +2,8 @@ package de.itfo2.fields;
 
 import de.itfo2.objects.Verwalter;
 
+import java.io.IOException;
+
 public class Gefaengnis implements Feld
 {
 	String bezeichnung;
@@ -23,9 +25,9 @@ public class Gefaengnis implements Feld
 
 	@Override
 	public void handleFieldEffect() {
-		Verwalter.getInstance().getCurSpieler().setImGefaengnis(true);
-		Verwalter.getInstance().getCurSpieler().setPlatz(10);
-		
-	}
+        Verwalter.getInstance().getCurSpieler().setImGefaengnis(true);
+        Verwalter.getInstance().getCurSpieler().setPlatz(10);
+
+    }
 
 }

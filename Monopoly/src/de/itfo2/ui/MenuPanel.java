@@ -1,7 +1,10 @@
 package de.itfo2.ui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -14,13 +17,15 @@ import javax.swing.JPanel;
 
 import de.itfo2.fields.Grundstueck;
 import de.itfo2.fields.Strasse;
+import de.itfo2.objects.Spieler;
+import de.itfo2.objects.Verwalter;
+import de.itfo2.util.DialogCreator;
 
-@SuppressWarnings("serial")
 public class MenuPanel extends JPanel implements MouseListener{
 
-    private JButton bBuy, bBuild;
+    private JButton bBuy, bBuild, bHypothek;
     private GUIFeld parent;
-    private boolean haus; 
+    private boolean haus;
     public MenuPanel(GUIFeld feld, boolean haus) throws IOException {
         parent = feld;
         this.haus = haus;
@@ -32,41 +37,14 @@ public class MenuPanel extends JPanel implements MouseListener{
 
         BufferedImage img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/geldscheinTransparent.jpg"));
         ImageIcon icon = new ImageIcon(img);
-        bBuy = new JButton(icon){
-            @Override
-            public boolean isVisible(){
-                Grundstueck gr = (Grundstueck) parent.getFeld();
-                return gr.getBesitzer()==null ? true : false;
-            }
-        };
+        bBuy = new JButton(icon);
+        bBuy.setVisible(false);
+        bBuy.setEnabled(false);
         bBuy.setSize(icon.getIconWidth(), icon.getIconHeight());
         bBuy.setMargin(new java.awt.Insets(0, 0, 0, 0));
         bBuy.setOpaque(false);
         bBuy.addMouseListener(this);
-        /*
-        bBuy.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                        Grundstueck gr = (Grundstueck) parent.getFeld();
-                        Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
-                        if(gr != null)
-                        {
-                            if(curSpieler.getKonto()>=gr.getPreis() && gr.getBesitzer() == null)
-                            {
-                                curSpieler.addGeld(-gr.getPreis());
-                                gr.setBesitzer(curSpieler);
-                                parent.setBackgroundImage(ColorChanger.changeColor((BufferedImage) parent.getImage(), Color.WHITE, curSpieler.getColor()));
-                            }
-                            else{
-                                DialogCreator.createOKDialog("Geh arbeiten Junge!", parent);
-                            }
-                        }
-                    } catch (IOException exception) {
-                }
-            }
-        });
-        */
+
         img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/geldschein_hover.jpg"));
         icon = new ImageIcon(img);
         bBuy.setPressedIcon(icon);
@@ -79,7 +57,24 @@ public class MenuPanel extends JPanel implements MouseListener{
             public boolean isVisible(){
                 if(parent.getFeld() instanceof Strasse){
                     Strasse st = (Strasse) parent.getFeld();
-                    return st.getMietePointer()==6 ? false : true;
+                    if(st.isAlleFarben() && st.getMietePointer()!=6)
+                        return true;
+                    else{
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }
+            @Override
+            public boolean isEnabled(){
+                if(parent.getFeld() instanceof Strasse){
+                    Strasse st = (Strasse) parent.getFeld();
+                    if(st.isAlleFarben() && st.getMietePointer()!=6)
+                        return true;
+                    else{
+                        return false;
+                    }
                 }else{
                     return false;
                 }
@@ -92,9 +87,21 @@ public class MenuPanel extends JPanel implements MouseListener{
         icon = new ImageIcon(img);
         bBuild.setPressedIcon(icon);
 
-        if(this.haus){
+        img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/hypothekButton.png"));
+        icon = new ImageIcon(img);
+        bHypothek = new JButton(icon);
+        bHypothek.setSize(icon.getIconWidth(), icon.getIconHeight());
+        bHypothek.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        bHypothek.addMouseListener(this);
+        img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/hypothekButton_hover.png"));
+        icon = new ImageIcon(img);
+        bHypothek.setPressedIcon(icon);
+        bHypothek.setEnabled(false);
+        bHypothek.setVisible(false);
+        add(bHypothek);
+
+        if(haus)
             add(bBuild);
-        }
     }
 
     @Override
@@ -128,5 +135,9 @@ public class MenuPanel extends JPanel implements MouseListener{
 
     public JButton getbBuild() {
         return bBuild;
+    }
+
+    public JButton getbHypothek() {
+        return bHypothek;
     }
 }

@@ -1,11 +1,18 @@
 package de.itfo2.ui;
 
-import java.awt.event.ActionListener;
-
+import de.itfo2.fields.Grundstueck;
+import de.itfo2.objects.InitSpielfeld;
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Spielfeld;
 import de.itfo2.objects.Verwalter;
 import de.itfo2.util.DialogCreator;
+import de.itfo2.util.GuiFeldMouseListener;
+import de.itfo2.util.HypothekenListener;
+
+import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
+import java.io.IOException;
 
 public class MonopolyGUI implements MonopolyGUIInterface {
 
@@ -16,11 +23,11 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 
     }
 
-    public void setSpielfeld(Spielfeld spielfeld) {
+    public void setSpielfeld(Spielfeld spielfeld){
         this.spielfeld = new GUISpielfeld(spielfeld);
     }
 
-    public static MonopolyGUI getInstance() {
+    public static MonopolyGUI getInstance(){
         if(instance == null){
             instance = new MonopolyGUI();
         }
@@ -28,42 +35,76 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     }
 
     @Override
-    public void rueckeVor(int anzahl) {
+    public void rueckeVor(int anzahl){
         Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
         spielfeld.setSpielerVisible(curSpieler.getPlatz(), Verwalter.getInstance().getSpielerAmZug(), false);
         spielfeld.setSpielerVisible(curSpieler.getPlatz()+anzahl, Verwalter.getInstance().getSpielerAmZug(), true);
         if(spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel()!=null){
-            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().setVisible(false);
-            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().setEnabled(false);
+            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setVisible(false);
+            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setEnabled(false);
         }
         if(spielfeld.getFeld(curSpieler.getPlatz()+anzahl).getMenuPanel()!=null){
-            spielfeld.getFeld(curSpieler.getPlatz()+anzahl).getMenuPanel().setVisible(true);
-            spielfeld.getFeld(curSpieler.getPlatz()+anzahl).getMenuPanel().setEnabled(true);
+            Grundstueck gr = (Grundstueck)spielfeld.getFeld(curSpieler.getPlatz()+anzahl).getFeld();
+            if(gr.getBesitzer()==null){
+                spielfeld.getFeld(curSpieler.getPlatz()+anzahl).getMenuPanel().getbBuy().setVisible(true);
+                spielfeld.getFeld(curSpieler.getPlatz()+anzahl).getMenuPanel().getbBuy().setEnabled(true);
+            }
         }
     }
 
     @Override
-    public void rueckeAuf(int platz) {
+    public void rueckeAuf(int platz){
         Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
         spielfeld.setSpielerVisible(curSpieler.getPlatz(), Verwalter.getInstance().getSpielerAmZug(), false);
         spielfeld.setSpielerVisible(platz, Verwalter.getInstance().getSpielerAmZug(), true);
         if(spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel()!=null){
-            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().setVisible(false);
-            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().setEnabled(false);
+            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setVisible(false);
+            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setEnabled(false);
         }
         if(spielfeld.getFeld(platz).getMenuPanel()!=null){
-            spielfeld.getFeld(platz).getMenuPanel().setVisible(true);
-            spielfeld.getFeld(platz).getMenuPanel().setEnabled(true);
+            Grundstueck gr = (Grundstueck)spielfeld.getFeld(platz).getFeld();
+            if(gr.getBesitzer()==null){
+                spielfeld.getFeld(platz).getMenuPanel().getbBuy().setVisible(true);
+                spielfeld.getFeld(platz).getMenuPanel().getbBuy().setEnabled(true);
+            }
         }
     }
 
-    public void naechsterSpieler() {
+    public void naechsterSpieler(){
         Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
         if(spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel()!=null){
-            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().setVisible(false);
-            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().setEnabled(false);
+            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setVisible(false);
+            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setEnabled(false);
         }
         setNextButtonEnabled(false);
+    }
+
+    public void updateHypothekButtons(){
+        for(int i=0;i<spielfeld.getFelder().size();i++){
+            if(spielfeld.getFelder().get(i).getMenuPanel()!=null) {
+                Grundstueck gr = (Grundstueck) spielfeld.getFelder().get(i).getFeld();
+                if(gr.getBesitzer() != null){
+                    if(gr.getBesitzer().equals(Verwalter.getInstance().getCurSpieler()))
+                    {
+                        if(gr.isBelastet()){
+                            spielfeld.getFelder().get(i).getMenuPanel().getbHypothek().setVisible(true);
+                            spielfeld.getFelder().get(i).getMenuPanel().getbHypothek().setEnabled(true);
+                        }
+                        else{
+                            spielfeld.getFelder().get(i).getMenuPanel().getbHypothek().setVisible(false);
+                            spielfeld.getFelder().get(i).getMenuPanel().getbHypothek().setEnabled(false);
+                        }
+                    }else{
+                        spielfeld.getFelder().get(i).getMenuPanel().getbHypothek().setVisible(false);
+                        spielfeld.getFelder().get(i).getMenuPanel().getbHypothek().setEnabled(false);
+                    }
+                }
+                else{
+                    spielfeld.getFelder().get(i).getMenuPanel().getbHypothek().setVisible(false);
+                    spielfeld.getFelder().get(i).getMenuPanel().getbHypothek().setEnabled(false);
+                }
+            }
+        }
     }
 
     @Override
@@ -77,7 +118,7 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     }
 
     @Override
-    public void addSpieler(int pos, Spieler spieler) {
+    public void addSpieler(int pos, Spieler spieler){
         spielfeld.addSpieler(pos, spieler);
     }
 
@@ -109,9 +150,15 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     public void setGemeinschaftskartenButtonActionListener(ActionListener listener){
         spielfeld.getMiddlePanel().getGemeinschaftskartenButton().addActionListener(listener);
     }
+    public void setGemeinschaftskartenButtonEnabled(boolean enabled){
+        spielfeld.getMiddlePanel().getGemeinschaftskartenButton().setEnabled(enabled);
+    }
 
     public void setEreigniskartenButtonActionListener(ActionListener listener){
         spielfeld.getMiddlePanel().getEreigniskartenButton().addActionListener(listener);
+    }
+    public void setEreigniskartenButtonEnabled(boolean enabled){
+        spielfeld.getMiddlePanel().getEreigniskartenButton().setEnabled(enabled);
     }
 
     public void setBuyButtonActionListener(ActionListener listener){
@@ -128,6 +175,24 @@ public class MonopolyGUI implements MonopolyGUIInterface {
         }
     }
 
+    public void setHypothekButtonActionListener(){
+        for(int i=0;i<spielfeld.getFelder().size();i++){
+            if(spielfeld.getFelder().get(i).getMenuPanel()!=null)
+                spielfeld.getFelder().get(i).getMenuPanel().getbHypothek().addActionListener(new HypothekenListener(spielfeld.getFelder().get(i)));
+        }
+    }
+
+    public void setGrundstueckMouseListener(){
+        for(int i=0;i<spielfeld.getFelder().size();i++){
+            if(spielfeld.getFelder().get(i).getFeld() instanceof Grundstueck)
+                spielfeld.getFelder().get(i).addMouseListener(new GuiFeldMouseListener(spielfeld.getFelder().get(i)));
+        }
+    }
+
+    public void setGUIFeldHypothek(int pos, boolean visible){
+        spielfeld.getFelder().get(pos).getLabelHypothek().setVisible(visible);
+    }
+
     public void kaufeFeld(){
         spielfeld.getFelder().get(Verwalter.getInstance().getCurSpieler().getPlatz()).faerbeFeld(Verwalter.getInstance().getCurSpieler().getColor());
     }
@@ -142,6 +207,10 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 
     public void createPopupDialog(String text){
         DialogCreator.createOKDialog(text, spielfeld);
+    }
+
+    public int createPopupChoiceDialog(String text){
+        return DialogCreator.createChoiceDialog(text, spielfeld);
     }
 
     public void addLogMessage(String text){

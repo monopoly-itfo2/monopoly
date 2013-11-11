@@ -1,9 +1,11 @@
 package de.itfo2.fields;
 
-public interface Feld 
+import java.io.IOException;
+
+public interface Feld
 {
 	String getBezeichnung();
 	void setBezeichnung(String bezeichnung);
-	void handleFieldEffect();
+	void handleFieldEffect() throws IOException;
 
 }

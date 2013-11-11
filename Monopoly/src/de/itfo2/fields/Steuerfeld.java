@@ -3,6 +3,8 @@ package de.itfo2.fields;
 import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
 
+import java.io.IOException;
+
 public class Steuerfeld implements Feld
 {
 	String bezeichnung;
@@ -35,13 +37,14 @@ public class Steuerfeld implements Feld
 
 	@Override
 	public void handleFieldEffect() {
-        Verwalter verwalter = Verwalter.getInstance();
+        Verwalter verwalter = null;
+        verwalter = Verwalter.getInstance();
         if(verwalter.getCurSpieler().getKonto() >= zuZahlen){
             verwalter.getCurSpieler().addGeld(-zuZahlen);
             verwalter.getSpielfeld().addFreiParkenGeld(zuZahlen);
             MonopolyGUI gui = null;
             gui = MonopolyGUI.getInstance();
-            gui.addLogMessage(verwalter.getCurSpieler().getName() + "zahlte " + zuZahlen + "€ Steuer");
+            gui.addLogMessage(verwalter.getCurSpieler().getName() + " zahlte " + zuZahlen + "€ Steuern");
         }else{
             //Hypothek?
         }

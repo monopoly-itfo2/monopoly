@@ -1,15 +1,18 @@
 package de.itfo2.ui;
 
-import java.awt.Dimension;
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
+import java.awt.geom.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ImageObserver;
+import java.awt.image.RenderedImage;
+import java.awt.image.renderable.RenderableImage;
+import java.text.AttributedCharacterIterator;
+import java.util.Map;
 
-import javax.swing.Icon;
-import javax.swing.JButton;
-
-@SuppressWarnings("serial")
 public class CardButton extends JButton {
 
     private Area shape;

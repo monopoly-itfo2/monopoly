@@ -1,8 +1,6 @@
 package de.itfo2.ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -18,33 +16,33 @@ import de.itfo2.fields.Feld;
 import de.itfo2.fields.Freiparken;
 import de.itfo2.fields.Grundstueck;
 import de.itfo2.fields.Strasse;
+import de.itfo2.objects.Spieler;
+import de.itfo2.objects.Verwalter;
 
-@SuppressWarnings("serial")
-public class GUIFeld extends PicturePanel implements MouseListener, Observer {
+public class GUIFeld extends PicturePanel implements Observer {
 
     private JLabel labelName;
     private JLabel labelPreis;
+    private JLabel labelHypothek;
     private MenuPanel menuPanel;
     private int gebaut = 0;
     private JLabel [] labelHaus = new JLabel[5];
     private JLabel [] figuren = new JLabel[4];
     private Feld feld;
 
-    public GUIFeld(Feld feld, BufferedImage image) {
-        addMouseListener(this);
+    public GUIFeld(Feld feld, BufferedImage image) throws IOException {
         setBackgroundImage(image);
         this.setLayout(null);
         this.feld = feld;
         //setSize(image.getWidth(this), image.getHeight(this));
-        try {
-			init();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        init();
         setPreferredSize(new Dimension(90, 90));
     }
 
+
+
     public void init() throws IOException {
+
         BufferedImage img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/hausTransparent.jpg"));
         ImageIcon icon = new ImageIcon(img);
         labelHaus[0] = new JLabel(icon);
@@ -67,11 +65,18 @@ public class GUIFeld extends PicturePanel implements MouseListener, Observer {
         this.add(labelHaus[3], 2);
         labelHaus[3].setVisible(false);
 
+        img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/hotelTransparent.jpg"));
         icon = new ImageIcon(img);
         labelHaus[4] = new JLabel(icon);
         labelHaus[4].setBounds(3, 3, 18, 17);
         this.add(labelHaus[4], 2);
         labelHaus[4].setVisible(false);
+
+        img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/hypothek.png"));
+        labelHypothek = new JLabel(new ImageIcon(img));
+        labelHypothek.setBounds(25, 37, 40, 50);
+        this.add(labelHypothek, 1);
+        labelHypothek.setVisible(false);
 
         figuren[0] = new JLabel();
         BufferedImage image = null;
@@ -115,7 +120,7 @@ public class GUIFeld extends PicturePanel implements MouseListener, Observer {
 
         if(feld instanceof Grundstueck)
         {
-            labelPreis = new JLabel(((Grundstueck) feld).getPreis() + "€");
+            labelPreis = new JLabel(((Grundstueck) feld).getPreis() + "â‚¬");
             labelPreis.setBounds(0, 30, 90, 10);
             labelPreis.setOpaque(false);
             labelPreis.setFont(new Font("Calibri", 0, 10));
@@ -126,7 +131,7 @@ public class GUIFeld extends PicturePanel implements MouseListener, Observer {
             if(feld instanceof Strasse)
                 isStrasse = true;
             menuPanel = new MenuPanel(this, isStrasse);
-            menuPanel.setVisible(false);
+            //menuPanel.setVisible(false);
             menuPanel.setBounds(0, 60, 90, 30);
             this.add(menuPanel, 2);
         }
@@ -146,11 +151,18 @@ public class GUIFeld extends PicturePanel implements MouseListener, Observer {
             for(int i=0;i<=4;i++)
                 labelHaus[i].setVisible(!labelHaus[i].isVisible());
             gebaut++;
+            menuPanel.getbBuild().setEnabled(false);
+            menuPanel.getbBuild().setVisible(false);
+            labelHaus[gebaut].setVisible(true);
         }
         if(gebaut<=3){
             labelHaus[gebaut].setVisible(true);
             gebaut++;
         }
+    }
+
+    public JLabel getLabelHypothek() {
+        return labelHypothek;
     }
 
     public void setSpielerVisible(int pos, boolean visible){
@@ -159,37 +171,6 @@ public class GUIFeld extends PicturePanel implements MouseListener, Observer {
 
     public Feld getFeld(){
         return this.feld;
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        /*if(menuPanel!=null){
-            menuPanel.setVisible(true);
-        }*/
-        //this.setBackgroundImage(ColorChanger.changeColor((BufferedImage) getImage(), Color.WHITE, Color.YELLOW));
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        /*if(menuPanel!=null){
-            menuPanel.setVisible(false);
-        }*/
-        //this.setBackgroundImage(ColorChanger.changeColor((BufferedImage)getImage(), Color.YELLOW, Color.WHITE));
     }
 
     public MenuPanel getMenuPanel() {

@@ -25,6 +25,8 @@ public class Spieler extends Observable{
 	}
 
 	public void addPlatz(int anzahl) {
+        if((anzahl+platz)>=40)
+            addGeld(4000);
 		platz = (anzahl+platz)%40;
 	}
 
@@ -67,7 +69,7 @@ public class Spieler extends Observable{
 	}
 
 	public void setGefaengnisFrei(int gefaengnisFrei) {
-		this.gefaengnisFrei += gefaengnisFrei;
+		this.gefaengnisFrei = gefaengnisFrei;
 	}
 
 	public Color getColor() {

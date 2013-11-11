@@ -1,7 +1,9 @@
 package de.itfo2.fields;
-import java.awt.Color;
-
 import de.itfo2.objects.Spieler;
+import de.itfo2.objects.Verwalter;
+import de.itfo2.ui.MonopolyGUI;
+
+import java.awt.Color;
 
 
 public class Werk implements Grundstueck
@@ -9,11 +11,22 @@ public class Werk implements Grundstueck
 	String bezeichnung = null;
 	Spieler besitzer = null;
 	private int preis = 0;
-    private Color farbe = null; //Warum wird diese Variable nicht genutzt ? Fabian
+    private Color farbe = null;
+    boolean belastet;
 
     public Werk(String bezeichnung, int preis){
         this.bezeichnung = bezeichnung;
         this.preis = preis;
+    }
+
+    @Override
+    public void setBelastet(boolean belastet){
+        this.belastet = belastet;
+    }
+
+    @Override
+    public boolean isBelastet(){
+        return belastet;
     }
 
 	@Override
@@ -53,6 +66,29 @@ public class Werk implements Grundstueck
 	
 	@Override
 	public void handleFieldEffect() {
-	
+        Spieler curSpieler = null;
+        MonopolyGUI gui = null;
+        int inBesitz = Verwalter.getInstance().getSpielfeld().getBahnhofBesitz(curSpieler);
+        gui = MonopolyGUI.getInstance();
+        curSpieler = Verwalter.getInstance().getCurSpieler();
+
+        if(besitzer != null){
+            if(!isBelastet())
+            {
+                if(besitzer != curSpieler){
+                    //1. Fall - Spieler kann bezahlen
+                    if(curSpieler.getKonto() >= 200 * Verwalter.getInstance().getLastWuerfelZahl()){
+                        besitzer.addGeld(200 * Verwalter.getInstance().getLastWuerfelZahl());
+                        curSpieler.addGeld(-200 * Verwalter.getInstance().getLastWuerfelZahl());
+                        gui.addLogMessage(curSpieler.getName() + " hat blubb " + (Verwalter.getInstance().getLastWuerfelZahl()) + "€ bezahlt.");
+                    }
+                    else{
+                        //2. Fall - Spieler kann nicht bezahlen
+                        Verwalter.getInstance().setHypothekenauswahl(true, true);
+                        gui.addLogMessage("Bitte wähle ein Grundstück für eine Hypothek aus!");
+                    }
+                }
+            }
+        }
 	}
 }

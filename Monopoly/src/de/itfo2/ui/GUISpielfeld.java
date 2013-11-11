@@ -1,26 +1,17 @@
 package de.itfo2.ui;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import de.itfo2.fields.Freiparken;
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Spielfeld;
 
-@SuppressWarnings("serial")
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class GUISpielfeld extends JFrame implements MouseMotionListener{
 
     private JScrollPane scrollPane;
@@ -29,13 +20,13 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
     GridBagConstraints c;
     BufferedImage image;
     JLabel testlabel;
-    private boolean mouseIsPressed; //Warum wird diese Variable nicht genutzt ? Fabian
+    private boolean mouseIsPressed;
     int lastX, lastY;
     private static final float SCROLLSPEED = 1.2f;
     private Spielfeld spielfeld;
     ArrayList<GUIFeld> felder = new ArrayList<GUIFeld>();
 
-    public GUISpielfeld(Spielfeld spielfeld) {
+    public GUISpielfeld(Spielfeld spielfeld){
         this.spielfeld = spielfeld;
         scrollPane = new JScrollPane();
         setContentPane(scrollPane);
@@ -45,10 +36,10 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
         pane.setLayout(new GridBagLayout());
         c = new GridBagConstraints();
         try {
-			addPanels();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            addPanels();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         scrollPane.addMouseMotionListener(this);
         scrollPane.setViewportView(pane);
         pack();
@@ -56,7 +47,7 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private void addPanels() throws IOException{
+    private void addPanels() throws IOException {
         //von vorne nach hinten
 
         c.gridx = 10;
@@ -314,7 +305,7 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
         return spielfeld;
     }
 
-    public void addSpieler(int pos, Spieler spieler) {
+    public void addSpieler(int pos, Spieler spieler){
         setSpielerVisible(0, pos, true);
     }
 

@@ -2,6 +2,8 @@ package de.itfo2.fields;
 
 import de.itfo2.objects.Verwalter;
 
+import java.io.IOException;
+
 public class Los implements Feld
 {
 	String bezeichnung;
@@ -23,7 +25,7 @@ public class Los implements Feld
 
 	@Override
 	public void handleFieldEffect() {
-		Verwalter.getInstance().getCurSpieler().addGeld(4000);
-		
-	}
+        Verwalter.getInstance().getCurSpieler().addGeld(4000);
+
+    }
 }

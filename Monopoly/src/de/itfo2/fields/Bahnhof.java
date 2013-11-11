@@ -1,7 +1,10 @@
 package de.itfo2.fields;
 import de.itfo2.objects.Spieler;
+import de.itfo2.objects.Verwalter;
+import de.itfo2.ui.MonopolyGUI;
 
 import java.awt.Color;
+import java.io.IOException;
 
 
 public class Bahnhof implements Grundstueck
@@ -10,13 +13,23 @@ public class Bahnhof implements Grundstueck
 	Spieler besitzer = null;
 	private int preis = 0;
     private int miete = 0;
-
+    private boolean belastet;
     Color farbe = Color.black;
 
     public Bahnhof(String bezeichnung, int preis, int miete)
     {
         this.bezeichnung = bezeichnung;
         this.preis = preis;
+    }
+
+    @Override
+    public void setBelastet(boolean belastet){
+        this.belastet = belastet;
+    }
+
+    @Override
+    public boolean isBelastet(){
+        return belastet;
     }
 
 	@Override
@@ -63,7 +76,31 @@ public class Bahnhof implements Grundstueck
     }
 	
 	@Override
-	public void handleFieldEffect() {
-	
+	public void handleFieldEffect() throws IOException {
+        Spieler curSpieler = null;
+        MonopolyGUI gui = null;
+        int inBesitz = Verwalter.getInstance().getSpielfeld().getBahnhofBesitz(curSpieler);
+        gui = MonopolyGUI.getInstance();
+        curSpieler = Verwalter.getInstance().getCurSpieler();
+
+
+        if(besitzer != null){
+            if(!isBelastet())
+            {
+                if(besitzer != curSpieler){
+                    //1. Fall - Spieler kann bezahlen
+                    if(curSpieler.getKonto() >= miete * inBesitz){
+                        besitzer.addGeld(miete * inBesitz);
+                        curSpieler.addGeld(-miete * inBesitz);
+                        gui.addLogMessage(curSpieler.getName() + " hat blubb " + (miete*inBesitz) + "€ bezahlt.");
+                    }
+                    else{
+                        //2. Fall - Spieler kann nicht bezahlen
+                        Verwalter.getInstance().setHypothekenauswahl(true, true);
+                        gui.addLogMessage("Bitte wähle ein Grundstück für eine Hypothek aus!");
+                    }
+                }
+            }
+        }
 	}
 }

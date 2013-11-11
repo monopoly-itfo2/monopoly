@@ -1,9 +1,10 @@
 package de.itfo2.fields;
-import java.awt.Color;
-
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
+
+import java.awt.Color;
+import java.io.IOException;
 
 public class Strasse implements Grundstueck {
 	
@@ -16,6 +17,17 @@ public class Strasse implements Grundstueck {
     private int mietePointer = 0;
 	private boolean alleFarben = false;
 	private int hausKosten = 0;
+    private boolean belastet;
+
+    @Override
+    public void setBelastet(boolean belastet){
+        this.belastet = belastet;
+    }
+
+    @Override
+    public boolean isBelastet(){
+        return belastet;
+    }
 
 	@Override
 	public String getBezeichnung() {
@@ -87,31 +99,50 @@ public class Strasse implements Grundstueck {
 	public int getHypothek () {
 		return preis/2;
 	}
-	
-	public int getMietePointer() {
-        return mietePointer;
-    }
-	
-    public int getHausAnzahl() {
+
+    public int getMietePointer() {
         return mietePointer;
     }
 
     @Override
 	public void handleFieldEffect() {
 
-        Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
-        MonopolyGUI gui = MonopolyGUI.getInstance();
+        Spieler curSpieler = null;
+        MonopolyGUI gui = null;
+        gui = MonopolyGUI.getInstance();
+        curSpieler = Verwalter.getInstance().getCurSpieler();
+
 
         if(besitzer != null){
             if(besitzer != curSpieler){
-                //1. Fall - Spieler kann bezahlen
-                if(curSpieler.getKonto() >= miete[0]){
-                    besitzer.addGeld(miete[0]);
-                    curSpieler.addGeld(miete[0]);
-                    gui.addLogMessage(curSpieler.getName() + " hat blubb " + preis + "€ bezahlt.");
-                }
-                else{
-                    //2. Fall - Spieler kann nicht bezahlen
+                if(!isBelastet())
+                {
+                    //1. Fall - Spieler kann bezahlen
+                    if(mietePointer==0 && alleFarben){
+                        if(curSpieler.getKonto() >= miete[mietePointer]*2){
+                            besitzer.addGeld(miete[mietePointer]*2);
+                            curSpieler.addGeld(-miete[mietePointer]*2);
+                            gui.addLogMessage(curSpieler.getName() + " hat blubb " + miete[mietePointer]*2 + "€ bezahlt.");
+                        }
+                        else{
+                            //2. Fall - Spieler kann nicht bezahlen
+                            Verwalter.getInstance().setHypothekenauswahl(true, true);
+                            gui.addLogMessage("Bitte wähle ein Grundstück für eine Hypothek aus!");
+                        }
+                    } else{
+                        if(curSpieler.getKonto() >= miete[mietePointer]){
+                            besitzer.addGeld(miete[mietePointer]);
+                            curSpieler.addGeld(miete[mietePointer]);
+                            gui.addLogMessage(curSpieler.getName() + " hat blubb " + miete[mietePointer]*2 + "€ bezahlt.");
+                        }
+                        else{
+                            //2. Fall - Spieler kann nicht bezahlen
+                            Verwalter.getInstance().setHypothekenauswahl(true, true);
+                            gui.addLogMessage("Bitte wähle ein Grundstück für eine Hypothek aus!");
+                        }
+                    }
+
+                    //2. Fall - Spieler kann bezahlen
                 }
             }
         }

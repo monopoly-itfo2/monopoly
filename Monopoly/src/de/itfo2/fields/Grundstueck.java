@@ -9,4 +9,6 @@ public interface Grundstueck extends Feld
 	int getPreis();
 	void setPreis(int preis);
 	int getHypothek();
+    boolean isBelastet();
+    void setBelastet(boolean belastet);
 }

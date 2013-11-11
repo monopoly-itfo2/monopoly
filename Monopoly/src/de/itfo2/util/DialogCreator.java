@@ -29,4 +29,8 @@ public class DialogCreator {
         dialog.setLocation(parent.getX()+parent.getWidth()/2-dialog.getWidth()/2, parent.getY()+parent.getHeight()/2-dialog.getHeight()/2);
         dialog.setVisible(true);
     }
+
+    public static int createChoiceDialog(String text, Container parent){
+        return JOptionPane.showConfirmDialog(parent, text, "Hypothek aufnehmen?", JOptionPane.YES_NO_OPTION);
+    }
 }
