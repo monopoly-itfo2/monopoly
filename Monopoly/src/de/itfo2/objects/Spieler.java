@@ -1,9 +1,10 @@
 package de.itfo2.objects;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Observable;
 
-public class Spieler extends Observable{
+public class Spieler extends Observable implements Serializable{
 
 	private String name;
 	private int konto;
