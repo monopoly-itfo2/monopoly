@@ -80,7 +80,7 @@ public class Verwalter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Spieler spieler1 = new Spieler("Spieler 1", 5000, new Color(rnd.nextInt()));
+		Spieler spieler1 = new Spieler(name, 5000, new Color(rnd.nextInt()));
 		Connector.getInstance().login(spieler1);
 		
         spieler1.addObserver(gui.getStatusPanel(0));
@@ -94,11 +94,11 @@ public class Verwalter {
         liste = Connector.getInstance().getSpielerliste();
         for (Spieler s : liste) {
 			if(!s.equals(spieler1)){
-				Spieler spieler2 = s;
-				spieler2.addObserver(gui.getStatusPanel(1));
-				spieler.add(spieler2);
-				gui.addSpieler(1, spieler2);
-				gui.getStatusPanel(1).update(spieler2, null);
+				System.out.println("Spieler gefunden: " + s.getName());
+				s.addObserver(gui.getStatusPanel(1));
+				spieler.add(s);
+				gui.addSpieler(1, s);
+				gui.getStatusPanel(1).update(s, null);
 			}
 		}
 	}
