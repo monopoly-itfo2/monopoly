@@ -25,9 +25,7 @@ public class Gefaengnis implements Feld
 
 	@Override
 	public void handleFieldEffect() {
-        Verwalter.getInstance().getCurSpieler().setImGefaengnis(true);
-        Verwalter.getInstance().getCurSpieler().setPlatz(10);
-
+        //nichts
     }
 
 }

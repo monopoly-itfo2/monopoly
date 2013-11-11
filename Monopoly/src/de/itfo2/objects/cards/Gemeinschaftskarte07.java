@@ -1,6 +1,7 @@
 package de.itfo2.objects.cards;
 
 
+import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte07 extends Karte{
@@ -13,9 +14,7 @@ public class Gemeinschaftskarte07 extends Karte{
 
     @Override
     public void effect() {
-        MonopolyGUI.getInstance().createPopupDialog(getText()); //Hiermit erstellt man diese tollen Popups zum Bestätigen.
-       // TODO Gefaengnisfreikarte
-//        Verwalter.getInstance().getCurSpieler().setPlatz(11); 
+        Verwalter.getInstance().getCurSpieler().setGefaengnisFrei(1);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
     }

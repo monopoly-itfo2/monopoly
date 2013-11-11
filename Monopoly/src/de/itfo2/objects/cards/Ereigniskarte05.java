@@ -15,8 +15,9 @@ public class Ereigniskarte05 extends Karte{
     @Override
     public void effect() {
        // TODO LOS ziehe 4000 DM ein
-    	Verwalter.getInstance().getCurSpieler().addPlatz(Verwalter.getInstance().calculateToGo(11));
     	MonopolyGUI.getInstance().rueckeAuf(11);
+    	Verwalter.getInstance().getCurSpieler().addPlatz(Verwalter.getInstance().calculateToGo(11));
+    	
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
     }

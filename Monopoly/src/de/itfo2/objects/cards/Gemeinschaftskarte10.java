@@ -14,8 +14,9 @@ public class Gemeinschaftskarte10 extends Karte{
 
     @Override
     public void effect() {
-        MonopolyGUI.getInstance().createPopupDialog(getText()); //Hiermit erstellt man diese tollen Popups zum Bestätigen.
-        Verwalter.getInstance().getCurSpieler().setPlatz(0);
+    	MonopolyGUI.getInstance().rueckeAuf(0);
+        Verwalter.getInstance().getCurSpieler().setPlatz(0); 
+        
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
     }

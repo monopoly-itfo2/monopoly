@@ -14,7 +14,6 @@ public class Gemeinschaftskarte13 extends Karte{
 
     @Override
     public void effect() {
-        MonopolyGUI.getInstance().createPopupDialog(getText()); //Hiermit erstellt man diese tollen Popups zum Bestätigen.
         Verwalter.getInstance().getCurSpieler().addGeld(-1000);
 //        TODO Zahle an die Bank, fuer jedes Haus 800 DM, fuer jedes Hotel 2300 DM
         System.out.println(text);

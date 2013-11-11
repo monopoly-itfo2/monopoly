@@ -88,7 +88,7 @@ public class GUIFeld extends PicturePanel implements Observer {
         figuren[0].setVisible(false);
 
         figuren[1] = new JLabel();
-        image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur_yellow.png"));
+        image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur_red.png"));
         spielfigur = new ImageIcon(ColorChanger.changeColor(image, Color.WHITE, Color.getHSBColor(0.9f, 0.1f, 0.7f)));
         figuren[1].setIcon(spielfigur);
         figuren[1].setBounds(24, 40, 18, 17);

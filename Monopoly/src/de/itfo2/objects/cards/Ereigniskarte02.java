@@ -14,8 +14,6 @@ public class Ereigniskarte02 extends Karte{
 
     @Override
     public void effect() {
-        MonopolyGUI.getInstance().createPopupDialog(getText()); //Hiermit erstellt man diese tollen Popups zum Bestätigen.
-       // TODO Gefaengnisfreikarte
         Verwalter.getInstance().getCurSpieler().setGefaengnisFrei(1);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);

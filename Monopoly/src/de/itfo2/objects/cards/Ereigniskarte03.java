@@ -15,8 +15,9 @@ public class Ereigniskarte03 extends Karte{
     @Override
     public void effect() {
        // TODO Gefaengnisfreikarte
+    	MonopolyGUI.getInstance().rueckeAuf(0);
         Verwalter.getInstance().getCurSpieler().setPlatz(0); 
-        MonopolyGUI.getInstance().rueckeAuf(0);
+        
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
     }
