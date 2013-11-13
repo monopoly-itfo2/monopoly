@@ -1,9 +1,9 @@
 package de.itfo2.fields;
+import java.awt.Color;
+
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
-
-import java.awt.Color;
 
 
 public class Werk implements Grundstueck
@@ -85,7 +85,7 @@ public class Werk implements Grundstueck
                     else{
                         //2. Fall - Spieler kann nicht bezahlen
                         Verwalter.getInstance().setHypothekenauswahl(true, true);
-                        gui.addLogMessage("Bitte wähle ein Grundstück für eine Hypothek aus!");
+                        gui.addLogMessage("Bitte waehle ein Grundstueck fuer eine Hypothek aus!");
                     }
                 }
             }

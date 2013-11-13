@@ -1,13 +1,13 @@
 package de.itfo2.util;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import de.itfo2.fields.Grundstueck;
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.GUIFeld;
 import de.itfo2.ui.MonopolyGUI;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 public class HypothekenListener implements ActionListener {
@@ -25,7 +25,7 @@ public class HypothekenListener implements ActionListener {
         Grundstueck gr = (Grundstueck) guifeld.getFeld();
         if(spieler.getKonto() >= gr.getHypothek()+(gr.getHypothek()/10)){
             spieler.addGeld(-gr.getHypothek() + (gr.getHypothek() / 10));
-            gui.addLogMessage(spieler.getName() +" bezahlte die Hypothek für " + gr.getBezeichnung());
+            gui.addLogMessage(spieler.getName() +" bezahlte die Hypothek fuer " + gr.getBezeichnung());
             gr.setBelastet(false);
             guifeld.getMenuPanel().getbHypothek().setVisible(false);
             guifeld.getMenuPanel().getbHypothek().setEnabled(false);
