@@ -14,10 +14,9 @@ import java.io.IOException;
 
 public class MiddlePanel extends JPanel {
 
-    private JButton rollDiceButton, startButton, nextButton;
-    private CardButton gemeinschaftskartenButton, ereigniskartenButton;
+    private JButton rollDiceButton, startButton, nextButton, loginButton;
+	private CardButton gemeinschaftskartenButton, ereigniskartenButton;
     private GridBagConstraints c;
-
     private StatusPanel[] statuspanel = new StatusPanel[4];
     private ChatPanel chatpanel;
 
@@ -107,7 +106,7 @@ public class MiddlePanel extends JPanel {
         img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/startbutton.png"));
         icon = new ImageIcon(img);
         startButton = ButtonCreator.getIconButton(icon, icon, icon);
-        startButton.setHorizontalAlignment(JButton.CENTER);
+        startButton.setHorizontalAlignment(JButton.LEFT);
         this.add(startButton, c);
 
         c.gridx = 1;
@@ -119,6 +118,14 @@ public class MiddlePanel extends JPanel {
         img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/sanduhr_inactive.png"));
         nextButton.setDisabledIcon(new ImageIcon(img));
         this.add(nextButton, c);
+        
+        c.gridx = 2;
+        c.gridy = 0;
+        img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/loginbutton.png"));
+        icon = new ImageIcon(img);
+        loginButton = ButtonCreator.getIconButton(icon, icon, icon);
+        loginButton.setHorizontalAlignment(JButton.RIGHT);
+        this.add(loginButton, c);
 
         c.gridy = 1;
         c.gridx = 3;
@@ -171,6 +178,10 @@ public class MiddlePanel extends JPanel {
     public JButton getNextButton() {
         return nextButton;
     }
+    
+    public JButton getLoginButton() {
+		return loginButton;
+	}
 
     public CardButton getGemeinschaftskartenButton() {
         return gemeinschaftskartenButton;

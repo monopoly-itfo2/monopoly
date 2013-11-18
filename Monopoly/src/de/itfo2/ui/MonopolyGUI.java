@@ -10,9 +10,16 @@ import de.itfo2.util.GuiFeldMouseListener;
 import de.itfo2.util.HypothekenListener;
 
 import javax.swing.*;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class MonopolyGUI implements MonopolyGUIInterface {
 
@@ -146,6 +153,13 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     public void setNextButtonEnabled(boolean enabled){
         spielfeld.getMiddlePanel().getNextButton().setEnabled(enabled);
     }
+    
+    public void setLoginButtonActionListener(ActionListener listener){
+        spielfeld.getMiddlePanel().getLoginButton().addActionListener(listener);
+    }
+    public void setLoginButtonEnabled(boolean enabled){
+        spielfeld.getMiddlePanel().getLoginButton().setEnabled(enabled);
+    }
 
     public void setGemeinschaftskartenButtonActionListener(ActionListener listener){
         spielfeld.getMiddlePanel().getGemeinschaftskartenButton().addActionListener(listener);
@@ -215,5 +229,33 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 
     public void addLogMessage(String text){
         spielfeld.getMiddlePanel().getChatpanel().addUsermessage("Spiel: ", text);
+    }
+    
+    public void createLoginDialog(){
+    	JDialog dialog = new JDialog(spielfeld, "Login");
+    	dialog.setSize(new Dimension(300, 200));
+    	JTextField fieldName = new JTextField();
+    	fieldName.setSize(200, 30);
+    	
+    	JComboBox cbColor = new JComboBox();  
+    	cbColor.setSize(200, 30);
+    	cbColor.addItem(Color.GREEN);
+    	cbColor.addItem(Color.RED);
+    	
+    	JButton buttonLogin = new JButton("Login");
+    	buttonLogin.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//hier die Felder auswerten und was machen!
+				
+			}
+		});
+    	
+    	dialog.setLayout(new BorderLayout());
+    	dialog.add(fieldName, BorderLayout.NORTH);
+    	dialog.add(cbColor, BorderLayout.EAST);
+    	dialog.add(buttonLogin, BorderLayout.SOUTH);
+    	dialog.pack();
+    	dialog.setVisible(true);
     }
 }
