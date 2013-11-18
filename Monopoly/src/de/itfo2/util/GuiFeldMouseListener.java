@@ -1,14 +1,14 @@
 package de.itfo2.util;
 
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.IOException;
+
 import de.itfo2.fields.Grundstueck;
 import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.GUIFeld;
 import de.itfo2.ui.MonopolyGUI;
-
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.IOException;
 
 public class GuiFeldMouseListener implements MouseListener {
 
@@ -33,7 +33,7 @@ public class GuiFeldMouseListener implements MouseListener {
                                 //Miete zahlen
                                 if(((Grundstueck)(Verwalter.getInstance().getSpielfeld().getFeld(Verwalter.getInstance().getCurSpieler().getPlatz()))).getBesitzer().equals(Verwalter.getInstance().getCurSpieler())){
                                     Verwalter.getInstance().getSpielfeld().getFeld(Verwalter.getInstance().getCurSpieler().getPlatz()).handleFieldEffect();
-                                    MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getSpielfeld().getFeld(Verwalter.getInstance().getCurSpieler().getPlatz()).getBezeichnung() + " als Hyptothek gewählt (Wert: " + ((Grundstueck)(Verwalter.getInstance().getSpielfeld().getFeld(Verwalter.getInstance().getCurSpieler().getPlatz()))).getHypothek() + ")");
+                                    MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getSpielfeld().getFeld(Verwalter.getInstance().getCurSpieler().getPlatz()).getBezeichnung() + " als Hyptothek gewaehlt (Wert: " + ((Grundstueck)(Verwalter.getInstance().getSpielfeld().getFeld(Verwalter.getInstance().getCurSpieler().getPlatz()))).getHypothek() + ")");
                                 }
                                 //Steuern
                                 else if(!(Verwalter.getInstance().getSpielfeld().getFeld(Verwalter.getInstance().getCurSpieler().getPlatz()) instanceof Grundstueck)){
