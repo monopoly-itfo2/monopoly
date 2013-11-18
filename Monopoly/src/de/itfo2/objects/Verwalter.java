@@ -13,6 +13,9 @@ import java.util.Random;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import de.itfo2.event.EventBus;
+import de.itfo2.event.UpdateSpielerlisteEvent;
+import de.itfo2.event.listeners.UpdateSpielerlisteEventListener;
 import de.itfo2.fields.Ereignisfeld;
 import de.itfo2.fields.Gemeinschaftsfeld;
 import de.itfo2.fields.Grundstueck;
@@ -24,13 +27,14 @@ public class Verwalter {
 	private int wuerfelZahl;
 	public int pasch = 0;
 	public boolean spielAmLaufen = true;
-	public ArrayList<Spieler> spieler = new ArrayList<Spieler>();
+	public ArrayList<Spieler> spielerListe = new ArrayList<Spieler>();
 	private static Verwalter instance = null;
 	int spielerAmZug = -1;
 	Spielfeld spielfeld;
 	MonopolyGUI gui = MonopolyGUI.getInstance();
 	boolean gewuerfelt;
 	boolean hypothekenauswahl = false;
+	Spieler spieler;
 
 	// final EventBus bus = EventBus.getInstance();//temporary disabled
 
@@ -85,38 +89,37 @@ public class Verwalter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Spieler spieler1 = new Spieler(name, 5000, new Color(rnd.nextInt()));
+		final Spieler spieler1 = new Spieler(name, 5000, new Color(rnd.nextInt()));
 		Connector.getInstance().login(spieler1);
 
 		spieler1.addObserver(gui.getStatusPanel(0));
-		spieler.add(spieler1);
+		spielerListe.add(spieler1);
 		gui.addSpieler(0, spieler1);
 		gui.getStatusPanel(0).update(spieler1, null);
 
-		List<Spieler> liste = Connector.getInstance().getSpielerliste();
-		System.out.println(liste.size() + " Spieler eingeloggt");
-		while (Connector.getInstance().getSpielerliste().size() == liste.size()) {
-		}
-		System.out.println("Spielerliste aktualisiert");
-		liste = Connector.getInstance().getSpielerliste();
-		for (Spieler s : liste) {
-			if (!s.equals(spieler1)) {
-				System.out.println("Spieler gefunden: " + s.getName());
-				s.addObserver(gui.getStatusPanel(1));
-				spieler.add(s);
-				gui.addSpieler(1, s);
-				gui.getStatusPanel(1).update(s, null);
+		EventBus.getInstance().addUpdateSpielerlisteEventListener(new UpdateSpielerlisteEventListener() {
+			@Override
+			public void onEvent(UpdateSpielerlisteEvent event) {
+				List<Spieler> liste = Connector.getInstance().getSpielerliste();
+				for (Spieler s : liste) {
+					if (!s.equals(spieler1)) {
+						System.out.println("Spieler gefunden: " + s.getName());
+						s.addObserver(gui.getStatusPanel(1));
+						spielerListe.add(s);
+						gui.addSpieler(1, s);
+						gui.getStatusPanel(1).update(s, null);
+					}
+				}
 			}
-		}
-		
+		});
 	}
 
 	public Spieler getCurSpieler() {
-		return spieler.get(spielerAmZug);
+		return spielerListe.get(spielerAmZug);
 	}
 
 	public Spieler getNextSpieler() {
-		return spieler.get((spielerAmZug + 1) % getSpieleranzahl());
+		return spielerListe.get((spielerAmZug + 1) % getSpieleranzahl());
 	}
 
 	public int getSpielerAmZug() {
@@ -138,7 +141,7 @@ public class Verwalter {
 				if (pasch == 3) {// TODO spieler.get(spielerAmZug) ersetzen durh
 									// curSpieler am Anfang jeder "Schleife"
 					// geheInsGefaengnis
-					spieler.get(spielerAmZug).setImGefaengnis(true);
+					spielerListe.get(spielerAmZug).setImGefaengnis(true);
 					gui.geheInsGefaengnis(spielerAmZug);
 					pasch = 0;
 
@@ -146,11 +149,11 @@ public class Verwalter {
 
 					// Ziehen
 					gui.rueckeVor(wuerfelZahl);
-					spieler.get(spielerAmZug).addPlatz(wuerfelZahl);
+					spielerListe.get(spielerAmZug).addPlatz(wuerfelZahl);
 
 					// Feld behandeln
 
-					int actualPlayerPosition = spieler.get(spielerAmZug)
+					int actualPlayerPosition = spielerListe.get(spielerAmZug)
 							.getPlatz();
 
 					try {
@@ -321,7 +324,7 @@ public class Verwalter {
 	}
 
 	public int getSpieleranzahl() {
-		return spieler.size();
+		return spielerListe.size();
 	}
 
 	public Spielfeld getSpielfeld() {
