@@ -15,7 +15,6 @@ public class GeheGefaengnis implements Feld {
     public String getBezeichnung() {
         return bezeichnung;
     }
-
     @Override
     public void setBezeichnung(String bezeichnung) {
 
