@@ -23,7 +23,7 @@ public class Verwalter {
 	private int wuerfelZahl;
 	public int pasch = 0;
 	public boolean spielAmLaufen = true;
-	ArrayList<Spieler> spieler = new ArrayList<Spieler>();
+	public ArrayList<Spieler> spieler = new ArrayList<Spieler>();
 	private static Verwalter instance = null;
 	int spielerAmZug = -1;
 	Spielfeld spielfeld;

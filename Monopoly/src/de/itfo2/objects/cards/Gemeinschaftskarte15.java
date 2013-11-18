@@ -1,7 +1,11 @@
 package de.itfo2.objects.cards;
 
 
+import java.util.ArrayList;
+
 import de.itfo2.network.Connector;
+import de.itfo2.objects.Spieler;
+import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte15 extends Karte{
@@ -17,5 +21,24 @@ public class Gemeinschaftskarte15 extends Karte{
 //		TODO       ziehe von jedem Spieler 200 DM ein  
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        /*
+         * 1. Jedem Spieler, auﬂer Aktuellem Spieler, werden dm 200 abgezogen, dabei i hohz‰hlen
+         * 2. Aktuellem SPieler Geld geben, das da w‰re: 200 * i
+         */
+        
+       ArrayList<Spieler> alleSpieler = Verwalter.getInstance().spieler;
+       Spieler aktuellerSpieler = Verwalter.getInstance().getCurSpieler();
+       int i = 0;
+       for(Spieler spielerMussZahlen: alleSpieler){
+    	   if(!aktuellerSpieler.equals(spielerMussZahlen)){    		   
+    		   spielerMussZahlen.addGeld(-200);
+    		   MonopolyGUI.getInstance().addLogMessage(spielerMussZahlen.getName()+" muss 200 Euro an "+aktuellerSpieler+" zahlen");
+    		   i++;
+    	   }    	   
+       }       
+       aktuellerSpieler.addGeld(200*i);
+       
+       MonopolyGUI.getInstance().addLogMessage(aktuellerSpieler.getName()+" erh‰lt "+200*i+" Euro");
+       
     }
 }
