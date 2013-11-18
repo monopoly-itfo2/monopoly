@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte05 extends Karte{
 
-    final String text = "Du hast den 2. Platz in einem Schoenheitswettbewerb gewonnen. Ziehe 200 DM ein";
+    final String text = "Du hast den 2. Platz in einem Schoenheitswettbewerb gewonnen. Ziehe 200 Euro ein";
 
     public Gemeinschaftskarte05() {
 

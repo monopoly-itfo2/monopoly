@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte16 extends Karte{
 
-    final String text = "Bankirrtum zu deinen Gunsten, ziehe 4000 DM ein";
+    final String text = "Bankirrtum zu deinen Gunsten, ziehe 4000 Euro ein";
 
     public Gemeinschaftskarte16() {
 
@@ -17,5 +17,7 @@ public class Gemeinschaftskarte16 extends Karte{
        Verwalter.getInstance().getCurSpieler().addGeld(4000);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
+
     }
 }

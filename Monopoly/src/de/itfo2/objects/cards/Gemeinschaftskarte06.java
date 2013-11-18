@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte06 extends Karte{
 
-    final String text = "Aus Lagerverkaeufen erhaelst du 100 DM";
+    final String text = "Aus Lagerverkaeufen erhaelst du 100 Euro";
 
     public Gemeinschaftskarte06() {
 
@@ -17,5 +17,7 @@ public class Gemeinschaftskarte06 extends Karte{
         Verwalter.getInstance().getCurSpieler().addGeld(100); 
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
+
     }
 }

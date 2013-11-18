@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte14 extends Karte{
 
-    final String text = "Arztkosten 100 DM";
+    final String text = "Arztkosten 100 Euro";
 
     public Gemeinschaftskarte14() {
 

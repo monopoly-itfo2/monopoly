@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte12 extends Karte{
 
-    final String text = "Zahle an das Krankenhaus 2000 DM";
+    final String text = "Zahle an das Krankenhaus 2000 Euro";
 
     public Gemeinschaftskarte12() {
 
@@ -17,5 +17,7 @@ public class Gemeinschaftskarte12 extends Karte{
         Verwalter.getInstance().getCurSpieler().addGeld(-2000);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
+
     }
 }

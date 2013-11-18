@@ -10,7 +10,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte15 extends Karte{
 
-    final String text = "Es ist dein Geburtstag, ziehe von jedem Spieler 200 DM ein";
+    final String text = "Es ist dein Geburtstag, ziehe von jedem Spieler 200 Euro ein";
 
     public Gemeinschaftskarte15() {
 
@@ -38,7 +38,8 @@ public class Gemeinschaftskarte15 extends Karte{
        }       
        aktuellerSpieler.addGeld(200*i);
        
-       MonopolyGUI.getInstance().addLogMessage(aktuellerSpieler.getName()+" erhält "+200*i+" Euro");
+       MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
+
        
     }
 }

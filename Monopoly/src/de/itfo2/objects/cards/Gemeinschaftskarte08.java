@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte08 extends Karte{
 
-    final String text = "Gehe in das Gefaengnis. Begib dich direkt dorthin, gehe nicht ueber LOS, ziehe nicht 4000 DM ein";
+    final String text = "Gehe in das Gefaengnis. Begib dich direkt dorthin, gehe nicht ueber LOS, ziehe nicht 4000 Euro ein";
 
     public Gemeinschaftskarte08() {
 
@@ -19,5 +19,7 @@ public class Gemeinschaftskarte08 extends Karte{
         
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
+
     }
 }

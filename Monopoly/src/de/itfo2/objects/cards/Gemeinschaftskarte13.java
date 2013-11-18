@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte13 extends Karte{
 
-    final String text = "Zahle deine Versicherungssumme 1000 DM";
+    final String text = "Zahle deine Versicherungssumme 1000 Euro";
 
     public Gemeinschaftskarte13() {
 
@@ -18,5 +18,7 @@ public class Gemeinschaftskarte13 extends Karte{
 //        TODO Zahle an die Bank, fuer jedes Haus 800 DM, fuer jedes Hotel 2300 DM
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
+
     }
 }

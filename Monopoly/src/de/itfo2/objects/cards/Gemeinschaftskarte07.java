@@ -17,5 +17,7 @@ public class Gemeinschaftskarte07 extends Karte{
         Verwalter.getInstance().getCurSpieler().setGefaengnisFrei(1);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
+
     }
 }

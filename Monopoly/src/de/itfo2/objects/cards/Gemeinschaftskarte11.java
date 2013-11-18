@@ -6,7 +6,7 @@ import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte11 extends Karte {
-	final String text = "Zahle eine Strafe von 200 DM oder nimm eine Ereigniskarte";
+	final String text = "Zahle eine Strafe von 200 Euro oder nimm eine Ereigniskarte";
 
 	public Gemeinschaftskarte11() {
 
@@ -25,6 +25,8 @@ public class Gemeinschaftskarte11 extends Karte {
 
 			System.out.println(text);
 			MonopolyGUI.getInstance().createPopupDialog(text);
+	        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
+
 		}
 	}
 }
