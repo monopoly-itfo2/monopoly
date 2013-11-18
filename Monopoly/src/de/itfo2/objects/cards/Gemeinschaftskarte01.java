@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte01 extends Karte{
 
-    final String text = "Die Jahresrente wird faellig. Zihe 2000 DM ein";
+    final String text = "Die Jahresrente wird faellig. Ziehe 2000 Euro ein";
 
     public Gemeinschaftskarte01() {
 
@@ -18,5 +18,7 @@ public class Gemeinschaftskarte01 extends Karte{
 //        MonopolyGUI.getInstance().);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
+
     }
 }

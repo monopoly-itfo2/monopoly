@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte03 extends Karte{
 
-    final String text = "Du erhaelst aus Vorzugsaktien 7% Dividende -  500 DM";
+    final String text = "Du erhaelst aus Vorzugsaktien 7% Dividende -  500 Euro";
 
     public Gemeinschaftskarte03() {
 
@@ -17,5 +17,7 @@ public class Gemeinschaftskarte03 extends Karte{
         Verwalter.getInstance().getCurSpieler().addGeld(500);;
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
+
     }
 }
