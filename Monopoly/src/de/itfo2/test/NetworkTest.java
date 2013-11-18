@@ -30,38 +30,48 @@ public class NetworkTest {
 		JPanel pnl = new JPanel();
 		JFrame testramen = new JFrame();
 		final JTextField tbx = new JTextField("Marco");
-		JButton btn = new JButton("sink Event");
+		JButton btn = new JButton("login");
+		JButton btn2 = new JButton("players");
 		final JTextArea area = new JTextArea();
-		
-		con.ensureConnected();
-		area.setText(area.getText()+"\n" + "connected");
-		
-		Spieler s = new Spieler(tbx.getText(), 1, Color.yellow);
-		
-		con.login(s);
-		
-		List<Spieler> liste = con.getSpielerliste();
-        System.out.println(liste.size() + " Spieler eingeloggt");
-        while (Connector.getInstance().getSpielerliste().size() == liste.size()){
-		}
-        System.out.println("Spielerliste aktualisiert");
-        liste = Connector.getInstance().getSpielerliste();
-        for (Spieler sp : liste) {
-			if(!s.equals(s)){
-				area.setText(area.getText()+"\n" + "Spieler gefunden: " + sp.getName());
-			}
-		}
-
-
 		tbx.setColumns(10);
 		area.setColumns(20);
 		area.setRows(20);
 		pnl.add(tbx);
 		pnl.add(area);
 		pnl.add(btn);
+		pnl.add(btn2);
 		testramen.add(pnl);
 		testramen.setSize(800, 600);
 		testramen.setVisible(true);
 		testramen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
+		con.ensureConnected();
+		area.setText(area.getText()+"\n" + "connected");
+		
+		final Spieler s = new Spieler(tbx.getText(), 1, Color.yellow);
+		
+		btn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				con.login(s);
+				area.setText(area.getText()+"\n" + s.getName() +" eingeloggt");
+			}
+		});
+		
+		btn2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				List<Spieler> liste = con.getSpielerliste();
+				printList(area, liste);
+			}
+
+			private void printList(JTextArea area, List<Spieler> liste) {
+				for(Spieler sp : liste){
+					area.setText(area.getText()+"\n" + sp.getName());
+				}
+				area.setText(area.getText()+"\n" + "- - - - - - - - - - -");
+			}
+		});	
+		
 	}
 }
