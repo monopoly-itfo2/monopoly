@@ -30,31 +30,29 @@ public class NetworkTest {
 		JPanel pnl = new JPanel();
 		JFrame testramen = new JFrame();
 		final JTextField tbx = new JTextField("Marco");
-//		final JSlider sld = new JSlider(1, 12);
 		JButton btn = new JButton("sink Event");
 		final JTextArea area = new JTextArea();
 		
-//		bus.addWuerfelEventListener(new WuerfelEventListener() {
-//			@Override
-//			public void onEvent(WuerfelEvent event) {
-//				System.out.println(event.getPlayer() + " würfelt " + event.getValue() + "\n");
-//			}
-//		});
-
-		bus.addWuerfelEventListener(new WuerfelEventListener() {
-			@Override
-			public void onEvent(WuerfelEvent event) {
-				System.out.println(event.getPlayer() + " wuerfelt " + event.getValue() + "\n");
+		con.ensureConnected();
+		area.setText(area.getText()+"\n" + "connected");
+		
+		Spieler s = new Spieler(tbx.getText(), 1, Color.yellow);
+		
+		con.login(s);
+		
+		List<Spieler> liste = con.getSpielerliste();
+        System.out.println(liste.size() + " Spieler eingeloggt");
+        while (Connector.getInstance().getSpielerliste().size() == liste.size()){
+		}
+        System.out.println("Spielerliste aktualisiert");
+        liste = Connector.getInstance().getSpielerliste();
+        for (Spieler sp : liste) {
+			if(!s.equals(s)){
+				area.setText(area.getText()+"\n" + "Spieler gefunden: " + sp.getName());
 			}
+		}
 
-			private	String asString(List<Spieler> liste) {
-				String result= "";
-				for (int i = 0; i < liste.size(); i++) {
-					result = result + liste.get(i).getName() + " ; ";
-				}
-				return result;
-			}
-		});
+
 		tbx.setColumns(10);
 		area.setColumns(20);
 		area.setRows(20);
