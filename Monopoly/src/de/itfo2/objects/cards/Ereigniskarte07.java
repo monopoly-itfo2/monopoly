@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte07 extends Karte{
 
-    final String text = "Du hast in einem Kreutzwortraetselwettbewerb gewonnen. Ziehe 2000 DM ein";
+    final String text = "Du hast in einem Kreutzwortraetselwettbewerb gewonnen. Ziehe 2000 Euro ein";
 
     public Ereigniskarte07() {
 
@@ -17,5 +17,6 @@ public class Ereigniskarte07 extends Karte{
         Verwalter.getInstance().getCurSpieler().addGeld(2000);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
     }
 }

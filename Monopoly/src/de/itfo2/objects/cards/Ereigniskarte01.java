@@ -18,6 +18,6 @@ public class Ereigniskarte01 extends Karte{
 //        MonopolyGUI.getInstance().);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
-        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +" erhält die Ereigniskarte "+ text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
     }
 }

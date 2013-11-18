@@ -17,5 +17,7 @@ public class Ereigniskarte15 extends Karte{
         Verwalter.getInstance().getCurSpieler().setPlatz(Verwalter.getInstance().getCurSpieler().getPlatz()-3);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
+
     }
 }

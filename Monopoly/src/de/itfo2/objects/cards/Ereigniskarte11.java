@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte11 extends Karte{
 
-    final String text = "Zahle Schulgeld, 3000 DM";
+    final String text = "Zahle Schulgeld, 3000 Euro";
 
     public Ereigniskarte11() {
 
@@ -17,5 +17,6 @@ public class Ereigniskarte11 extends Karte{
         Verwalter.getInstance().getCurSpieler().addGeld(-3000);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
     }
 }

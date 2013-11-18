@@ -34,5 +34,7 @@ final String text = "Lass alle deine Haeuser renovieren. Zahle an die Bank, fuer
     	Verwalter.getInstance().getCurSpieler().addGeld(-renovierungsKosten);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
+
     }
 }

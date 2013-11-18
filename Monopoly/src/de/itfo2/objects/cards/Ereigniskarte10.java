@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte10 extends Karte{
 
-    final String text = "Betrunken im Dienst, zahle 400 DM Strafe";
+    final String text = "Betrunken im Dienst, zahle 400 Euro Strafe";
 
     public Ereigniskarte10() {
 
@@ -17,5 +17,6 @@ public class Ereigniskarte10 extends Karte{
         Verwalter.getInstance().getCurSpieler().addGeld(-400);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
     }
 }
