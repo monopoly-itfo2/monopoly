@@ -3,6 +3,7 @@ package de.itfo2.event;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.itfo2.event.listeners.UpdateSpielerlisteEventListener;
 import de.itfo2.event.listeners.WuerfelEventListener;
 import de.itfo2.network.Connector;
 
@@ -25,6 +26,7 @@ public final class EventBus {
 	};
 
 	private List<WuerfelEventListener> listerners_wuerfel = new ArrayList<WuerfelEventListener>();
+	private List<UpdateSpielerlisteEventListener> listerners_spielerliste = new ArrayList<UpdateSpielerlisteEventListener>();
 
 	public void sinkNetworkEvent(Object event) {
 		if (event instanceof WuerfelEvent) {
@@ -40,6 +42,13 @@ public final class EventBus {
 		Connector.getInstance().sentEvent(event);
 	}
 
+	// Listener registration
+	public void addWuerfelEventListener(WuerfelEventListener listener) {
+		listerners_wuerfel.add(listener);
+	}
+	public void addUpdateSpielerlisteEventListener(UpdateSpielerlisteEventListener listener) {
+		listerners_spielerliste.add(listener);
+	}
 	
 	// WuerfelEvent
 	private void triggerWuerfelEvent(WuerfelEvent event) {
@@ -48,10 +57,6 @@ public final class EventBus {
 		}
 	}
 
-	public void addWuerfelEventListener(WuerfelEventListener listener) {
-		listerners_wuerfel.add(listener);
-	}
-	
 	
 	// SpieleranmeldungEvent
 	private void triggerLoginEvent(LoginEvent event) {
@@ -61,5 +66,8 @@ public final class EventBus {
 	// SpieleranmeldungEvent
 	private void triggerUpdateSpielerlisteEvent(UpdateSpielerlisteEvent event) {
 		Connector.getInstance().setSpielerliste(event.getSpielerListe());
+		for (int i = 0; i < listerners_spielerliste.size(); i++) {
+			listerners_spielerliste.get(i).onEvent(event);
+		}
 	}
 }

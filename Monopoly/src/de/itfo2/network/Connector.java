@@ -150,8 +150,7 @@ public final class Connector {
 		if (!spielerliste.contains(player)){
 			spielerliste.add(player);
 		}
-		UpdateSpielerlisteEvent listevt = new UpdateSpielerlisteEvent();
-		listevt.setSpielerListe(spielerliste);
+		UpdateSpielerlisteEvent listevt = new UpdateSpielerlisteEvent(spielerliste);
 		sentEvent(listevt);
 	}
 	

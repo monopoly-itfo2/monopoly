@@ -5,20 +5,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-import javax.naming.spi.DirStateFactory.Result;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import javax.xml.transform.Templates;
 
 import de.itfo2.event.EventBus;
-import de.itfo2.event.WuerfelEvent;
-import de.itfo2.event.listeners.WuerfelEventListener;
+import de.itfo2.event.UpdateSpielerlisteEvent;
+import de.itfo2.event.listeners.UpdateSpielerlisteEventListener;
 import de.itfo2.network.Connector;
 import de.itfo2.objects.Spieler;
 
@@ -31,7 +27,6 @@ public class NetworkTest {
 		JFrame testramen = new JFrame();
 		final JTextField tbx = new JTextField("Marco");
 		JButton btn = new JButton("login");
-		JButton btn2 = new JButton("players");
 		final JTextArea area = new JTextArea();
 		tbx.setColumns(10);
 		area.setColumns(20);
@@ -39,7 +34,6 @@ public class NetworkTest {
 		pnl.add(tbx);
 		pnl.add(area);
 		pnl.add(btn);
-		pnl.add(btn2);
 		testramen.add(pnl);
 		testramen.setSize(800, 600);
 		testramen.setVisible(true);
@@ -48,19 +42,20 @@ public class NetworkTest {
 		con.ensureConnected();
 		area.setText(area.getText()+"\n" + "connected");
 		
-		final Spieler s = new Spieler(tbx.getText(), 1, Color.yellow);
 		
 		btn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Spieler s = new Spieler(tbx.getText(), 1, Color.yellow);
 				con.login(s);
 				area.setText(area.getText()+"\n" + s.getName() +" eingeloggt");
 			}
 		});
 		
-		btn2.addMouseListener(new MouseAdapter() {
+		bus.addUpdateSpielerlisteEventListener(new UpdateSpielerlisteEventListener() {
+			
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void onEvent(UpdateSpielerlisteEvent event) {
 				List<Spieler> liste = con.getSpielerliste();
 				printList(area, liste);
 			}
@@ -71,7 +66,6 @@ public class NetworkTest {
 				}
 				area.setText(area.getText()+"\n" + "- - - - - - - - - - -");
 			}
-		});	
-		
+		});
 	}
 }
