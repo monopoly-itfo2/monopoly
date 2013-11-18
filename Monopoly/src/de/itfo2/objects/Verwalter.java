@@ -89,8 +89,10 @@ public class Verwalter {
         gui.getStatusPanel(0).update(spieler1, null);
         
         List<Spieler> liste = Connector.getInstance().getSpielerliste();
+        System.out.println(liste.size() + " Spieler eingeloggt");
         while (Connector.getInstance().getSpielerliste().size() == liste.size()){
 		}
+        System.out.println("Spielerliste aktualisiert");
         liste = Connector.getInstance().getSpielerliste();
         for (Spieler s : liste) {
 			if(!s.equals(spieler1)){
