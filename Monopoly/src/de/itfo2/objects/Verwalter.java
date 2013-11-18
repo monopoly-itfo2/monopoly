@@ -53,7 +53,7 @@ public class Verwalter {
 			pasch = 0;
 
 		wuerfelZahl = ersterWert + zweiterWert;
-        //wuerfelZahl = 2;
+        wuerfelZahl = 2;
         gui.addLogMessage(getCurSpieler().getName() + " hat eine " + wuerfelZahl + " gewÃ¼rfelt. (" + ersterWert + " + " + zweiterWert + ")");
         gewuerfelt = true;
         gui.setRollDiceButtonEnabled(false);
@@ -196,6 +196,7 @@ public class Verwalter {
 		gui.setEreigniskartenButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//An dieser Stelle näöhste Woche weitermachen, wir wollen die Ereigniskarten in Reinfolge bringen ( für ALLE SPieler) und die Gefängisfreikarten entfernen.
                 getSpielfeld().getEreigniskarten().get(spielfeld.getEreigniskartenPointer()).effect();
                 spielfeld.setEreigniskartenPointer((spielfeld.getEreigniskartenPointer()+1)%getSpielfeld().getEreigniskarten().size());
                 gui.setEreigniskartenButtonEnabled(false);

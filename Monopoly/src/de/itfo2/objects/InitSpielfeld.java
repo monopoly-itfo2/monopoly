@@ -17,13 +17,38 @@ public class InitSpielfeld {
         ereigniskarten.add(new Ereigniskarte03());
         ereigniskarten.add(new Ereigniskarte04());
         ereigniskarten.add(new Ereigniskarte05());
-        ereigniskarten.add(new Ereigniskarte05());
         ereigniskarten.add(new Ereigniskarte06());
         ereigniskarten.add(new Ereigniskarte07());
         ereigniskarten.add(new Ereigniskarte08());
         ereigniskarten.add(new Ereigniskarte09());
         ereigniskarten.add(new Ereigniskarte10());
+        ereigniskarten.add(new Ereigniskarte11());
+        ereigniskarten.add(new Ereigniskarte12());
+        ereigniskarten.add(new Ereigniskarte13());
+        ereigniskarten.add(new Ereigniskarte14());
+        ereigniskarten.add(new Ereigniskarte15());
+        ereigniskarten.add(new Ereigniskarte16());
         return ereigniskarten;
+	}
+	public static ArrayList<Karte> getGemeischaftskarten(){
+        ArrayList<Karte> Gemeinschaftskarten = new ArrayList<Karte>();
+        Gemeinschaftskarten.add(new Gemeinschaftskarte01());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte02());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte03());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte04());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte05());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte06());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte07());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte08());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte09());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte10());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte11());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte12());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte13());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte14());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte15());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte16());
+        return Gemeinschaftskarten;
 	}
 
 
