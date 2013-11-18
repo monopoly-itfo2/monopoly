@@ -3,21 +3,17 @@ package de.itfo2.objects;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
-import javax.swing.JOptionPane;
-
-import de.itfo2.fields.Ereignisfeld;
-import de.itfo2.fields.Gemeinschaftsfeld;
-import de.itfo2.fields.Grundstueck;
-import de.itfo2.fields.Strasse;
-import de.itfo2.network.Connector;
+import de.itfo2.event.EventBus;
+import de.itfo2.fields.*;
 import de.itfo2.ui.MonopolyGUI;
+import de.itfo2.util.GuiFeldMouseListener;
+
+import javax.swing.*;
 
 public class Verwalter {
 	private int wuerfelZahl;
@@ -34,9 +30,7 @@ public class Verwalter {
     //	final EventBus bus = EventBus.getInstance();//temporary disabled
 
 	public Verwalter() {
-		init();
-
-        initGuiButtonFunctions();
+		play();
 	}
 
 	public static Verwalter getInstance() {
@@ -65,44 +59,38 @@ public class Verwalter {
         gui.setRollDiceButtonEnabled(false);
 	}
 
+	public void play() {
+
+		init();
+
+        initGuiButtonFunctions();
+	}
+
 	private void init() {
 
 		spielfeld = new Spielfeld(InitSpielfeld.getfelder(), InitSpielfeld.getEreigniskarten(), InitSpielfeld.getEreigniskarten());
 		gui.setSpielfeld(spielfeld);
-		
-		gui.addLogMessage("Login...");
-		Connector.getInstance().ensureConnected();
-		Random rnd = new Random();
-		String name = "no hostname";
-		try {
-			name = InetAddress.getLocalHost().getHostName();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Spieler spieler1 = new Spieler(name, 5000, new Color(rnd.nextInt()));
-		Connector.getInstance().login(spieler1);
-		
+
+		// Spieler spieler1 = new Spieler("Spieler 1", 10000,
+		// Color.getHSBColor(269f, 35f, 96f));
+
+        //Spieler 1
+		Spieler spieler1 = new Spieler("Spieler 1", 5000, Color.getHSBColor(
+				0.9f, 0.1f, 0.7f));
+
         spieler1.addObserver(gui.getStatusPanel(0));
 		spieler.add(spieler1);
 		gui.addSpieler(0, spieler1);
         gui.getStatusPanel(0).update(spieler1, null);
-        
-        List<Spieler> liste = Connector.getInstance().getSpielerliste();
-        System.out.println(liste.size() + " Spieler eingeloggt");
-        while (Connector.getInstance().getSpielerliste().size() == liste.size()){
-		}
-        System.out.println("Spielerliste aktualisiert");
-        liste = Connector.getInstance().getSpielerliste();
-        for (Spieler s : liste) {
-			if(!s.equals(spieler1)){
-				System.out.println("Spieler gefunden: " + s.getName());
-				s.addObserver(gui.getStatusPanel(1));
-				spieler.add(s);
-				gui.addSpieler(1, s);
-				gui.getStatusPanel(1).update(s, null);
-			}
-		}
+
+        //Spieler 2
+        Spieler spieler2 = new Spieler("Spieler 2", 5000, Color.getHSBColor(
+                0.3f, 0.1f, 0.9f));
+        spieler2.addObserver(gui.getStatusPanel(1));
+		spieler.add(spieler2);
+		gui.addSpieler(1, spieler2);
+        gui.getStatusPanel(1).update(spieler2, null);
+
 	}
 
 	public Spieler getCurSpieler() {
