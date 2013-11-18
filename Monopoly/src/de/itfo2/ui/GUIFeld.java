@@ -120,7 +120,7 @@ public class GUIFeld extends PicturePanel implements Observer {
 
         if(feld instanceof Grundstueck)
         {
-            labelPreis = new JLabel(((Grundstueck) feld).getPreis() + "â‚¬");
+            labelPreis = new JLabel(((Grundstueck) feld).getPreis() + "€");
             labelPreis.setBounds(0, 30, 90, 10);
             labelPreis.setOpaque(false);
             labelPreis.setFont(new Font("Calibri", 0, 10));
@@ -136,7 +136,7 @@ public class GUIFeld extends PicturePanel implements Observer {
             this.add(menuPanel, 2);
         }
         else if(feld instanceof Freiparken){
-            labelPreis = new JLabel(((Freiparken) feld).getSumme() + "â‚¬ im Pott");
+            labelPreis = new JLabel(((Freiparken) feld).getSumme() + "€ im Pott");
             labelPreis.setBounds(0, 30, 90, 10);
             labelPreis.setOpaque(false);
             labelPreis.setFont(new Font("Calibri", 0, 10));
@@ -184,7 +184,7 @@ public class GUIFeld extends PicturePanel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if(feld instanceof Freiparken){
-            labelPreis.setText(((Freiparken) feld).getSumme() + "â‚¬ im Pott");
+            labelPreis.setText(((Freiparken) feld).getSumme() + "€ im Pott");
         }
     }
 }
