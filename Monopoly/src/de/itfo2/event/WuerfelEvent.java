@@ -7,9 +7,8 @@ package de.itfo2.event;
  * @author Marco Ernst
  *
  */
-@SuppressWarnings("serial")
 public class WuerfelEvent implements MonopolyEvent {
-
+	private static final long serialVersionUID = -1140744467488636229L;
 	private int value = 0;
 	private String player = null;
 
