@@ -24,6 +24,6 @@ public class GeheGefaengnis implements Feld {
     public void handleFieldEffect() {
         MonopolyGUI.getInstance().rueckeAuf(10);
         Verwalter.getInstance().getCurSpieler().setPlatz(10);
-        Verwalter.getInstance().getCurSpieler().setImGefaengnis(1);
+        Verwalter.getInstance().getCurSpieler().setImGefaengnis(true);
     }
 }
