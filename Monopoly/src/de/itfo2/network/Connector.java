@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import de.itfo2.event.EventBus;
 import de.itfo2.event.LoginEvent;
@@ -33,17 +36,17 @@ public final class Connector {
 	ObjectOutputStream out;
 	List<Spieler> spielerliste = new ArrayList<Spieler>();
 
-	public void login(Spieler spieler){
+	public void login(Spieler spieler) {
+		sentEvent(new LoginEvent(spieler));
 		addSpieler(spieler);
-		EventBus.getInstance().sinkClientEvent(new LoginEvent(spieler));
 	}
-	
+
 	public void ensureConnected() {
 		Socket socket = null;
 		List<Socket> sockets = null;
 		sockets = discoverNetwork();
-//			sockets = new ArrayList<Socket>();
-//			sockets.add(new Socket("10.0.7.12", 28000));
+		// sockets = new ArrayList<Socket>();
+		// sockets.add(new Socket("10.0.7.12", 28000));
 		if (sockets.size() > 0) {
 			socket = sockets.get(0); // nimmt erstmal die erste gefundene
 										// Verbindung
@@ -81,6 +84,12 @@ public final class Connector {
 						try {
 							event = in.readObject();
 							EventBus.getInstance().sinkNetworkEvent(event);
+						} catch (SocketException e) {
+							JOptionPane.showMessageDialog(null,
+									"Die Verbindung wurde unterbrochen.",
+									"Verbindung unterbrochen",
+									JOptionPane.OK_CANCEL_OPTION);
+							break;
 						} catch (IOException | ClassNotFoundException e) {
 							e.printStackTrace();
 						}
@@ -115,7 +124,7 @@ public final class Connector {
 			}
 		} catch (IOException e) {
 			System.err.println("Error during 'discoverNetwork' : " + e);
-		} 
+		}
 
 		for (int i = 1; i < addresses.size() - 1; i++) {
 			ConnectionTester discover = new ConnectionTester();
@@ -147,18 +156,19 @@ public final class Connector {
 	}
 
 	public void addSpieler(Spieler player) {
-		if (!spielerliste.contains(player)){
+		if (!spielerliste.contains(player)) {
 			spielerliste.add(player);
 		}
-		UpdateSpielerlisteEvent listevt = new UpdateSpielerlisteEvent(spielerliste);
+		UpdateSpielerlisteEvent listevt = new UpdateSpielerlisteEvent(
+				spielerliste);
 		sentEvent(listevt);
 	}
-	
-	public void setSpielerliste (List<Spieler> spielerliste) {
+
+	public void setSpielerliste(List<Spieler> spielerliste) {
 		this.spielerliste = spielerliste;
 	}
-	
-	public List<Spieler> getSpielerliste () {
+
+	public List<Spieler> getSpielerliste() {
 		return spielerliste;
-	}	
+	}
 }

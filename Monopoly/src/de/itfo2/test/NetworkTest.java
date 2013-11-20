@@ -19,6 +19,8 @@ import de.itfo2.network.Connector;
 import de.itfo2.objects.Spieler;
 
 public class NetworkTest {
+	protected static Spieler s;
+
 	public static void main(String[] args) throws InterruptedException {
 		final EventBus bus = EventBus.getInstance();
 		final Connector con = Connector.getInstance();
@@ -40,31 +42,32 @@ public class NetworkTest {
 		testramen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		con.ensureConnected();
-		area.setText(area.getText()+"\n" + "connected");
+		System.out.println("connected");
 		
 		
 		btn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Spieler s = new Spieler(tbx.getText(), 1, Color.yellow);
+				s = new Spieler(tbx.getText(), 1, Color.yellow);
 				con.login(s);
-				area.setText(area.getText()+"\n" + s.getName() +" eingeloggt");
+				System.out.println(s.getName() +" eingeloggt");
 			}
 		});
 		
 		bus.addUpdateSpielerlisteEventListener(new UpdateSpielerlisteEventListener() {
-			
 			@Override
 			public void onEvent(UpdateSpielerlisteEvent event) {
 				List<Spieler> liste = con.getSpielerliste();
 				printList(area, liste);
+				
 			}
 
 			private void printList(JTextArea area, List<Spieler> liste) {
+				StringBuffer sb = new StringBuffer();
 				for(Spieler sp : liste){
-					area.setText(area.getText()+"\n" + sp.getName());
+					sb.append("\n" + sp.getName());
 				}
-				area.setText(area.getText()+"\n" + "- - - - - - - - - - -");
+				area.setText(sb.toString());
 			}
 		});
 	}
