@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.swing.JOptionPane;
 
@@ -70,7 +69,7 @@ public class Verwalter {
 	}
 
 	private void init() {
-		Connector.getInstance().ensureConnected();
+
 		spielfeld = new Spielfeld(InitSpielfeld.getfelder(),
 				InitSpielfeld.getEreigniskarten(),
 				InitSpielfeld.getEreigniskarten());
@@ -404,15 +403,9 @@ public class Verwalter {
 
 	public void login(String name) {
 		gui.addLogMessage("Login...");
+		Connector.getInstance().ensureConnected();
 		
 		final Spieler spieler1 = new Spieler(name, 5000);
-		Connector.getInstance().login(spieler1);
-
-		spieler1.addObserver(gui.getStatusPanel(0));
-		spielerListe.add(spieler1);
-		gui.addSpieler(0, spieler1);
-		gui.getStatusPanel(0).update(spieler1, null);
-
 		EventBus.getInstance().addUpdateSpielerlisteEventListener(new UpdateSpielerlisteEventListener() {
 			@Override
 			public void onEvent(UpdateSpielerlisteEvent event) {
@@ -429,5 +422,13 @@ public class Verwalter {
 				}
 			}
 		});
+		
+		Connector.getInstance().login(spieler1);
+
+		spieler1.addObserver(gui.getStatusPanel(0));
+		spielerListe.add(spieler1);
+		gui.addSpieler(0, spieler1);
+		gui.getStatusPanel(0).update(spieler1, null);
+
 	}
 }
