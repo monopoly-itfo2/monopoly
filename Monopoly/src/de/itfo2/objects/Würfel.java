@@ -1,17 +1,17 @@
 package de.itfo2.objects;
 
-public class Wuerfel {
+public class Würfel {
     private int wert;
 
     public int getWert() {
-        wuerfeln();
+        würfeln();
         return wert;
     }
 
-    public void wuerfeln() {
+    public void würfeln() {
         wert = (int) (Math.random() * 7);
         if (wert == 0) {
-            wuerfeln();
+            würfeln();
         }
     }
 }

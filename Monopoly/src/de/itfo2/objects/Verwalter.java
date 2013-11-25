@@ -43,7 +43,7 @@ public class Verwalter {
 	public void wuerfeln() {
 		int ersterWert;
 		int zweiterWert;
-		Wuerfel wuerfel = new Wuerfel();
+		Würfel wuerfel = new Würfel();
 		ersterWert = wuerfel.getWert();
 		zweiterWert = wuerfel.getWert();
 

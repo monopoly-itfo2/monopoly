@@ -13,7 +13,7 @@ public class InitSpielfeld {
 	public static ArrayList<Karte> getEreigniskarten(){
         ArrayList<Karte> ereigniskarten = new ArrayList<Karte>();
         ereigniskarten.add(new Ereigniskarte01());
-        ereigniskarten.add(new Ereigniskarte02());
+        ereigniskarten.add(new Ereigniskarte02()); // Gefängnisfreikarte
         ereigniskarten.add(new Ereigniskarte03());
         ereigniskarten.add(new Ereigniskarte04());
         ereigniskarten.add(new Ereigniskarte05());
@@ -38,7 +38,7 @@ public class InitSpielfeld {
         Gemeinschaftskarten.add(new Gemeinschaftskarte04());
         Gemeinschaftskarten.add(new Gemeinschaftskarte05());
         Gemeinschaftskarten.add(new Gemeinschaftskarte06());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte07());
+        Gemeinschaftskarten.add(new Gemeinschaftskarte07());  // Gefängnisfreikarte
         Gemeinschaftskarten.add(new Gemeinschaftskarte08());
         Gemeinschaftskarten.add(new Gemeinschaftskarte09());
         Gemeinschaftskarten.add(new Gemeinschaftskarte10());
