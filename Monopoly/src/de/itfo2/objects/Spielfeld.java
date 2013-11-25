@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 public class Spielfeld {
 
-    private ArrayList<Karte> gemeinschaftskarten;
+    public ArrayList<Karte> gemeinschaftskarten;
     private int gemeinschaftskartenPointer;
-    private ArrayList<Karte> ereigniskarten;
+    public ArrayList<Karte> ereigniskarten;
     private int ereigniskartenPointer;
     public ArrayList<Feld> felder;
     Spielfeld(ArrayList<Feld> felder, ArrayList<Karte> ereigniskarten, ArrayList<Karte> gemeinschaftskarten){
@@ -68,5 +68,6 @@ public class Spielfeld {
     public void setEreigniskartenPointer(int ereigniskartenPointer) {
         this.ereigniskartenPointer = ereigniskartenPointer;
     }
+
 }
 

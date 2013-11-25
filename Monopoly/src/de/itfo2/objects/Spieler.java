@@ -69,8 +69,8 @@ public class Spieler extends Observable implements Serializable{
 		return gefaengnisFrei;
 	}
 
-	public void setGefaengnisFrei(int gefaengnisFrei) {
-		this.gefaengnisFrei = gefaengnisFrei;
+	public void addGefaengnisFrei(int gefaengnisFrei) {
+		this.gefaengnisFrei += gefaengnisFrei;
 	}
 
 	public Color getColor() {
