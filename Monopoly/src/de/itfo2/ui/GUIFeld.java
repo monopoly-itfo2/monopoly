@@ -78,19 +78,20 @@ public class GUIFeld extends PicturePanel implements Observer {
         this.add(labelHypothek, 1);
         labelHypothek.setVisible(false);
 
-        figuren[0] = new JLabel();
+        
         BufferedImage image = null;
-        image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur_green.png"));
+        image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur_template.png"));
+        icon = new ImageIcon(getClass().getResource("/de/itfo2/ui/resources/kokowei.gif"));
         ImageIcon spielfigur = new ImageIcon(ColorChanger.changeColor(image, Color.WHITE, Color.getHSBColor(0.9f, 0.1f, 0.7f)));
-        figuren[0].setIcon(spielfigur);
+        figuren[0] = new JLabel(icon);
         figuren[0].setBounds(3, 40, 18, 17);
         this.add(figuren[0], 2);
         figuren[0].setVisible(false);
 
-        figuren[1] = new JLabel();
-        image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur_red.png"));
+        icon = new ImageIcon(getClass().getResource("/de/itfo2/ui/resources/arkani_small.gif"));
+        figuren[1] = new JLabel(icon);
         spielfigur = new ImageIcon(ColorChanger.changeColor(image, Color.WHITE, Color.getHSBColor(0.9f, 0.1f, 0.7f)));
-        figuren[1].setIcon(spielfigur);
+        //figuren[1].setIcon(new ImageIcon(image));
         figuren[1].setBounds(24, 40, 18, 17);
         this.add(figuren[1], 2);
         figuren[1].setVisible(false);
