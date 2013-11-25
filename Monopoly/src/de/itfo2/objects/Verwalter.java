@@ -78,40 +78,6 @@ public class Verwalter {
 				InitSpielfeld.getEreigniskarten(),
 				InitSpielfeld.getEreigniskarten());
 		gui.setSpielfeld(spielfeld);
-
-		gui.addLogMessage("Login...");
-		Connector.getInstance().ensureConnected();
-		Random rnd = new Random();
-		String name = "no hostname";
-		try {
-			name = InetAddress.getLocalHost().getHostName();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		final Spieler spieler1 = new Spieler(name, 5000, new Color(rnd.nextInt()));
-		Connector.getInstance().login(spieler1);
-
-		spieler1.addObserver(gui.getStatusPanel(0));
-		spielerListe.add(spieler1);
-		gui.addSpieler(0, spieler1);
-		gui.getStatusPanel(0).update(spieler1, null);
-
-		EventBus.getInstance().addUpdateSpielerlisteEventListener(new UpdateSpielerlisteEventListener() {
-			@Override
-			public void onEvent(UpdateSpielerlisteEvent event) {
-				List<Spieler> liste = Connector.getInstance().getSpielerliste();
-				for (Spieler s : liste) {
-					if (!s.equals(spieler1)) {
-						System.out.println("Spieler gefunden: " + s.getName());
-						s.addObserver(gui.getStatusPanel(1));
-						spielerListe.add(s);
-						gui.addSpieler(1, s);
-						gui.getStatusPanel(1).update(s, null);
-					}
-				}
-			}
-		});
 	}
 
 	public Spieler getCurSpieler() {
@@ -437,5 +403,37 @@ public class Verwalter {
 			}
 
 		}
+	}
+
+	public void login(String name) {
+		gui.addLogMessage("Login...");
+		Connector.getInstance().ensureConnected();
+		Random rnd = new Random();
+		
+		final Spieler spieler1 = new Spieler(name, 5000);
+		Connector.getInstance().login(spieler1);
+
+		spieler1.addObserver(gui.getStatusPanel(0));
+		spielerListe.add(spieler1);
+		gui.addSpieler(0, spieler1);
+		gui.getStatusPanel(0).update(spieler1, null);
+
+		EventBus.getInstance().addUpdateSpielerlisteEventListener(new UpdateSpielerlisteEventListener() {
+			@Override
+			public void onEvent(UpdateSpielerlisteEvent event) {
+				List<Spieler> liste = Connector.getInstance().getSpielerliste();
+				for (Spieler s : liste) {
+					if (!s.equals(spieler1)) {
+						//nicht lesen ->
+						System.out.println("Spieler gefunden: " + s.getName());
+						s.addObserver(gui.getStatusPanel(1));
+						spielerListe.add(s);
+						gui.addSpieler(1, s);
+						gui.getStatusPanel(1).update(s, null);
+						// <- nicht lesen
+					}
+				}
+			}
+		});
 	}
 }

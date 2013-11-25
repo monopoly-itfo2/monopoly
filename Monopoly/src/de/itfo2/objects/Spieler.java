@@ -11,12 +11,10 @@ public class Spieler extends Observable implements Serializable{
 	private int platz = 0;
 	private boolean imGefaengnis = false;
 	private int gefaengnisFrei = 0;
-	private Color color;
 
-	public Spieler(String name, int konto, Color color) {
+	public Spieler(String name, int konto) {
 		this.name = name;
 		this.konto = konto;
-		this.color = color;
 	}
 
 	public void addGeld(int geld) {
@@ -71,9 +69,5 @@ public class Spieler extends Observable implements Serializable{
 
 	public void setGefaengnisFrei(int gefaengnisFrei) {
 		this.gefaengnisFrei = gefaengnisFrei;
-	}
-
-	public Color getColor() {
-		return this.color;
 	}
 }

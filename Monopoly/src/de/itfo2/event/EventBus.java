@@ -3,6 +3,7 @@ package de.itfo2.event;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.itfo2.event.listeners.RundenendeEventListener;
 import de.itfo2.event.listeners.UpdateSpielerlisteEventListener;
 import de.itfo2.event.listeners.WuerfelEventListener;
 import de.itfo2.network.Connector;
@@ -27,6 +28,7 @@ public final class EventBus {
 
 	private List<WuerfelEventListener> listerners_wuerfel = new ArrayList<WuerfelEventListener>();
 	private List<UpdateSpielerlisteEventListener> listerners_spielerliste = new ArrayList<UpdateSpielerlisteEventListener>();
+	private List<RundenendeEventListener> listerners_rundenende = new ArrayList<RundenendeEventListener>();
 
 	public void sinkNetworkEvent(Object event) {
 		if (event instanceof WuerfelEvent) {
@@ -50,13 +52,16 @@ public final class EventBus {
 		listerners_spielerliste.add(listener);
 	}
 	
+	public void addURundenendeEventListener(RundenendeEventListener listener) {
+		listerners_rundenende.add(listener);
+	}
+	
 	// WuerfelEvent
 	private void triggerWuerfelEvent(WuerfelEvent event) {
 		for (int i = 0; i < listerners_wuerfel.size(); i++) {
 			listerners_wuerfel.get(i).onEvent(event);
 		}
 	}
-
 	
 	// SpieleranmeldungEvent
 	private void triggerLoginEvent(LoginEvent event) {

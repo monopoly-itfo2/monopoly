@@ -48,7 +48,7 @@ public class NetworkTest {
 		btn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				s = new Spieler(tbx.getText(), 1, Color.yellow);
+				s = new Spieler(tbx.getText(), 1);
 				con.login(s);
 				System.out.println(s.getName() +" eingeloggt");
 			}

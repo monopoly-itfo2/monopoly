@@ -1,6 +1,10 @@
 package de.itfo2.ui;
 
+import de.itfo2.event.EventBus;
+import de.itfo2.event.UpdateSpielerlisteEvent;
+import de.itfo2.event.listeners.UpdateSpielerlisteEventListener;
 import de.itfo2.fields.Grundstueck;
+import de.itfo2.network.Connector;
 import de.itfo2.objects.InitSpielfeld;
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Spielfeld;
@@ -19,7 +23,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 public class MonopolyGUI implements MonopolyGUIInterface {
 
@@ -208,7 +216,13 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     }
 
     public void kaufeFeld(){
-        spielfeld.getFelder().get(Verwalter.getInstance().getCurSpieler().getPlatz()).faerbeFeld(Verwalter.getInstance().getCurSpieler().getColor());
+        spielfeld
+        	.getFelder()
+        	.get(Verwalter
+        			.getInstance()
+        			.getCurSpieler()
+        			.getPlatz())
+        			.faerbeFeld(Color.BLUE);
     }
 
     public void baueHaus(){
@@ -234,26 +248,19 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     public void createLoginDialog(){
     	JDialog dialog = new JDialog(spielfeld, "Login");
     	dialog.setSize(new Dimension(300, 200));
-    	JTextField fieldName = new JTextField();
+    	final JTextField fieldName = new JTextField();
     	fieldName.setSize(200, 30);
-    	
-    	JComboBox cbColor = new JComboBox();  
-    	cbColor.setSize(200, 30);
-    	cbColor.addItem(Color.GREEN);
-    	cbColor.addItem(Color.RED);
     	
     	JButton buttonLogin = new JButton("Login");
     	buttonLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//hier die Felder auswerten und was machen!
-				
+				Verwalter.getInstance().login(fieldName.getText());
 			}
 		});
     	
     	dialog.setLayout(new BorderLayout());
     	dialog.add(fieldName, BorderLayout.NORTH);
-    	dialog.add(cbColor, BorderLayout.EAST);
     	dialog.add(buttonLogin, BorderLayout.SOUTH);
     	dialog.pack();
     	dialog.setVisible(true);
