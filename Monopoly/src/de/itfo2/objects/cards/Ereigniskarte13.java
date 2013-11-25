@@ -25,7 +25,7 @@ public class Ereigniskarte13 extends Karte{
     	}else{
     		anzahlHaeuser = anzahlHaeuser;
     	}
-    	System.out.println("Häuser: "+anzahlHaeuser +" Hotels: "+anzahlHotel);
+    	System.out.println("Haeuser: "+anzahlHaeuser +" Hotels: "+anzahlHotel);
     	renovierungsKosten = ((800 * anzahlHaeuser)+ (2300 * anzahlHotel));
     	Verwalter.getInstance().getCurSpieler().addGeld(-renovierungsKosten);
 

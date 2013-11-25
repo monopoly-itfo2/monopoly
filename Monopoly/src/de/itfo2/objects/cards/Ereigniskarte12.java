@@ -29,7 +29,7 @@ final String text = "Lass alle deine Haeuser renovieren. Zahle an die Bank, fuer
     	}else{
     		anzahlHaeuser = anzahlHaeuser;
     	}
-    	System.out.println("Häuser: "+anzahlHaeuser +" Hotels: "+anzahlHotel);
+    	System.out.println("Haeuser: "+anzahlHaeuser +" Hotels: "+anzahlHotel);
     	renovierungsKosten = ((500 * anzahlHaeuser)+ (2000 * anzahlHotel));
     	Verwalter.getInstance().getCurSpieler().addGeld(-renovierungsKosten);
         System.out.println(text);
