@@ -53,7 +53,7 @@ public class Verwalter {
 			pasch = 0;
 
 		wuerfelZahl = ersterWert + zweiterWert;
-        wuerfelZahl = 2;
+//        wuerfelZahl = 2;
         gui.addLogMessage(getCurSpieler().getName() + " hat eine " + wuerfelZahl + " gewÃ¼rfelt. (" + ersterWert + " + " + zweiterWert + ")");
         gewuerfelt = true;
         gui.setRollDiceButtonEnabled(false);
@@ -127,6 +127,7 @@ public class Verwalter {
                     // Ziehen
                     gui.rueckeVor(wuerfelZahl);
                     spieler.get(spielerAmZug).addPlatz(wuerfelZahl);
+//                    spieler.get(spielerAmZug).setPlatz(wuerfelZahl);
 
                     // Feld behandeln
 
@@ -213,7 +214,7 @@ public class Verwalter {
 		gui.setGemeinschaftskartenButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-                getSpielfeld().getGemeinschaftskarten().get(spielfeld.getGemeinschaftskartenPointer()).effect();
+                spielfeld.getGemeinschaftskarten().get(spielfeld.getGemeinschaftskartenPointer()).effect();
                 spielfeld.setGemeinschaftskartenPointer((spielfeld.getGemeinschaftskartenPointer()+1)%getSpielfeld().getGemeinschaftskarten().size());
                 gui.setGemeinschaftskartenButtonEnabled(false);
 
@@ -226,7 +227,7 @@ public class Verwalter {
         gui.setGemeinschaftskartenButtonEnabled(false);
 
         /*****************************************************
-         GrundstÃ¼ck kaufen
+         Grundstück kaufen
          *****************************************************/
 		gui.setBuyButtonActionListener(new ActionListener() {
 			@Override
@@ -384,5 +385,20 @@ public class Verwalter {
             }
 
         }
+    }
+    
+    public void disableGefängnisFrei(int typ) {
+    	System.out.println("Typ "+typ);
+//    	spielfeld.ereigniskarten.remove(0);
+    	// Löscht erst beim zweiten mal
+    	switch(typ) {
+	    	case 1: spielfeld.ereigniskarten.remove(0);
+	    			System.out.println(spielfeld.getEreigniskartenPointer());
+	    			break;
+	    	case 2: spielfeld.gemeinschaftskarten.remove(spielfeld.getGemeinschaftskartenPointer());break;
+	    	default:System.out.println("nur eins oder zwei, du depp!");
+    	}
+    	
+    	
     }
 }

@@ -2,10 +2,11 @@ package de.itfo2.objects;
 
 import de.itfo2.fields.*;
 import de.itfo2.objects.cards.*;
-import de.itfo2.objects.cards.Karte;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 
 public class InitSpielfeld {
@@ -28,30 +29,31 @@ public class InitSpielfeld {
         ereigniskarten.add(new Ereigniskarte14());
         ereigniskarten.add(new Ereigniskarte15());
         ereigniskarten.add(new Ereigniskarte16());
+        Collections.shuffle(ereigniskarten);
         return ereigniskarten;
 	}
 	public static ArrayList<Karte> getGemeischaftskarten(){
-        ArrayList<Karte> Gemeinschaftskarten = new ArrayList<Karte>();
-        Gemeinschaftskarten.add(new Gemeinschaftskarte01());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte02());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte03());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte04());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte05());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte06());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte07());  // Gefängnisfreikarte
-        Gemeinschaftskarten.add(new Gemeinschaftskarte08());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte09());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte10());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte11());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte12());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte13());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte14());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte15());
-        Gemeinschaftskarten.add(new Gemeinschaftskarte16());
-        return Gemeinschaftskarten;
+        ArrayList<Karte> gemeinschaftskarten = new ArrayList<Karte>();
+        gemeinschaftskarten.add(new Gemeinschaftskarte01());
+        gemeinschaftskarten.add(new Gemeinschaftskarte02());
+        gemeinschaftskarten.add(new Gemeinschaftskarte03());
+        gemeinschaftskarten.add(new Gemeinschaftskarte04());
+        gemeinschaftskarten.add(new Gemeinschaftskarte05());
+        gemeinschaftskarten.add(new Gemeinschaftskarte06());
+        gemeinschaftskarten.add(new Gemeinschaftskarte07());  // Gefängnisfreikarte
+        gemeinschaftskarten.add(new Gemeinschaftskarte08());
+        gemeinschaftskarten.add(new Gemeinschaftskarte09());
+        gemeinschaftskarten.add(new Gemeinschaftskarte10());
+        gemeinschaftskarten.add(new Gemeinschaftskarte11());
+        gemeinschaftskarten.add(new Gemeinschaftskarte12());
+        gemeinschaftskarten.add(new Gemeinschaftskarte13());
+        gemeinschaftskarten.add(new Gemeinschaftskarte14());
+        gemeinschaftskarten.add(new Gemeinschaftskarte15());
+        gemeinschaftskarten.add(new Gemeinschaftskarte16());
+        Collections.shuffle(gemeinschaftskarten);
+        return gemeinschaftskarten;
 	}
-
-
+	
 	public static ArrayList<Feld> getfelder() {
 		
 		ArrayList<Feld> feldArray = new ArrayList<Feld>();

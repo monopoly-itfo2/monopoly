@@ -14,7 +14,8 @@ public class Ereigniskarte02 extends Karte{
 
     @Override
     public void effect() {
-        Verwalter.getInstance().getCurSpieler().setGefaengnisFrei(1);
+        Verwalter.getInstance().getCurSpieler().addGefaengnisFrei(1);
+        Verwalter.getInstance().disableGefängnisFrei(1);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
         MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
