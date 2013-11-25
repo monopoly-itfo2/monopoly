@@ -34,7 +34,7 @@ public final class Connector {
 
 	ObjectInputStream in;
 	ObjectOutputStream out;
-	List<Spieler> spielerliste = new ArrayList<Spieler>();
+	private static List<Spieler> spielerliste = new ArrayList<Spieler>();
 
 	public void login(Spieler spieler) {
 		sentEvent(new LoginEvent(spieler));

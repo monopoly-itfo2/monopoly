@@ -31,6 +31,7 @@ public class Verwalter {
 	boolean gewuerfelt;
 	boolean hypothekenauswahl = false;
 	Spieler spieler;
+	private Spieler meinSpieler;
 
 	// final EventBus bus = EventBus.getInstance();//temporary disabled
 
@@ -405,14 +406,14 @@ public class Verwalter {
 		gui.addLogMessage("Login...");
 		Connector.getInstance().ensureConnected();
 		
-		final Spieler spieler1 = new Spieler(name, 5000);
+		meinSpieler = new Spieler(name, 5000);
 		EventBus.getInstance().addUpdateSpielerlisteEventListener(new UpdateSpielerlisteEventListener() {
 			@Override
 			public void onEvent(UpdateSpielerlisteEvent event) {
 				List<Spieler> liste = Connector.getInstance().getSpielerliste();
 				System.out.println("UpdateSpielerListe Event");
 				for (Spieler s : liste) {
-					if (!s.equals(spieler1)) {
+					if (!s.getName().equals(meinSpieler.getName())) {
 						System.out.println("Spieler gefunden: " + s.getName());
 						s.addObserver(gui.getStatusPanel(1));
 						spielerListe.add(s);
@@ -423,12 +424,12 @@ public class Verwalter {
 			}
 		});
 		
-		Connector.getInstance().login(spieler1);
+		Connector.getInstance().login(meinSpieler);
 
-		spieler1.addObserver(gui.getStatusPanel(0));
-		spielerListe.add(spieler1);
-		gui.addSpieler(0, spieler1);
-		gui.getStatusPanel(0).update(spieler1, null);
+		meinSpieler.addObserver(gui.getStatusPanel(0));
+		spielerListe.add(meinSpieler);
+		gui.addSpieler(0, meinSpieler);
+		gui.getStatusPanel(0).update(meinSpieler, null);
 
 	}
 }
