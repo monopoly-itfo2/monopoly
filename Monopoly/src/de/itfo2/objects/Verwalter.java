@@ -4,13 +4,10 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import de.itfo2.event.EventBus;
@@ -73,7 +70,7 @@ public class Verwalter {
 	}
 
 	private void init() {
-
+		Connector.getInstance().ensureConnected();
 		spielfeld = new Spielfeld(InitSpielfeld.getfelder(),
 				InitSpielfeld.getEreigniskarten(),
 				InitSpielfeld.getEreigniskarten());
@@ -407,8 +404,6 @@ public class Verwalter {
 
 	public void login(String name) {
 		gui.addLogMessage("Login...");
-		Connector.getInstance().ensureConnected();
-		Random rnd = new Random();
 		
 		final Spieler spieler1 = new Spieler(name, 5000);
 		Connector.getInstance().login(spieler1);
@@ -422,15 +417,14 @@ public class Verwalter {
 			@Override
 			public void onEvent(UpdateSpielerlisteEvent event) {
 				List<Spieler> liste = Connector.getInstance().getSpielerliste();
+				System.out.println("UpdateSpielerListe Event");
 				for (Spieler s : liste) {
 					if (!s.equals(spieler1)) {
-						//nicht lesen ->
 						System.out.println("Spieler gefunden: " + s.getName());
 						s.addObserver(gui.getStatusPanel(1));
 						spielerListe.add(s);
 						gui.addSpieler(1, s);
 						gui.getStatusPanel(1).update(s, null);
-						// <- nicht lesen
 					}
 				}
 			}
