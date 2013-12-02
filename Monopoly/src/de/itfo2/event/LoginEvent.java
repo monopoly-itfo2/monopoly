@@ -11,7 +11,7 @@ public class LoginEvent implements MonopolyEvent {
 		player = spieler;
 	}
 	
-	public Spieler  getPlayer() {
+	public Spieler getPlayer() {
 		return player;
 	}
 }

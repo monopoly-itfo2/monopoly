@@ -1,9 +1,8 @@
 package de.itfo2.objects.cards;
 
 
-import java.util.ArrayList;
+import java.util.List;
 
-import de.itfo2.network.Connector;
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
@@ -26,7 +25,7 @@ public class Gemeinschaftskarte15 extends Karte{
          * 2. Aktuellem SPieler Geld geben, das da wäre: 200 * i
          */
         
-       ArrayList<Spieler> alleSpieler = Verwalter.getInstance().spielerListe;
+       List<Spieler> alleSpieler = Verwalter.getInstance().spielerListe;
        Spieler aktuellerSpieler = Verwalter.getInstance().getCurSpieler();
        int i = 0;
        for(Spieler spielerMussZahlen: alleSpieler){

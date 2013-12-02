@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -27,7 +28,7 @@ public class Verwalter {
 	private int wuerfelZahl;
 	public int pasch = 0;
 	public boolean spielAmLaufen = true;
-	public ArrayList<Spieler> spielerListe = new ArrayList<Spieler>();
+	public List<Spieler> spielerListe = new ArrayList<Spieler>();
 	private static Verwalter instance = null;
 	boolean meinZug = false;
 	Spielfeld spielfeld;
@@ -83,12 +84,17 @@ public class Verwalter {
 		bus.addRundenendeEventListener(new RundenendeEventListener() {
 			@Override
 			public void onEvent(RundenendeEvent event) {
+				System.out.println("rundenende von " + event.getSpielername()
+						+ " angekommen bei : " + meinSpieler.getName());
 				int spieleranzahl = spielerListe.size();
 				int meineListenPosition = 0;
 				int eventListenPosition = 0;
 				String eventSpielername = event.getSpielername();
 				for (int i = 0; i < spieleranzahl; i++) {
 					Spieler s = spielerListe.get(i);
+
+					System.out.println(s.getName() + " pos: " + i);
+
 					if (meinSpieler.getName().equals(s.getName())) {
 						meineListenPosition = i;
 					}
@@ -96,12 +102,14 @@ public class Verwalter {
 						eventListenPosition = i;
 					}
 				}
+				System.out.println("meine pos: " + meineListenPosition);
+				System.out.println("event pos: " + eventListenPosition);
 				if ((eventListenPosition + 1) % spieleranzahl == meineListenPosition) {
+					gui.addLogMessage("Ich bin am Zug!");
 					spielerAmZug = meinSpieler;
 					gui.entsperren(meinSpieler);
 				} else {
-					spielerAmZug = spielerListe.get((eventListenPosition + 1)
-							% spieleranzahl);
+					gui.addLogMessage(spielerAmZug.getName() + " ist am Zug!");
 				}
 			}
 		});
@@ -204,6 +212,9 @@ public class Verwalter {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				gui.addLogMessage("Spiel gestartet!");
+				Collections.sort(spielerListe);
+				System.out.println(spielerListe.get(0).getName());
+				System.out.println(spielerListe.get(1).getName());
 				spielerAmZug = spielerListe.get(0);
 				if (meinZug = spielerAmZug.getName().equals(
 						meinSpieler.getName())) {
@@ -215,7 +226,7 @@ public class Verwalter {
 		});
 
 		/*****************************************************
-		 * Nächster Spieler an der Reihe
+		 * Naechster Spieler an der Reihe
 		 *****************************************************/
 		gui.setNextButtonActionListener(new ActionListener() {
 			@Override
@@ -223,11 +234,12 @@ public class Verwalter {
 				gui.sperren(meinSpieler);
 				meinZug = !meinZug;
 				gui.updateHypothekButtons();
-				gui.addLogMessage("Naechster Spieler " // TODO Spielername
-														// herausfinden
-						+ " ist jetzt am Zug.");
-				EventBus.getInstance().sinkClientEvent(new RundenendeEvent());
+				spielerAmZug = getNaechterSpieler();
+				gui.addLogMessage(spielerAmZug.getName() + " ist jetzt am Zug.");
+				EventBus.getInstance().sinkClientEvent(
+						new RundenendeEvent(meinSpieler.getName()));
 			}
+
 		});
 		gui.setNextButtonEnabled(false);
 
@@ -239,8 +251,8 @@ public class Verwalter {
 			public void actionPerformed(ActionEvent e) {
 				gui.addLogMessage("Login...");
 				Connector.getInstance().login(meinSpieler);
+				spielerListe = Connector.getInstance().getSpielerliste();
 				meinSpieler.addObserver(gui.getStatusPanel(0));
-				spielerListe.add(meinSpieler);
 				gui.addSpieler(0, meinSpieler);
 				gui.getStatusPanel(0).update(meinSpieler, null);
 			}
@@ -336,6 +348,11 @@ public class Verwalter {
 		 * Hypothekenauswahl, falls man nicht bezahlen kann
 		 *****************************************************/
 		gui.setGrundstueckMouseListener();
+	}
+
+	protected Spieler getNaechterSpieler() {
+		int i = spielerListe.indexOf(meinSpieler);
+		return spielerListe.get((i+1)%spielerListe.size());
 	}
 
 	public int getSpieleranzahl() {

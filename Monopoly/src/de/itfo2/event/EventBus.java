@@ -33,14 +33,18 @@ public final class EventBus {
 	public void sinkNetworkEvent(Object event) {
 		if (event instanceof WuerfelEvent) {
 			triggerWuerfelEvent((WuerfelEvent) event);
-		} else if(event instanceof LoginEvent) {
+		} else if (event instanceof LoginEvent) {
 			triggerLoginEvent((LoginEvent) event);
-		} else if(event instanceof UpdateSpielerlisteEvent) {
+		} else if (event instanceof UpdateSpielerlisteEvent) {
 			triggerUpdateSpielerlisteEvent((UpdateSpielerlisteEvent) event);
+		} else if (event instanceof RundenendeEvent) {
+			triggerRundenendeEvent((RundenendeEvent) event);
 		}
 	}
 
 	public void sinkClientEvent(MonopolyEvent event) {
+		System.out.println("send Client Event:"
+				+ event.getClass().getSimpleName());
 		Connector.getInstance().sentEvent(event);
 	}
 
@@ -48,14 +52,16 @@ public final class EventBus {
 	public void addWuerfelEventListener(WuerfelEventListener listener) {
 		listerners_wuerfel.add(listener);
 	}
-	public void addUpdateSpielerlisteEventListener(UpdateSpielerlisteEventListener listener) {
+
+	public void addUpdateSpielerlisteEventListener(
+			UpdateSpielerlisteEventListener listener) {
 		listerners_spielerliste.add(listener);
 	}
-	
+
 	public void addRundenendeEventListener(RundenendeEventListener listener) {
 		listerners_rundenende.add(listener);
 	}
-	
+
 	// WuerfelEvent
 	private void triggerWuerfelEvent(WuerfelEvent event) {
 		for (int i = 0; i < listerners_wuerfel.size(); i++) {
@@ -63,11 +69,18 @@ public final class EventBus {
 		}
 	}
 	
+	// RundenendeEvent
+	private void triggerRundenendeEvent(RundenendeEvent event) {
+		for (int i = 0; i < listerners_rundenende.size(); i++) {
+			listerners_rundenende.get(i).onEvent(event);
+		}
+	}
+
 	// SpieleranmeldungEvent
 	private void triggerLoginEvent(LoginEvent event) {
 		Connector.getInstance().addSpieler(event.getPlayer());
 	}
-	
+
 	// SpieleranmeldungEvent
 	private void triggerUpdateSpielerlisteEvent(UpdateSpielerlisteEvent event) {
 		Connector.getInstance().setSpielerliste(event.getSpielerListe());

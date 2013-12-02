@@ -304,18 +304,14 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 	}
 
 	public void sperren(Spieler meinSpieler) {
-		spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
-				.setVisible(false);
-		spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
-				.setEnabled(false);
+//		spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
+//				.setVisible(false);
+//		spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
+//				.setEnabled(false);
 		setNextButtonEnabled(false);
 	}
 
 	public void entsperren(Spieler meinSpieler) {
-		spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
-				.setVisible(true);
-		spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
-				.setEnabled(true);
-		setNextButtonEnabled(true);
+		setRollDiceButtonEnabled(true);
 	}
 }
