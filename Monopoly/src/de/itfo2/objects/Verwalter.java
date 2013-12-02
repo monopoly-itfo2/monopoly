@@ -188,8 +188,9 @@ public class Verwalter {
 				if (meinZug = spielerListe.get(0).getName()
 						.equals(meinSpieler.getName())) {
 					gui.setRollDiceButtonEnabled(true);
-					gui.setStartButtonEnabled(false);
 				}
+				gui.setStartButtonEnabled(false);
+				gui.addLogMessage(spielerListe.get(0).getName()+" startet.");
 			}
 		});
 
@@ -453,6 +454,13 @@ public class Verwalter {
 						}
 					}
 				});
+		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Connector.getInstance().login(meinSpieler);
 

@@ -65,6 +65,6 @@ public class StatusPanel extends PicturePanel implements Observer{
         Spieler spieler = (Spieler)o;
         //lab_name.setForeground(spieler.getColor());
         lab_name.setText(spieler.getName());
-        lab_geld.setText(""+spieler.getKonto()+"€");
+        lab_geld.setText(""+spieler.getKonto()+" EUR");
     }
 }
