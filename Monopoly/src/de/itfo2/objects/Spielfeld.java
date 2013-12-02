@@ -27,11 +27,26 @@ public class Spielfeld {
     public ArrayList<Karte> getGemeinschaftskarten() {
         return gemeinschaftskarten;
     }
+    
+    public void removeGemeinschaftsskarte(int pointer) {
+    	gemeinschaftskarten.remove(pointer);
+    }
 
     public ArrayList<Karte> getEreigniskarten() {
         return ereigniskarten;
     }
+    
+    public void removeEreigniskarte(int pointer) {
+    	ereigniskarten.remove(pointer);
+    }
 
+    public void printAllEreigniskarten() {
+    	for(Karte karte: ereigniskarten) {
+    		
+    		System.out.println("Print Ereigniskarten "+karte.getText());
+    	}
+    }
+    
     public void addFreiParkenGeld(int betrag){
         ((Freiparken)(felder.get(20))).addMoney(betrag);
     }

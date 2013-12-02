@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import de.itfo2.event.EventBus;
 import de.itfo2.fields.*;
+import de.itfo2.objects.cards.Karte;
 import de.itfo2.ui.MonopolyGUI;
 import de.itfo2.util.GuiFeldMouseListener;
 
@@ -127,7 +128,7 @@ public class Verwalter {
                     // Ziehen
                     gui.rueckeVor(wuerfelZahl);
                     spieler.get(spielerAmZug).addPlatz(wuerfelZahl);
-//                    spieler.get(spielerAmZug).setPlatz(wuerfelZahl);
+//                    spieler.get(spielerAmZug).setPlatz(2);
 
                     // Feld behandeln
 
@@ -197,8 +198,7 @@ public class Verwalter {
 		gui.setEreigniskartenButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//An dieser Stelle näöhste Woche weitermachen, wir wollen die Ereigniskarten in Reinfolge bringen ( für ALLE SPieler) und die Gefängisfreikarten entfernen.
-                getSpielfeld().getEreigniskarten().get(spielfeld.getEreigniskartenPointer()).effect();
+                spielfeld.getEreigniskarten().get(spielfeld.getEreigniskartenPointer()).effect();
                 spielfeld.setEreigniskartenPointer((spielfeld.getEreigniskartenPointer()+1)%getSpielfeld().getEreigniskarten().size());
                 gui.setEreigniskartenButtonEnabled(false);
 
@@ -380,7 +380,7 @@ public class Verwalter {
         }
         else{
             if(critical){
-                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine GrundstÃ¼cke fÃ¼r Hypotheken." );
+                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine Grundstücke für Hypotheken." );
                 gui.addLogMessage(getCurSpieler().getName() + " kann seine Schulden nicht mehr bezahlen." );
                 gui.addLogMessage(getCurSpieler().getName() + " scheidet aus dem Spiel aus. (noch zu implementieren)");
             }
@@ -393,17 +393,35 @@ public class Verwalter {
     }
     
     public void disableGefängnisFrei(int typ) {
-    	System.out.println("Typ "+typ);
+
+    	
+//    	System.out.println("Typ "+typ);
 //    	spielfeld.ereigniskarten.remove(0);
     	// Löscht erst beim zweiten mal
-    	switch(typ) {
-	    	case 1: spielfeld.ereigniskarten.remove(0);
+    	spielfeld.printAllEreigniskarten();
+    	
+    	
+    	switch(typ) {//Das Problem ist, das die Variablen aus dem Falschem Array gelöscht werden
+	    	case 0:
+//	    			if(spielfeld.ereigniskarten.isEmpty() == false){
+	    				spielfeld.removeEreigniskarte(spielfeld.getEreigniskartenPointer());
+//	    			}
 	    			System.out.println(spielfeld.getEreigniskartenPointer());
 	    			break;
-	    	case 2: spielfeld.gemeinschaftskarten.remove(spielfeld.getGemeinschaftskartenPointer());break;
+	    	case 1: spielfeld.gemeinschaftskarten.remove(spielfeld.getGemeinschaftskartenPointer());
+	    			break;
 	    	default:System.out.println("nur eins oder zwei, du depp!");
     	}
     	
     	
+    	
     }
+    public void testGefängnisFrei ()
+	{
+    	for(Karte karte:spielfeld.ereigniskarten){
+    		System.out.println("###############");
+    		System.out.println(karte.getText());
+    	}
+    	
+	}
 }
