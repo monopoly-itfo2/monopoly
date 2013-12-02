@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import de.itfo2.network.Connector;
+
 public class MonopolyServer extends Thread {
 	Socket clientSocket = null;
+	private boolean error;
 	public void run(){
         ServerSocket serverSocket = null;
 
@@ -14,20 +17,20 @@ public class MonopolyServer extends Thread {
             serverSocket = new ServerSocket(28000);
         } catch (IOException e) {
             System.err.println("Could not listen on port: 28000");
+            error = true;
         }
 
-        while(listeningSocket){
+        while(listeningSocket && !error){
         	try{
      			clientSocket = serverSocket.accept();
                 System.out.println("accepted: " +clientSocket.getInetAddress());
         	}catch (IOException e) {
-				System.err.println(e);
+				break;
 			}
          }   
     }
 	
 	public Socket getClientSocket(){
-//		System.out.println("socket was requested");
 		return clientSocket;
 	}
 }

@@ -57,16 +57,17 @@ public class Verwalter {
 		ersterWert = wuerfel.getWert();
 		zweiterWert = wuerfel.getWert();
 
-		pasch = (ersterWert == zweiterWert) ? pasch+1 : 0;
-		
+		pasch = (ersterWert == zweiterWert) ? pasch + 1 : 0;
+
 		wuerfelZahl = ersterWert + zweiterWert;
-		
+
 		gewuerfelt = true;
 		gui.setRollDiceButtonEnabled(false);
-		EventBus.getInstance().sinkClientEvent(new WuerfelEvent(meinSpieler.getName(), wuerfelZahl));
+		EventBus.getInstance().sinkClientEvent(
+				new WuerfelEvent(meinSpieler.getName(), wuerfelZahl));
 	}
-	
-	public Spieler getCurSpieler(){
+
+	public Spieler getCurSpieler() {
 		return spielerAmZug;
 	}
 
@@ -86,24 +87,25 @@ public class Verwalter {
 				int meineListenPosition = 0;
 				int eventListenPosition = 0;
 				String eventSpielername = event.getSpielername();
-				for(int i = 0; i < spieleranzahl; i++){
+				for (int i = 0; i < spieleranzahl; i++) {
 					Spieler s = spielerListe.get(i);
 					if (meinSpieler.getName().equals(s.getName())) {
 						meineListenPosition = i;
 					}
-					if (eventSpielername.equals(s.getName())){
+					if (eventSpielername.equals(s.getName())) {
 						eventListenPosition = i;
 					}
 				}
-				if( ( eventListenPosition + 1 ) % spieleranzahl == meineListenPosition){
+				if ((eventListenPosition + 1) % spieleranzahl == meineListenPosition) {
 					spielerAmZug = meinSpieler;
 					gui.entsperren(meinSpieler);
 				} else {
-					spielerAmZug = spielerListe.get(( eventListenPosition + 1 ) % spieleranzahl);
+					spielerAmZug = spielerListe.get((eventListenPosition + 1)
+							% spieleranzahl);
 				}
 			}
 		});
-		
+
 		bus.addWuerfelEventListener(new WuerfelEventListener() {
 			@Override
 			public void onEvent(WuerfelEvent event) {
@@ -116,8 +118,25 @@ public class Verwalter {
 						+ " gewuerfelt.");
 			}
 		});
+
+		bus.addUpdateSpielerlisteEventListener(new UpdateSpielerlisteEventListener() {
+			@Override
+			public void onEvent(UpdateSpielerlisteEvent event) {
+				List<Spieler> liste = Connector.getInstance().getSpielerliste();
+				System.out.println("UpdateSpielerListe Event");
+				for (Spieler s : liste) {
+					if (!s.getName().equals(meinSpieler.getName())) {
+						System.out.println("Spieler gefunden: " + s.getName());
+						s.addObserver(gui.getStatusPanel(1));
+						spielerListe.add(s);
+						gui.addSpieler(1, s);
+						gui.getStatusPanel(1).update(s, null);
+					}
+				}
+			}
+		});
 	}
-	
+
 	public void initGuiButtonFunctions() {
 
 		/*****************************************************
@@ -186,12 +205,12 @@ public class Verwalter {
 			public void actionPerformed(ActionEvent e) {
 				gui.addLogMessage("Spiel gestartet!");
 				spielerAmZug = spielerListe.get(0);
-				if (meinZug = spielerAmZug.getName()
-						.equals(meinSpieler.getName())) {
+				if (meinZug = spielerAmZug.getName().equals(
+						meinSpieler.getName())) {
 					gui.setRollDiceButtonEnabled(true);
 				}
 				gui.setStartButtonEnabled(false);
-				gui.addLogMessage(spielerListe.get(0).getName()+" startet.");
+				gui.addLogMessage(spielerListe.get(0).getName() + " startet.");
 			}
 		});
 
@@ -218,8 +237,12 @@ public class Verwalter {
 		gui.setLoginButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Öffne Fenster mit Spielername, Farbe
-				gui.createLoginDialog();
+				gui.addLogMessage("Login...");
+				Connector.getInstance().login(meinSpieler);
+				meinSpieler.addObserver(gui.getStatusPanel(0));
+				spielerListe.add(meinSpieler);
+				gui.addSpieler(0, meinSpieler);
+				gui.getStatusPanel(0).update(meinSpieler, null);
 			}
 		});
 
@@ -432,43 +455,11 @@ public class Verwalter {
 	}
 
 	public void login(String name) {
-		gui.addLogMessage("Login...");
-		Connector.getInstance().ensureConnected();
-
 		meinSpieler = new Spieler(name, 5000);
-		EventBus.getInstance().addUpdateSpielerlisteEventListener(
-				new UpdateSpielerlisteEventListener() {
-					@Override
-					public void onEvent(UpdateSpielerlisteEvent event) {
-						List<Spieler> liste = Connector.getInstance()
-								.getSpielerliste();
-						System.out.println("UpdateSpielerListe Event");
-						for (Spieler s : liste) {
-							if (!s.getName().equals(meinSpieler.getName())) {
-								System.out.println("Spieler gefunden: "
-										+ s.getName());
-								s.addObserver(gui.getStatusPanel(1));
-								spielerListe.add(s);
-								gui.addSpieler(1, s);
-								gui.getStatusPanel(1).update(s, null);
-							}
-						}
-					}
-				});
-		
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	}
 
-		Connector.getInstance().login(meinSpieler);
-
-		meinSpieler.addObserver(gui.getStatusPanel(0));
-		spielerListe.add(meinSpieler);
-		gui.addSpieler(0, meinSpieler);
-		gui.getStatusPanel(0).update(meinSpieler, null);
-
+	public void connectionEstablished() {
+		gui.addLogMessage("Connected");
+		gui.createLoginDialog();
 	}
 }

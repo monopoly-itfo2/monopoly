@@ -282,7 +282,7 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 	}
 
 	public void createLoginDialog() {
-		JDialog dialog = new JDialog(spielfeld, "Login");
+		final JDialog dialog = new JDialog(spielfeld, "Login");
 		dialog.setSize(new Dimension(300, 200));
 		final JTextField fieldName = new JTextField();
 		fieldName.setSize(200, 30);
@@ -292,6 +292,7 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Verwalter.getInstance().login(fieldName.getText());
+				dialog.dispose();
 			}
 		});
 

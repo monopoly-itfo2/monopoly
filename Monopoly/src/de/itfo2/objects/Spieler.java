@@ -4,7 +4,7 @@ import java.awt.*;
 import java.io.Serializable;
 import java.util.Observable;
 
-public class Spieler extends Observable implements Serializable{
+public class Spieler extends Observable implements Serializable, Comparable<Spieler>{
 
 	private String name;
 	private int konto;
@@ -69,5 +69,15 @@ public class Spieler extends Observable implements Serializable{
 
 	public void setGefaengnisFrei(int gefaengnisFrei) {
 		this.gefaengnisFrei = gefaengnisFrei;
+	}
+
+	@Override
+	public int compareTo(Spieler compare) {
+		return name.compareTo(compare.name);
+	}
+	
+	@Override
+	public boolean equals(Object equal) {
+		return (equal instanceof Spieler) ? name.equals(((Spieler) equal).name):false;
 	}
 }
