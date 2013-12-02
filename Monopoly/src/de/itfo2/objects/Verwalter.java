@@ -307,18 +307,23 @@ public class Verwalter {
         }
     }
 
-    public int getAlleHaeuser(Spieler aktuellerSpieler) {
-        int anzahlHauser = 0;
+    public int[] getAlleHaeuser(Spieler aktuellerSpieler) {
+        int[] gebäude = new int[2];//0 sind häuser, 1 sind hotels
+        gebäude[0] = 0;
+        gebäude[1] = 0;
         for(int i = 0; i < 40; i++){
             Strasse strasse = (Strasse)spielfeld.getFeld(i);
             if(strasse != null){
-                Spieler besitzer = strasse.getBesitzer();
                 if(aktuellerSpieler.equals(aktuellerSpieler)){
-                    anzahlHauser += strasse.getMietePointer();
+                	if(strasse.getMietePointer()<5){
+                		gebäude[0] += strasse.getMietePointer();
+                	}else{
+                		gebäude[1]++;
+                	}
                 }
             }
         }
-        return anzahlHauser;
+        return gebäude;
     }
 
     public void checkAlleFarben(){

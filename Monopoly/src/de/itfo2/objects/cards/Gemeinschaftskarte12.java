@@ -1,6 +1,5 @@
 package de.itfo2.objects.cards;
 
-
 import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
 

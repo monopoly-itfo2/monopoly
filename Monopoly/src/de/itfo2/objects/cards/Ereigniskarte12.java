@@ -7,7 +7,7 @@ import de.itfo2.ui.MonopolyGUI;
 public class Ereigniskarte12 extends Karte{
 
 
-final String text = "Lass alle deine Haeuser renovieren. Zahle an die Bank, fuer jedes Haus 500 DM, fuer jedes Hotel 2000 DM";
+	final String text = "Lass alle deine Haeuser renovieren. Zahle an die Bank, fuer jedes Haus 500 DM, fuer jedes Hotel 2000 DM";
     int anzahlHotel = 0;
     int anzahlHaeuser = 0;
     int renovierungsKosten = 0;
@@ -18,20 +18,13 @@ final String text = "Lass alle deine Haeuser renovieren. Zahle an die Bank, fuer
 
     @Override
     public void effect() {
-//        Verwalter.getInstance().getCurSpieler().addGeld(-3000);
-//        TODO Zahle an die Bank, fuer jedes Haus 500 DM, fuer jedes Hotel 2000 DM
     	
-    	//Warum wird diese Variable nicht genutzt ? Fabian
-    	int anzahlHaeuser = Verwalter.getInstance().getAlleHaeuser(Verwalter.getInstance().getCurSpieler());
-    	if(anzahlHaeuser > 5){
-    		this.anzahlHaeuser = 5;
-    		anzahlHotel = anzahlHaeuser - 5;
-    	}else{
-    		anzahlHaeuser = anzahlHaeuser;
-    	}
-    	System.out.println("Häuser: "+anzahlHaeuser +" Hotels: "+anzahlHotel);
-    	renovierungsKosten = ((500 * anzahlHaeuser)+ (2000 * anzahlHotel));
+    	int[] anzahlGebäude = Verwalter.getInstance().getAlleHaeuser(Verwalter.getInstance().getCurSpieler());
+
+    	System.out.println("Häuser: "+anzahlGebäude[0] +" Hotels: "+anzahlGebäude[1]);
+    	renovierungsKosten = ((500 * anzahlGebäude[0])+ (2000 * anzahlGebäude[1]));
     	Verwalter.getInstance().getCurSpieler().addGeld(-renovierungsKosten);
+    	
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
         MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);

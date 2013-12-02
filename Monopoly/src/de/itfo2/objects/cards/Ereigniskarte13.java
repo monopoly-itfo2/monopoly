@@ -1,15 +1,14 @@
 package de.itfo2.objects.cards;
 
-
 import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
 
 public class Ereigniskarte13 extends Karte{
 
+    final String text = "Du wirst zu Strassenausbesserungsarbeiten herangezogen. Zahle fuer deine Haeuser und Hotels DM 800 pro Haus und DM 2300 je Hotel";
     int anzahlHotel = 0;
     int anzahlHaeuser = 0;
     int renovierungsKosten = 0;
-    final String text = "Du wirst zu Strassenausbesserungsarbeiten herangezogen. Zahle fuer deine Haeuser und Hotels DM 800 pro Haus und DM 2300 je Hotel";
 
 
     public Ereigniskarte13() {
@@ -18,15 +17,10 @@ public class Ereigniskarte13 extends Karte{
 
     @Override
     public void effect() {
-    	int anzahlHaeuser = Verwalter.getInstance().getAlleHaeuser(Verwalter.getInstance().getCurSpieler());
-    	if(anzahlHaeuser > 5){
-    		this.anzahlHaeuser = 5;
-    		anzahlHotel = anzahlHaeuser - 5;
-    	}else{
-    		anzahlHaeuser = anzahlHaeuser;
-    	}
-    	System.out.println("Häuser: "+anzahlHaeuser +" Hotels: "+anzahlHotel);
-    	renovierungsKosten = ((800 * anzahlHaeuser)+ (2300 * anzahlHotel));
+    	int[] anzahlGebäude = Verwalter.getInstance().getAlleHaeuser(Verwalter.getInstance().getCurSpieler());
+
+    	System.out.println("Häuser: "+anzahlGebäude[0] +" Hotels: "+anzahlGebäude[1]);
+    	renovierungsKosten = ((800 * anzahlGebäude[0])+ (2300 * anzahlGebäude[1]));
     	Verwalter.getInstance().getCurSpieler().addGeld(-renovierungsKosten);
 
         System.out.println(text);
