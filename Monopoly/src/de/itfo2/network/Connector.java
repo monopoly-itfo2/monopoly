@@ -29,7 +29,7 @@ public final class Connector {
 		return INSTANCE;
 	}
 
-	protected Connector() {
+	private Connector() {
 	}
 
 	ObjectInputStream in;

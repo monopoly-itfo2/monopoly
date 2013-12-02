@@ -7,7 +7,7 @@ import de.itfo2.objects.Spieler;
 public interface MonopolyGUIInterface {
     void rueckeVor(int anzahl) throws IOException;
     void rueckeAuf(int platz) throws IOException;
-    void geheInsGefaengnis(int spieler);
+    void geheInsGefaengnis(Spieler spieler);
     void kaufeFeld();
     void baueHaus();
     void wuerfeln();

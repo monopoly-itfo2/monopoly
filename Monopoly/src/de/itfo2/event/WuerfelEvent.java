@@ -17,11 +17,11 @@ public class WuerfelEvent implements MonopolyEvent {
 		value = wert;
 	}
 	
-	public String getPlayer() {
+	public String getSpielername() {
 		return player;
 	}
 
-	public int getValue() {
+	public int getWert() {
 		return value;
 	}
 	

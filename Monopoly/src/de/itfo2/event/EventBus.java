@@ -52,7 +52,7 @@ public final class EventBus {
 		listerners_spielerliste.add(listener);
 	}
 	
-	public void addURundenendeEventListener(RundenendeEventListener listener) {
+	public void addRundenendeEventListener(RundenendeEventListener listener) {
 		listerners_rundenende.add(listener);
 	}
 	

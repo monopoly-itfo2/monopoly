@@ -10,8 +10,12 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import de.itfo2.event.EventBus;
+import de.itfo2.event.RundenendeEvent;
 import de.itfo2.event.UpdateSpielerlisteEvent;
+import de.itfo2.event.WuerfelEvent;
+import de.itfo2.event.listeners.RundenendeEventListener;
 import de.itfo2.event.listeners.UpdateSpielerlisteEventListener;
+import de.itfo2.event.listeners.WuerfelEventListener;
 import de.itfo2.fields.Ereignisfeld;
 import de.itfo2.fields.Gemeinschaftsfeld;
 import de.itfo2.fields.Grundstueck;
@@ -25,19 +29,17 @@ public class Verwalter {
 	public boolean spielAmLaufen = true;
 	public ArrayList<Spieler> spielerListe = new ArrayList<Spieler>();
 	private static Verwalter instance = null;
-	int spielerAmZug = -1;
+	boolean meinZug = false;
 	Spielfeld spielfeld;
 	MonopolyGUI gui = MonopolyGUI.getInstance();
 	boolean gewuerfelt;
 	boolean hypothekenauswahl = false;
-	Spieler spieler;
 	private Spieler meinSpieler;
-
-	// final EventBus bus = EventBus.getInstance();//temporary disabled
+	private Spieler spielerAmZug;
 
 	public Verwalter() {
 		init();
-
+		initListeners();
 		initGuiButtonFunctions();
 	}
 
@@ -55,44 +57,71 @@ public class Verwalter {
 		ersterWert = wuerfel.getWert();
 		zweiterWert = wuerfel.getWert();
 
-		if (ersterWert == zweiterWert)
-			pasch++;
-		else
-			pasch = 0;
-
+		pasch = (ersterWert == zweiterWert) ? pasch+1 : 0;
+		
 		wuerfelZahl = ersterWert + zweiterWert;
-		// wuerfelZahl = 2;
-		gui.addLogMessage(getCurSpieler().getName() + " hat eine "
-				+ wuerfelZahl + " gewürfelt. (" + ersterWert + " + "
-				+ zweiterWert + ")");
+		
 		gewuerfelt = true;
 		gui.setRollDiceButtonEnabled(false);
+		EventBus.getInstance().sinkClientEvent(new WuerfelEvent(meinSpieler.getName(), wuerfelZahl));
+	}
+	
+	public Spieler getCurSpieler(){
+		return spielerAmZug;
 	}
 
 	private void init() {
-
 		spielfeld = new Spielfeld(InitSpielfeld.getfelder(),
 				InitSpielfeld.getEreigniskarten(),
 				InitSpielfeld.getEreigniskarten());
 		gui.setSpielfeld(spielfeld);
 	}
 
-	public Spieler getCurSpieler() {
-		return spielerListe.get(spielerAmZug);
+	private void initListeners() {
+		EventBus bus = EventBus.getInstance();
+		bus.addRundenendeEventListener(new RundenendeEventListener() {
+			@Override
+			public void onEvent(RundenendeEvent event) {
+				int spieleranzahl = spielerListe.size();
+				int meineListenPosition = 0;
+				int eventListenPosition = 0;
+				String eventSpielername = event.getSpielername();
+				for(int i = 0; i < spieleranzahl; i++){
+					Spieler s = spielerListe.get(i);
+					if (meinSpieler.getName().equals(s.getName())) {
+						meineListenPosition = i;
+					}
+					if (eventSpielername.equals(s.getName())){
+						eventListenPosition = i;
+					}
+				}
+				if( ( eventListenPosition + 1 ) % spieleranzahl == meineListenPosition){
+					spielerAmZug = meinSpieler;
+					gui.entsperren(meinSpieler);
+				} else {
+					spielerAmZug = spielerListe.get(( eventListenPosition + 1 ) % spieleranzahl);
+				}
+			}
+		});
+		
+		bus.addWuerfelEventListener(new WuerfelEventListener() {
+			@Override
+			public void onEvent(WuerfelEvent event) {
+				String spielername = event.getSpielername();
+				int wert = event.getWert();
+				if (spielerAmZug.getName().equals(spielername)) {
+					gui.rueckeVor(wert);
+				}
+				gui.addLogMessage(spielername + " hat eine " + wert
+						+ " gewuerfelt.");
+			}
+		});
 	}
-
-	public Spieler getNextSpieler() {
-		return spielerListe.get((spielerAmZug + 1) % getSpieleranzahl());
-	}
-
-	public int getSpielerAmZug() {
-		return spielerAmZug;
-	}
-
+	
 	public void initGuiButtonFunctions() {
 
 		/*****************************************************
-		 * Regelt, was beim würfeln passiert
+		 * Regelt, was beim wuerfeln passiert *
 		 *****************************************************/
 		gui.setRollDiceButtonActionListener(new ActionListener() {
 			@Override
@@ -100,24 +129,23 @@ public class Verwalter {
 				wuerfeln();
 				// TODO curSPieler = spieler.get(spielerAmZug);
 				// hier die Rune rein
-				// System.out.println("Sopieler an der Reihe: "+spielerAmZug);
+				// System.out.println("spieler an der Reihe: "+spielerAmZug);
 				if (pasch == 3) {// TODO spieler.get(spielerAmZug) ersetzen durh
 									// curSpieler am Anfang jeder "Schleife"
 					// geheInsGefaengnis
-					spielerListe.get(spielerAmZug).setImGefaengnis(true);
-					gui.geheInsGefaengnis(spielerAmZug);
+					meinSpieler.setImGefaengnis(true);
+					gui.geheInsGefaengnis(meinSpieler);
 					pasch = 0;
 
 				} else {
 
 					// Ziehen
 					gui.rueckeVor(wuerfelZahl);
-					spielerListe.get(spielerAmZug).addPlatz(wuerfelZahl);
+					meinSpieler.addPlatz(wuerfelZahl);
 
 					// Feld behandeln
 
-					int actualPlayerPosition = spielerListe.get(spielerAmZug)
-							.getPlatz();
+					int actualPlayerPosition = meinSpieler.getPlatz();
 
 					try {
 						spielfeld.getFeld(actualPlayerPosition)
@@ -132,8 +160,8 @@ public class Verwalter {
 
 					// wenn ein Pasch gewuerfelt wurde
 				}
-				if (spielfeld.getFeld(getCurSpieler().getPlatz()) instanceof Ereignisfeld
-						|| spielfeld.getFeld(getCurSpieler().getPlatz()) instanceof Gemeinschaftsfeld) {
+				if (spielfeld.getFeld(spielerAmZug.getPlatz()) instanceof Ereignisfeld
+						|| spielfeld.getFeld(spielerAmZug.getPlatz()) instanceof Gemeinschaftsfeld) {
 					gui.setNextButtonEnabled(false);
 					gui.setRollDiceButtonEnabled(false);
 				} else {
@@ -157,9 +185,11 @@ public class Verwalter {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				gui.addLogMessage("Spiel gestartet!");
-				spielerAmZug = 0;
-				gui.setRollDiceButtonEnabled(true);
-				gui.setStartButtonEnabled(false);
+				if (meinZug = spielerListe.get(0).getName()
+						.equals(meinSpieler.getName())) {
+					gui.setRollDiceButtonEnabled(true);
+					gui.setStartButtonEnabled(false);
+				}
 			}
 		});
 
@@ -169,16 +199,13 @@ public class Verwalter {
 		gui.setNextButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				gui.naechsterSpieler();
-				spielerAmZug = (spielerAmZug + 1) % getSpieleranzahl();
+				gui.sperren(meinSpieler);
+				meinZug = !meinZug;
 				gui.updateHypothekButtons();
-				gui.setRollDiceButtonEnabled(true);
-				gui.addLogMessage(getCurSpieler().getName()
+				gui.addLogMessage("Naechster Spieler " // TODO Spielername
+														// herausfinden
 						+ " ist jetzt am Zug.");
-				if (pasch != 0)
-					gui.setNextButtonEnabled(true);
-				else
-					gui.setRollDiceButtonEnabled(true);
+				EventBus.getInstance().sinkClientEvent(new RundenendeEvent());
 			}
 		});
 		gui.setNextButtonEnabled(false);
@@ -189,7 +216,7 @@ public class Verwalter {
 		gui.setLoginButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//�ffne Fenster mit Spielername, Farbe
+				// �ffne Fenster mit Spielername, Farbe
 				gui.createLoginDialog();
 			}
 		});
@@ -238,12 +265,12 @@ public class Verwalter {
 		gui.setBuyButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Grundstueck gr = (Grundstueck) spielfeld
-						.getFeld(getCurSpieler().getPlatz());
-				if (getCurSpieler().getKonto() >= gr.getPreis()) {
-					getCurSpieler().addGeld(-gr.getPreis());
-					gr.setBesitzer(getCurSpieler());
-					gui.addLogMessage(getCurSpieler().getName() + " kaufte "
+				Grundstueck gr = (Grundstueck) spielfeld.getFeld(spielerAmZug
+						.getPlatz());
+				if (spielerAmZug.getKonto() >= gr.getPreis()) {
+					spielerAmZug.addGeld(-gr.getPreis());
+					gr.setBesitzer(spielerAmZug);
+					gui.addLogMessage(spielerAmZug.getName() + " kaufte "
 							+ "\"" + gr.getBezeichnung() + "\"");
 					gui.kaufeFeld();
 					checkAlleFarben();
@@ -261,12 +288,12 @@ public class Verwalter {
 		gui.setBuildHouseButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Strasse st = (Strasse) spielfeld.getFeld(getCurSpieler()
+				Strasse st = (Strasse) spielfeld.getFeld(spielerAmZug
 						.getPlatz());
-				if (getCurSpieler().getKonto() >= st.getHausKosten()) {
-					getCurSpieler().addGeld(-st.getHausKosten());
+				if (spielerAmZug.getKonto() >= st.getHausKosten()) {
+					spielerAmZug.addGeld(-st.getHausKosten());
 					st.addMietePointer();
-					gui.addLogMessage(getCurSpieler().getName()
+					gui.addLogMessage(spielerAmZug.getName()
 							+ " kaufte ein Haus auf " + st.getBezeichnung());
 					gui.baueHaus();
 				} else {
@@ -310,7 +337,7 @@ public class Verwalter {
 	}
 
 	public int calculateToGo(int feldPosition) {
-		int aktuellePosition = getCurSpieler().getPlatz();
+		int aktuellePosition = spielerAmZug.getPlatz();
 		if (aktuellePosition > feldPosition) {
 			return ((39 - aktuellePosition) + feldPosition);
 		} else {
@@ -354,7 +381,7 @@ public class Verwalter {
 						}
 						if (((Strasse) spielfeld.getFeld(i)).getBesitzer() != null) {
 							if (!((Strasse) spielfeld.getFeld(i)).getBesitzer()
-									.equals(getCurSpieler())) {
+									.equals(spielerAmZug)) {
 								alleFarben = false;
 							}
 						}
@@ -372,7 +399,7 @@ public class Verwalter {
 			if (spielfeld.getFeld(i) instanceof Grundstueck) {
 				Grundstueck gr = (Grundstueck) spielfeld.getFeld(i);
 				if (gr.getBesitzer() != null) {
-					if (gr.getBesitzer().equals(getCurSpieler())) {
+					if (gr.getBesitzer().equals(spielerAmZug)) {
 						if (!gr.isBelastet()) {
 							verfuegbar = true;
 							nochVerfuegbar += gr.getBezeichnung() + ", ";
@@ -387,14 +414,14 @@ public class Verwalter {
 			gui.addLogMessage(nochVerfuegbar);
 		} else {
 			if (critical) {
-				gui.addLogMessage(getCurSpieler().getName()
+				gui.addLogMessage(spielerAmZug.getName()
 						+ " Du hast keine Grundstücke für Hypotheken.");
-				gui.addLogMessage(getCurSpieler().getName()
+				gui.addLogMessage(spielerAmZug.getName()
 						+ " kann seine Schulden nicht mehr bezahlen.");
-				gui.addLogMessage(getCurSpieler().getName()
+				gui.addLogMessage(spielerAmZug.getName()
 						+ " scheidet aus dem Spiel aus. (noch zu implementieren)");
 			} else {
-				gui.addLogMessage(getCurSpieler().getName()
+				gui.addLogMessage(spielerAmZug.getName()
 						+ " Du hast keine Grundstücke für Hypotheken.");
 				setHypothekenauswahl(false, false);
 			}
@@ -405,25 +432,28 @@ public class Verwalter {
 	public void login(String name) {
 		gui.addLogMessage("Login...");
 		Connector.getInstance().ensureConnected();
-		
+
 		meinSpieler = new Spieler(name, 5000);
-		EventBus.getInstance().addUpdateSpielerlisteEventListener(new UpdateSpielerlisteEventListener() {
-			@Override
-			public void onEvent(UpdateSpielerlisteEvent event) {
-				List<Spieler> liste = Connector.getInstance().getSpielerliste();
-				System.out.println("UpdateSpielerListe Event");
-				for (Spieler s : liste) {
-					if (!s.getName().equals(meinSpieler.getName())) {
-						System.out.println("Spieler gefunden: " + s.getName());
-						s.addObserver(gui.getStatusPanel(1));
-						spielerListe.add(s);
-						gui.addSpieler(1, s);
-						gui.getStatusPanel(1).update(s, null);
+		EventBus.getInstance().addUpdateSpielerlisteEventListener(
+				new UpdateSpielerlisteEventListener() {
+					@Override
+					public void onEvent(UpdateSpielerlisteEvent event) {
+						List<Spieler> liste = Connector.getInstance()
+								.getSpielerliste();
+						System.out.println("UpdateSpielerListe Event");
+						for (Spieler s : liste) {
+							if (!s.getName().equals(meinSpieler.getName())) {
+								System.out.println("Spieler gefunden: "
+										+ s.getName());
+								s.addObserver(gui.getStatusPanel(1));
+								spielerListe.add(s);
+								gui.addSpieler(1, s);
+								gui.getStatusPanel(1).update(s, null);
+							}
+						}
 					}
-				}
-			}
-		});
-		
+				});
+
 		Connector.getInstance().login(meinSpieler);
 
 		meinSpieler.addObserver(gui.getStatusPanel(0));
