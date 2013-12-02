@@ -185,7 +185,8 @@ public class Verwalter {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				gui.addLogMessage("Spiel gestartet!");
-				if (meinZug = spielerListe.get(0).getName()
+				spielerAmZug = spielerListe.get(0);
+				if (meinZug = spielerAmZug.getName()
 						.equals(meinSpieler.getName())) {
 					gui.setRollDiceButtonEnabled(true);
 				}
