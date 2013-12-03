@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import de.itfo2.network.Connector;
-
 public class MonopolyServer extends Thread {
 	Socket clientSocket = null;
 	private boolean error;

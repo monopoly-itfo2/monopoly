@@ -1,8 +1,8 @@
 package de.itfo2.ui;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Observable;
@@ -16,12 +16,14 @@ import de.itfo2.fields.Feld;
 import de.itfo2.fields.Freiparken;
 import de.itfo2.fields.Grundstueck;
 import de.itfo2.fields.Strasse;
-import de.itfo2.objects.Spieler;
-import de.itfo2.objects.Verwalter;
 
 public class GUIFeld extends PicturePanel implements Observer {
 
-    private JLabel labelName;
+    /**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 582024066742884484L;
+	private JLabel labelName;
     private JLabel labelPreis;
     private JLabel labelHypothek;
     private MenuPanel menuPanel;

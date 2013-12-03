@@ -1,13 +1,24 @@
 package de.itfo2.ui;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 public class ChatPanel extends JPanel {
 
-    JTextField textfield;
+    /**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -4183109407028539227L;
+	JTextField textfield;
     JTextArea textarea;
     JScrollPane scrollpanel;
 

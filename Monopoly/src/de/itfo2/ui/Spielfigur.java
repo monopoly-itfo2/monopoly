@@ -1,15 +1,21 @@
 package de.itfo2.ui;
 
 
-import de.itfo2.objects.Spieler;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
+import de.itfo2.objects.Spieler;
+
 public class Spielfigur extends JLabel {
-    Spieler spieler;
+    /**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -6587021463210242922L;
+	Spieler spieler;
     public Spielfigur(Spieler spieler){
         BufferedImage image = null;
         this.spieler = spieler;

@@ -1,6 +1,5 @@
 package de.itfo2.test;
 
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;

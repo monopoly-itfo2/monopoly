@@ -165,7 +165,7 @@ public final class Connector {
 	}
 
 	public void setSpielerliste(List<Spieler> spielerliste) {
-		this.spielerliste = spielerliste;
+		Connector.spielerliste = spielerliste;
 	}
 
 	public List<Spieler> getSpielerliste() {

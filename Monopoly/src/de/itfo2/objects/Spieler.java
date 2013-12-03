@@ -1,11 +1,14 @@
 package de.itfo2.objects;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.util.Observable;
 
 public class Spieler extends Observable implements Serializable, Comparable<Spieler>{
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -4411233106402431497L;
 	private String name;
 	private int konto;
 	private int platz = 0;

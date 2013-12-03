@@ -2,8 +2,6 @@ package de.itfo2.fields;
 
 import de.itfo2.objects.Verwalter;
 
-import java.io.IOException;
-
 public class Los implements Feld
 {
 	String bezeichnung;

@@ -3,8 +3,6 @@ package de.itfo2.fields;
 import de.itfo2.objects.Verwalter;
 import de.itfo2.ui.MonopolyGUI;
 
-import java.io.IOException;
-
 public class Steuerfeld implements Feld
 {
 	String bezeichnung;

@@ -1,20 +1,27 @@
 package de.itfo2.ui;
 
-import de.itfo2.util.ButtonCreator;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.IOException;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import de.itfo2.util.ButtonCreator;
 
 public class MiddlePanel extends JPanel {
 
-    private JButton rollDiceButton, startButton, nextButton, loginButton;
+    /**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 6943493915110896323L;
+	private JButton rollDiceButton, startButton, nextButton, loginButton;
 	private CardButton gemeinschaftskartenButton, ereigniskartenButton;
     private GridBagConstraints c;
     private StatusPanel[] statuspanel = new StatusPanel[4];

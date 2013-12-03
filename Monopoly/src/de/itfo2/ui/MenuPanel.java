@@ -1,10 +1,7 @@
 package de.itfo2.ui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -15,15 +12,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import de.itfo2.fields.Grundstueck;
 import de.itfo2.fields.Strasse;
-import de.itfo2.objects.Spieler;
-import de.itfo2.objects.Verwalter;
-import de.itfo2.util.DialogCreator;
 
 public class MenuPanel extends JPanel implements MouseListener{
 
-    private JButton bBuy, bBuild, bHypothek;
+    /**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -7598748880159187320L;
+	private JButton bBuy, bBuild, bHypothek;
     private GUIFeld parent;
     private boolean haus;
     public MenuPanel(GUIFeld feld, boolean haus) throws IOException {
@@ -53,7 +50,11 @@ public class MenuPanel extends JPanel implements MouseListener{
         img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/hausTransparent.jpg"));
         icon = new ImageIcon(img);
         bBuild = new JButton(icon){
-            @Override
+            /**
+			 * 
+			 */
+			private static final long	serialVersionUID	= -1886876130243455544L;
+			@Override
             public boolean isVisible(){
                 if(parent.getFeld() instanceof Strasse){
                     Strasse st = (Strasse) parent.getFeld();
