@@ -31,6 +31,10 @@ public class Spieler extends Observable implements Serializable, Comparable<Spie
             addGeld(4000);
 		platz = (anzahl+platz)%40;
 	}
+	
+	public void addGUIPlatz(int anzahl){
+		platz = (anzahl+platz)%40;
+	}
 
 	public String getName() {
 		return name;

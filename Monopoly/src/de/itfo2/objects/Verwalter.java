@@ -25,18 +25,18 @@ import de.itfo2.network.Connector;
 import de.itfo2.ui.MonopolyGUI;
 
 public class Verwalter {
-	private int wuerfelZahl;
-	public int pasch = 0;
-	public boolean spielAmLaufen = true;
-	public List<Spieler> spielerListe = new ArrayList<Spieler>();
-	private static Verwalter instance = null;
-	boolean meinZug = false;
-	Spielfeld spielfeld;
-	MonopolyGUI gui = MonopolyGUI.getInstance();
-	boolean gewuerfelt;
-	boolean hypothekenauswahl = false;
-	private Spieler meinSpieler;
-	private Spieler spielerAmZug;
+	private int					wuerfelZahl;
+	public int					pasch				= 0;
+	public boolean				spielAmLaufen		= true;
+	public List<Spieler>		spielerListe		= new ArrayList<Spieler>();
+	private static Verwalter	instance			= null;
+	boolean						meinZug				= false;
+	Spielfeld					spielfeld;
+	MonopolyGUI					gui					= MonopolyGUI.getInstance();
+	boolean						gewuerfelt;
+	boolean						hypothekenauswahl	= false;
+	private Spieler				meinSpieler;
+	private Spieler				spielerAmZug;
 
 	public Verwalter() {
 		init();
@@ -64,6 +64,8 @@ public class Verwalter {
 
 		gewuerfelt = true;
 		gui.setRollDiceButtonEnabled(false);
+		gui.addLogMessage(meinSpieler.getName() + " hat eine " + wuerfelZahl
+				+ " gewuerfelt.");
 		EventBus.getInstance().sinkClientEvent(
 				new WuerfelEvent(meinSpieler.getName(), wuerfelZahl));
 	}
@@ -121,9 +123,13 @@ public class Verwalter {
 				int wert = event.getWert();
 				if (spielerAmZug.getName().equals(spielername)) {
 					gui.rueckeVor(wert);
+
+					spielerListe.get(spielerListe.indexOf(spielerAmZug))
+							.addGUIPlatz(wert);
+
+					gui.addLogMessage(spielername + " hat eine " + wert
+							+ " gewuerfelt.");
 				}
-				gui.addLogMessage(spielername + " hat eine " + wert
-						+ " gewuerfelt.");
 			}
 		});
 
@@ -353,7 +359,7 @@ public class Verwalter {
 
 	protected Spieler getNaechterSpieler() {
 		int i = spielerListe.indexOf(meinSpieler);
-		return spielerListe.get((i+1)%spielerListe.size());
+		return spielerListe.get((i + 1) % spielerListe.size());
 	}
 
 	public int getSpieleranzahl() {
