@@ -57,6 +57,7 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
         pack();
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Monopoly");
     }
 
     private void addPanels() throws IOException {
@@ -322,7 +323,7 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
     }
 
     public void setSpielerVisible(int feld, int pos, boolean visible){
-        getFeld(feld).setSpielerVisible(pos, visible);
+    	getFeld(feld).setSpielerVisible(pos, visible);
     }
 
     public void updateFeld(){

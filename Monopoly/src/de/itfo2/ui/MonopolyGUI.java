@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -21,8 +22,8 @@ import de.itfo2.util.HypothekenListener;
 
 public class MonopolyGUI implements MonopolyGUIInterface {
 
-	private static MonopolyGUI instance = null;
-	GUISpielfeld spielfeld;
+	private static MonopolyGUI	instance	= null;
+	GUISpielfeld				spielfeld;
 
 	private MonopolyGUI() {
 	}
@@ -41,24 +42,27 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 	@Override
 	public void rueckeVor(int anzahl) {
 		Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
-		spielfeld.setSpielerVisible(curSpieler.getPlatz(), Connector
-				.getInstance().getSpielerliste().indexOf(curSpieler), false);
-		spielfeld.setSpielerVisible(curSpieler.getPlatz() + anzahl, Connector
-				.getInstance().getSpielerliste().indexOf(curSpieler), true);
-		if (spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel() != null) {
-			spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy()
-					.setVisible(false);
-			spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy()
-					.setEnabled(false);
+		int aktuellerPlatz = curSpieler.getPlatz();
+		List<Spieler> spielerliste = Connector.getInstance().getSpielerliste();
+
+		spielfeld.setSpielerVisible(aktuellerPlatz,
+				spielerliste.indexOf(curSpieler), false);
+		spielfeld.setSpielerVisible(aktuellerPlatz + anzahl,
+				spielerliste.indexOf(curSpieler), true);
+
+		MenuPanel menuPanel = spielfeld.getFeld(aktuellerPlatz).getMenuPanel();
+		if (menuPanel != null) {
+			menuPanel.getbBuy().setVisible(false);
+			menuPanel.getbBuy().setEnabled(false);
 		}
-		if (spielfeld.getFeld(curSpieler.getPlatz() + anzahl).getMenuPanel() != null) {
-			Grundstueck gr = (Grundstueck) spielfeld.getFeld(
-					curSpieler.getPlatz() + anzahl).getFeld();
+
+		GUIFeld aktuellesFeld = spielfeld.getFeld(aktuellerPlatz + anzahl);
+
+		if (aktuellesFeld.getMenuPanel() != null) {
+			Grundstueck gr = (Grundstueck) aktuellesFeld.getFeld();
 			if (gr.getBesitzer() == null) {
-				spielfeld.getFeld(curSpieler.getPlatz() + anzahl)
-						.getMenuPanel().getbBuy().setVisible(true);
-				spielfeld.getFeld(curSpieler.getPlatz() + anzahl)
-						.getMenuPanel().getbBuy().setEnabled(true);
+				aktuellesFeld.getMenuPanel().getbBuy().setVisible(true);
+				aktuellesFeld.getMenuPanel().getbBuy().setEnabled(true);
 			}
 		}
 	}
@@ -66,16 +70,21 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 	@Override
 	public void rueckeAuf(int platz) {
 		Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
-		spielfeld.setSpielerVisible(curSpieler.getPlatz(), Connector
-				.getInstance().getSpielerliste().indexOf(curSpieler), false);
-		spielfeld.setSpielerVisible(platz, Connector.getInstance()
-				.getSpielerliste().indexOf(curSpieler), true);
-		if (spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel() != null) {
-			spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy()
-					.setVisible(false);
-			spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy()
-					.setEnabled(false);
+
+		int aktuellerPlatz = curSpieler.getPlatz();
+
+		List<Spieler> spielerliste = Connector.getInstance().getSpielerliste();
+		spielfeld.setSpielerVisible(aktuellerPlatz,
+				spielerliste.indexOf(curSpieler), false);
+		spielfeld.setSpielerVisible(platz, spielerliste.indexOf(curSpieler),
+				true);
+
+		MenuPanel menuPanel = spielfeld.getFeld(aktuellerPlatz).getMenuPanel();
+		if (menuPanel != null) {
+			menuPanel.getbBuy().setVisible(false);
+			menuPanel.getbBuy().setEnabled(false);
 		}
+
 		if (spielfeld.getFeld(platz).getMenuPanel() != null) {
 			Grundstueck gr = (Grundstueck) spielfeld.getFeld(platz).getFeld();
 			if (gr.getBesitzer() == null) {
@@ -89,45 +98,42 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 
 	public void naechsterSpieler() {
 		Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
-		if (spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel() != null) {
-			spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy()
-					.setVisible(false);
-			spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy()
-					.setEnabled(false);
+		MenuPanel menuPanel = spielfeld.getFeld(curSpieler.getPlatz())
+				.getMenuPanel();
+
+		if (menuPanel != null) {
+			menuPanel.getbBuy().setVisible(false);
+			menuPanel.getbBuy().setEnabled(false);
 		}
+
 		setNextButtonEnabled(false);
 	}
 
 	public void updateHypothekButtons() {
 		for (int i = 0; i < spielfeld.getFelder().size(); i++) {
-			if (spielfeld.getFelder().get(i).getMenuPanel() != null) {
-				Grundstueck gr = (Grundstueck) spielfeld.getFelder().get(i)
-						.getFeld();
+			GUIFeld guiFeld = spielfeld.getFelder().get(i);
+
+			if (guiFeld.getMenuPanel() != null) {
+				Grundstueck gr = (Grundstueck) guiFeld.getFeld();
+				JButton hypothekButton = guiFeld.getMenuPanel().getbHypothek();
+
 				if (gr.getBesitzer() != null) {
 					if (gr.getBesitzer().equals(
 							Verwalter.getInstance().getCurSpieler())) {
 						if (gr.isBelastet()) {
-							spielfeld.getFelder().get(i).getMenuPanel()
-									.getbHypothek().setVisible(true);
-							spielfeld.getFelder().get(i).getMenuPanel()
-									.getbHypothek().setEnabled(true);
+							hypothekButton.setVisible(true);
+							hypothekButton.setEnabled(true);
 						} else {
-							spielfeld.getFelder().get(i).getMenuPanel()
-									.getbHypothek().setVisible(false);
-							spielfeld.getFelder().get(i).getMenuPanel()
-									.getbHypothek().setEnabled(false);
+							hypothekButton.setVisible(false);
+							hypothekButton.setEnabled(false);
 						}
 					} else {
-						spielfeld.getFelder().get(i).getMenuPanel()
-								.getbHypothek().setVisible(false);
-						spielfeld.getFelder().get(i).getMenuPanel()
-								.getbHypothek().setEnabled(false);
+						hypothekButton.setVisible(false);
+						hypothekButton.setEnabled(false);
 					}
 				} else {
-					spielfeld.getFelder().get(i).getMenuPanel().getbHypothek()
-							.setVisible(false);
-					spielfeld.getFelder().get(i).getMenuPanel().getbHypothek()
-							.setEnabled(false);
+					hypothekButton.setVisible(false);
+					hypothekButton.setEnabled(false);
 				}
 			}
 		}
@@ -304,14 +310,18 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 	}
 
 	public void sperren(Spieler meinSpieler) {
-//		spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
-//				.setVisible(false);
-//		spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
-//				.setEnabled(false);
+		// spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
+		// .setVisible(false);
+		// spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
+		// .setEnabled(false);
 		setNextButtonEnabled(false);
 	}
 
 	public void entsperren(Spieler meinSpieler) {
 		setRollDiceButtonEnabled(true);
+	}
+
+	public void setTitle(String title) {
+		spielfeld.setTitle(title);
 	}
 }

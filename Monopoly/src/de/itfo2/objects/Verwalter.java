@@ -255,6 +255,7 @@ public class Verwalter {
 				meinSpieler.addObserver(gui.getStatusPanel(0));
 				gui.addSpieler(0, meinSpieler);
 				gui.getStatusPanel(0).update(meinSpieler, null);
+				gui.setTitle("Monopoly - " + meinSpieler.getName());
 			}
 		});
 
