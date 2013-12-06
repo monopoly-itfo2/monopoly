@@ -1,7 +1,9 @@
 package de.itfo2.event;
 
 public class UpdateGeldEvent implements MonopolyEvent {
-
+	//TODO Stelle fürs Triggern überlegen. Fabian
+	
+	
 	private static final long	serialVersionUID	= -324278601359935103L;
 	
 	private String spielername;

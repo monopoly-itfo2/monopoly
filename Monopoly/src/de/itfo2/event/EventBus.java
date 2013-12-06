@@ -97,7 +97,6 @@ public final class EventBus {
 	}
 	
 	private void triggerUpdateGeldEvent(UpdateGeldEvent event) {
-		// TODO Fabian
 		for (int i = 0; i < listerners_updategeld.size(); i++) {
 			listerners_updategeld.get(i).onEvent(event);
 		}
