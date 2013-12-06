@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.itfo2.event.listeners.RundenendeEventListener;
+import de.itfo2.event.listeners.UpdateGeldEventListener;
 import de.itfo2.event.listeners.UpdateSpielerlisteEventListener;
 import de.itfo2.event.listeners.WuerfelEventListener;
 import de.itfo2.network.Connector;
@@ -29,6 +30,7 @@ public final class EventBus {
 	private List<WuerfelEventListener> listerners_wuerfel = new ArrayList<WuerfelEventListener>();
 	private List<UpdateSpielerlisteEventListener> listerners_spielerliste = new ArrayList<UpdateSpielerlisteEventListener>();
 	private List<RundenendeEventListener> listerners_rundenende = new ArrayList<RundenendeEventListener>();
+	private List<UpdateGeldEventListener> listerners_updategeld = new ArrayList<UpdateGeldEventListener>();
 
 	public void sinkNetworkEvent(Object event) {
 		if (event instanceof WuerfelEvent) {
@@ -39,6 +41,8 @@ public final class EventBus {
 			triggerUpdateSpielerlisteEvent((UpdateSpielerlisteEvent) event);
 		} else if (event instanceof RundenendeEvent) {
 			triggerRundenendeEvent((RundenendeEvent) event);
+		} else if (event instanceof UpdateGeldEvent) {
+			triggerUpdateGeldEvent((UpdateGeldEvent) event);
 		}
 	}
 
@@ -60,6 +64,9 @@ public final class EventBus {
 
 	public void addRundenendeEventListener(RundenendeEventListener listener) {
 		listerners_rundenende.add(listener);
+	}
+	public void addUpdateGeldEventListener(UpdateGeldEventListener listener) {
+		listerners_updategeld.add(listener);
 	}
 
 	// WuerfelEvent
@@ -86,6 +93,13 @@ public final class EventBus {
 		Connector.getInstance().setSpielerliste(event.getSpielerListe());
 		for (int i = 0; i < listerners_spielerliste.size(); i++) {
 			listerners_spielerliste.get(i).onEvent(event);
+		}
+	}
+	
+	private void triggerUpdateGeldEvent(UpdateGeldEvent event) {
+		// TODO Fabian
+		for (int i = 0; i < listerners_updategeld.size(); i++) {
+			listerners_updategeld.get(i).onEvent(event);
 		}
 	}
 }
