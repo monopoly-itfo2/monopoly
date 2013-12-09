@@ -310,11 +310,11 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 	}
 
 	public void sperren(Spieler meinSpieler) {
-		// spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
-		// .setVisible(false);
-		// spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
-		// .setEnabled(false);
-		setNextButtonEnabled(false);
+//		 spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
+//		 .setVisible(false);
+//		 spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
+//		 .setEnabled(false);
+			 setNextButtonEnabled(false);
 	}
 
 	public void entsperren(Spieler meinSpieler) {

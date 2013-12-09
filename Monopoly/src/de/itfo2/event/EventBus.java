@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.itfo2.event.listeners.RundenendeEventListener;
+import de.itfo2.event.listeners.UpdateGUISperrenEventListener;
 import de.itfo2.event.listeners.UpdateGeldEventListener;
 import de.itfo2.event.listeners.UpdateSpielerlisteEventListener;
 import de.itfo2.event.listeners.WuerfelEventListener;
@@ -31,6 +32,7 @@ public final class EventBus {
 	private List<UpdateSpielerlisteEventListener> listerners_spielerliste = new ArrayList<UpdateSpielerlisteEventListener>();
 	private List<RundenendeEventListener> listerners_rundenende = new ArrayList<RundenendeEventListener>();
 	private List<UpdateGeldEventListener> listerners_updategeld = new ArrayList<UpdateGeldEventListener>();
+	private List<UpdateGUISperrenEventListener> listerners_updateguisperren = new ArrayList<UpdateGUISperrenEventListener>();
 
 	public void sinkNetworkEvent(Object event) {
 		if (event instanceof WuerfelEvent) {
@@ -43,6 +45,8 @@ public final class EventBus {
 			triggerRundenendeEvent((RundenendeEvent) event);
 		} else if (event instanceof UpdateGeldEvent) {
 			triggerUpdateGeldEvent((UpdateGeldEvent) event);
+		} else if (event instanceof UpdateGUISperrenEvent) {
+			triggerUpdateGUISperrenEvent((UpdateGUISperrenEvent) event);
 		}
 	}
 
@@ -67,6 +71,9 @@ public final class EventBus {
 	}
 	public void addUpdateGeldEventListener(UpdateGeldEventListener listener) {
 		listerners_updategeld.add(listener);
+	}
+	public void addUpdateGUISperrenEventListener(UpdateGUISperrenEventListener listener) {
+		listerners_updateguisperren.add(listener);
 	}
 
 	// WuerfelEvent
@@ -99,6 +106,11 @@ public final class EventBus {
 	private void triggerUpdateGeldEvent(UpdateGeldEvent event) {
 		for (int i = 0; i < listerners_updategeld.size(); i++) {
 			listerners_updategeld.get(i).onEvent(event);
+		}
+	}
+	private void triggerUpdateGUISperrenEvent(UpdateGUISperrenEvent event) {
+		for (int i = 0; i < listerners_updateguisperren.size(); i++) {
+			listerners_updateguisperren.get(i).onEvent(event);
 		}
 	}
 }

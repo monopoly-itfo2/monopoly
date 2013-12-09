@@ -3,6 +3,9 @@ package de.itfo2.objects;
 import java.io.Serializable;
 import java.util.Observable;
 
+import de.itfo2.event.EventBus;
+import de.itfo2.event.UpdateGeldEvent;
+
 public class Spieler extends Observable implements Serializable, Comparable<Spieler>{
 
 	/**
@@ -22,6 +25,7 @@ public class Spieler extends Observable implements Serializable, Comparable<Spie
 
 	public void addGeld(int geld) {
 		konto += geld;
+		EventBus.getInstance().sinkClientEvent(new UpdateGeldEvent(name, geld));
         setChanged();
         notifyObservers();
 	}
@@ -86,5 +90,11 @@ public class Spieler extends Observable implements Serializable, Comparable<Spie
 	@Override
 	public boolean equals(Object equal) {
 		return (equal instanceof Spieler) ? name.equals(((Spieler) equal).name):false;
+	}
+
+	public void addGUIGeld(int geld) {
+		konto += geld;
+        setChanged();
+        notifyObservers();
 	}
 }

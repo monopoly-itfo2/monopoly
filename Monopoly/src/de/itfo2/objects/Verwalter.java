@@ -12,10 +12,12 @@ import javax.swing.JOptionPane;
 
 import de.itfo2.event.EventBus;
 import de.itfo2.event.RundenendeEvent;
+import de.itfo2.event.UpdateGUISperrenEvent;
 import de.itfo2.event.UpdateGeldEvent;
 import de.itfo2.event.UpdateSpielerlisteEvent;
 import de.itfo2.event.WuerfelEvent;
 import de.itfo2.event.listeners.RundenendeEventListener;
+import de.itfo2.event.listeners.UpdateGUISperrenEventListener;
 import de.itfo2.event.listeners.UpdateGeldEventListener;
 import de.itfo2.event.listeners.UpdateSpielerlisteEventListener;
 import de.itfo2.event.listeners.WuerfelEventListener;
@@ -155,8 +157,19 @@ public class Verwalter {
 			@Override
 			public void onEvent(UpdateGeldEvent event) {
 				if(spielerAmZug.getName().equals(event.getSpielername())){
-					spielerAmZug.addGeld(event.getGeldVeraenderung());
+					spielerAmZug.addGUIGeld(event.getGeldVeraenderung());
 				}
+			}
+		});
+		bus.addUpdateGUISperrenEventListener(new UpdateGUISperrenEventListener() {
+			
+			@Override
+			public void onEvent(UpdateGUISperrenEvent event) {
+//				for(Spieler s : spielerListe){
+//					if(s.getName().equals(event.getName())){
+//						gui.sperren(s);
+//					}
+//				}
 			}
 		});
 	}
