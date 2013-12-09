@@ -165,11 +165,11 @@ public class Verwalter {
 			
 			@Override
 			public void onEvent(UpdateGUISperrenEvent event) {
-//				for(Spieler s : spielerListe){
-//					if(s.getName().equals(event.getName())){
+				for(Spieler s : spielerListe){
+					if(s.getName().equals(event.getName())){
 //						gui.sperren(s);
-//					}
-//				}
+					}
+				}
 			}
 		});
 	}
@@ -508,5 +508,9 @@ public class Verwalter {
 	public void connectionEstablished() {
 		gui.addLogMessage("Connected");
 		gui.createLoginDialog();
+	}
+	
+	public Spieler getMeinSpieler(){
+		return meinSpieler;
 	}
 }

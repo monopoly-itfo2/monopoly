@@ -59,10 +59,17 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 		GUIFeld aktuellesFeld = spielfeld.getFeld(aktuellerPlatz + anzahl);
 
 		if (aktuellesFeld.getMenuPanel() != null) {
-			Grundstueck gr = (Grundstueck) aktuellesFeld.getFeld();
-			if (gr.getBesitzer() == null) {
-				aktuellesFeld.getMenuPanel().getbBuy().setVisible(true);
-				aktuellesFeld.getMenuPanel().getbBuy().setEnabled(true);
+			if(Verwalter.getInstance().getMeinSpieler().equals(curSpieler)){
+				Grundstueck gr = (Grundstueck) aktuellesFeld.getFeld();
+				if (gr.getBesitzer() == null) {
+					aktuellesFeld.getMenuPanel().getbBuy().setVisible(true);
+					aktuellesFeld.getMenuPanel().getbBuy().setEnabled(true);
+				}else{
+					spielfeld.getFeld(aktuellerPlatz).getMenuPanel().getbBuy()
+					.setVisible(false);
+					spielfeld.getFeld(aktuellerPlatz).getMenuPanel().getbBuy()
+					.setEnabled(false);
+				}
 			}
 		}
 	}
@@ -92,6 +99,11 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 						.setVisible(true);
 				spielfeld.getFeld(platz).getMenuPanel().getbBuy()
 						.setEnabled(true);
+			}else{
+				spielfeld.getFeld(platz).getMenuPanel().getbBuy()
+				.setVisible(false);
+				spielfeld.getFeld(platz).getMenuPanel().getbBuy()
+				.setEnabled(false);
 			}
 		}
 	}
@@ -310,11 +322,15 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 	}
 
 	public void sperren(Spieler meinSpieler) {
-//		 spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
-//		 .setVisible(false);
-//		 spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy()
-//		 .setEnabled(false);
-			 setNextButtonEnabled(false);
+		if(spielfeld.getFeld(meinSpieler.getPlatz()) != null){
+			if(spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel() != null){
+				if(spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy() != null){
+					spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy().setVisible(false);
+					spielfeld.getFeld(meinSpieler.getPlatz()).getMenuPanel().getbBuy().setEnabled(false);
+				}
+			}
+		}
+		setNextButtonEnabled(false);
 	}
 
 	public void entsperren(Spieler meinSpieler) {
