@@ -145,12 +145,24 @@ public class Verwalter {
                     pasch = 0;
 
                 } else {
-
-                    // Ziehen
-                    gui.rueckeVor(wuerfelZahl);
-                    spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
-                    //spieler.get(spielerAmZug).setPlatz(7);
-//                    spieler.get(spielerAmZug).setPlatz(wuerfelZahl);
+                	
+	                // Ziehen
+	                	
+	                //testzehen
+					int zahl = 0;
+					if(zahl %2==0) {
+						gui.rueckeAuf(7);
+						spielerliste.get(spielerAmZug).setPlatz(2);
+					} else {
+						gui.rueckeAuf(7);
+						spielerliste.get(spielerAmZug).setPlatz(2);
+					}
+	
+	                //eigentliches Ziehen
+					
+//                    gui.rueckeVor(wuerfelZahl);
+//                    spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
+                    
 
                     // Feld behandeln
 
