@@ -30,7 +30,7 @@ public class DialogCreator {
         dialog.setVisible(true);
     }
 
-    public static int createChoiceDialog(String text, Container parent){
-        return JOptionPane.showConfirmDialog(parent, text, "Hypothek aufnehmen?", JOptionPane.YES_NO_OPTION);
+    public static int createChoiceDialog(String header, String text, Container parent){
+        return JOptionPane.showConfirmDialog(parent, text, header, JOptionPane.YES_NO_OPTION);
     }
 }

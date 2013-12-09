@@ -230,7 +230,7 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     }
 
     public int createPopupChoiceDialog(String text){
-        return DialogCreator.createChoiceDialog(text, spielfeld);
+        return DialogCreator.createChoiceDialog("Hypothek aufnehmen?", text, spielfeld);
     }
 
     public void addLogMessage(String text){
