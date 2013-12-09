@@ -46,7 +46,7 @@ public class Spielfeld {
     		System.out.println("Print Ereigniskarten "+karte.getText());
     	}
     }
-    
+
     public void addFreiParkenGeld(int betrag){
         ((Freiparken)(felder.get(20))).addMoney(betrag);
     }

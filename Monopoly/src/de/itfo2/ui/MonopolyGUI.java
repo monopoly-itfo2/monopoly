@@ -37,8 +37,9 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     @Override
     public void rueckeVor(int anzahl){
         Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
-        spielfeld.setSpielerVisible(curSpieler.getPlatz(), Verwalter.getInstance().getSpielerAmZug(), false);
-        spielfeld.setSpielerVisible(curSpieler.getPlatz()+anzahl, Verwalter.getInstance().getSpielerAmZug(), true);
+        //spielfeld.setSpielerVisible(curSpieler.getPlatz(), Verwalter.getInstance().getSpielerAmZug(), false);
+        //spielfeld.setSpielerVisible(curSpieler.getPlatz()+anzahl, Verwalter.getInstance().getSpielerAmZug(), true);
+        moveFigur(anzahl);
         if(spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel()!=null){
             spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setVisible(false);
             spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setEnabled(false);
@@ -55,8 +56,27 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     @Override
     public void rueckeAuf(int platz){
         Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
-        spielfeld.setSpielerVisible(curSpieler.getPlatz(), Verwalter.getInstance().getSpielerAmZug(), false);
-        spielfeld.setSpielerVisible(platz, Verwalter.getInstance().getSpielerAmZug(), true);
+        //spielfeld.setSpielerVisible(curSpieler.getPlatz(), Verwalter.getInstance().getSpielerAmZug(), false);
+        //spielfeld.setSpielerVisible(platz, Verwalter.getInstance().getSpielerAmZug(), true);
+        moveFigur(Verwalter.getInstance().calculateToGo(platz));
+        if(spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel()!=null){
+            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setVisible(false);
+            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setEnabled(false);
+        }
+        if(spielfeld.getFeld(platz).getMenuPanel()!=null){
+            Grundstueck gr = (Grundstueck)spielfeld.getFeld(platz).getFeld();
+            if(gr.getBesitzer()==null){
+                spielfeld.getFeld(platz).getMenuPanel().getbBuy().setVisible(true);
+                spielfeld.getFeld(platz).getMenuPanel().getbBuy().setEnabled(true);
+            }
+        }
+    }
+    
+    public void rueckeZurueck(int platz){
+        Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
+        //spielfeld.setSpielerVisible(curSpieler.getPlatz(), Verwalter.getInstance().getSpielerAmZug(), false);
+        //spielfeld.setSpielerVisible(platz, Verwalter.getInstance().getSpielerAmZug(), true);
+        moveFigur(Verwalter.getInstance().calculateToGo(platz)-39);
         if(spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel()!=null){
             spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setVisible(false);
             spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setEnabled(false);
@@ -215,5 +235,13 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 
     public void addLogMessage(String text){
         spielfeld.getMiddlePanel().getChatpanel().addUsermessage("Spiel: ", text);
+    }
+    
+    public void moveFigur(int felderZuGehen){
+    	spielfeld.getGlassPane().moveFigur(felderZuGehen);
+    }
+    
+    public void setFigurLabel(int pos, Spieler spieler){
+    	spielfeld.getGlassPane().setFigurLabel(pos, spieler);
     }
 }

@@ -12,6 +12,9 @@ import de.itfo2.event.EventBus;
 import de.itfo2.fields.*;
 import de.itfo2.objects.cards.Karte;
 import de.itfo2.ui.MonopolyGUI;
+import de.itfo2.ui.SpielfeldOverlay;
+import de.itfo2.ui.SpielfigurList;
+import de.itfo2.ui.SpielstartFenster;
 import de.itfo2.util.GuiFeldMouseListener;
 
 import javax.swing.*;
@@ -20,7 +23,7 @@ public class Verwalter {
 	private int wuerfelZahl;
 	public int pasch = 0;
 	public boolean spielAmLaufen = true;
-	public ArrayList<Spieler> spieler = new ArrayList<Spieler>();
+	public ArrayList<Spieler> spielerliste = new ArrayList<Spieler>();
 	private static Verwalter instance = null;
 	int spielerAmZug = -1;
 	Spielfeld spielfeld;
@@ -54,7 +57,7 @@ public class Verwalter {
 			pasch = 0;
 
 		wuerfelZahl = ersterWert + zweiterWert;
-//        wuerfelZahl = 2;
+		//wuerfelZahl = 17;
         gui.addLogMessage(getCurSpieler().getName() + " hat eine " + wuerfelZahl + " gewÃ¼rfelt. (" + ersterWert + " + " + zweiterWert + ")");
         gewuerfelt = true;
         gui.setRollDiceButtonEnabled(false);
@@ -69,36 +72,53 @@ public class Verwalter {
 
 	private void init() {
 
-		spielfeld = new Spielfeld(InitSpielfeld.getfelder(), InitSpielfeld.getEreigniskarten(), InitSpielfeld.getEreigniskarten());
+		spielfeld = new Spielfeld(InitSpielfeld.getfelder(), InitSpielfeld.getEreigniskarten(), InitSpielfeld.getGemeischaftskarten());
 		gui.setSpielfeld(spielfeld);
 
 		// Spieler spieler1 = new Spieler("Spieler 1", 10000,
 		// Color.getHSBColor(269f, 35f, 96f));
 
-        //Spieler 1
-		Spieler spieler1 = new Spieler("Spieler 1", 5000, Color.getHSBColor(
-				0.9f, 0.1f, 0.7f));
+        /*//Spieler 1
+		Spieler spieler1 = new Spieler("Spieler 1", 500000, Color.getHSBColor(
+				0.9f, 0.1f, 0.7f), SpielfigurList.getInstance().getSpielfigurByName("kokowei"));
+		gui.setFigurLabel(0, spieler1);
 
         spieler1.addObserver(gui.getStatusPanel(0));
-		spieler.add(spieler1);
+		spielerliste.add(spieler1);
 		gui.addSpieler(0, spieler1);
         gui.getStatusPanel(0).update(spieler1, null);
 
         //Spieler 2
-        Spieler spieler2 = new Spieler("Spieler 2", 5000, Color.getHSBColor(
-                0.3f, 0.1f, 0.9f));
+        Spieler spieler2 = new Spieler("Spieler 2", 500000, Color.getHSBColor(
+                0.3f, 0.1f, 0.9f), SpielfigurList.getInstance().getSpielfigurByName("arkani"));
+        gui.setFigurLabel(1, spieler2);
         spieler2.addObserver(gui.getStatusPanel(1));
-		spieler.add(spieler2);
+		spielerliste.add(spieler2);
 		gui.addSpieler(1, spieler2);
         gui.getStatusPanel(1).update(spieler2, null);
-
+		*/
+	}
+	
+	public void addSpieler(ArrayList<Spieler> spielerdaten){
+		int i = 0;
+		Color[]colors = {Color.getHSBColor(0.9f, 0.1f, 0.7f), Color.getHSBColor(0.3f, 0.1f, 0.9f), Color.getHSBColor(0.5f, 0.5f, 0.5f), Color.getHSBColor(0.3f, 0.9f, 0.1f)}; 
+		for(Spieler spieler : spielerdaten){
+			Spieler tempSpieler = spieler;
+			gui.setFigurLabel(i, tempSpieler);
+			tempSpieler.setColor(colors[i]);
+			tempSpieler.addObserver(gui.getStatusPanel(i));
+		    spielerliste.add(tempSpieler);
+		    gui.addSpieler(i,  tempSpieler);
+		    gui.getStatusPanel(i).update(tempSpieler, null);
+			i++;
+		}
 	}
 
 	public Spieler getCurSpieler() {
-		return spieler.get(spielerAmZug);
+		return spielerliste.get(spielerAmZug);
 	}
     public Spieler getNextSpieler() {
-        return spieler.get((spielerAmZug+1)%getSpieleranzahl());
+        return spielerliste.get((spielerAmZug+1)%getSpieleranzahl());
     }
 
 	public int getSpielerAmZug() {
@@ -113,13 +133,14 @@ public class Verwalter {
 		gui.setRollDiceButtonActionListener(new ActionListener() {
 			@Override
             public void actionPerformed(ActionEvent e) {
+				
                 wuerfeln();
                 //TODO curSPieler = spieler.get(spielerAmZug);
                 // hier die Rune rein
                 //System.out.println("Sopieler an der Reihe: "+spielerAmZug);
                 if (pasch == 3) {//TODO spieler.get(spielerAmZug) ersetzen durh curSpieler am Anfang jeder "Schleife"
                     // geheInsGefaengnis
-                    spieler.get(spielerAmZug).setImGefaengnis(true);
+                    spielerliste.get(spielerAmZug).setImGefaengnis(true);
                     gui.geheInsGefaengnis(spielerAmZug);
                     pasch = 0;
 
@@ -127,19 +148,20 @@ public class Verwalter {
 
                     // Ziehen
                     gui.rueckeVor(wuerfelZahl);
-                    spieler.get(spielerAmZug).addPlatz(wuerfelZahl);
-//                    spieler.get(spielerAmZug).setPlatz(2);
+                    spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
+                    //spieler.get(spielerAmZug).setPlatz(7);
+//                    spieler.get(spielerAmZug).setPlatz(wuerfelZahl);
 
                     // Feld behandeln
 
-                    int actualPlayerPosition = spieler.get(spielerAmZug)
+                    int actualPlayerPosition = spielerliste.get(spielerAmZug)
                             .getPlatz();
 
-                    try {
-                        spielfeld.getFeld(actualPlayerPosition).handleFieldEffect();
-
-                    } catch (IOException e1) {
-                    }
+//                    try {
+//                        spielfeld.getFeld(actualPlayerPosition).handleFieldEffect();
+//
+//                    } catch (IOException e1) {
+//                    }
 
                     // MainPhase
 
@@ -170,6 +192,7 @@ public class Verwalter {
         gui.setStartButtonActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	SpielstartFenster sf = new SpielstartFenster();
                 gui.addLogMessage("Spiel gestartet!");
                 spielerAmZug = 0;
                 gui.setRollDiceButtonEnabled(true);
@@ -198,7 +221,8 @@ public class Verwalter {
 		gui.setEreigniskartenButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-                spielfeld.getEreigniskarten().get(spielfeld.getEreigniskartenPointer()).effect();
+				//An dieser Stelle näöhste Woche weitermachen, wir wollen die Ereigniskarten in Reinfolge bringen ( für ALLE SPieler) und die Gefängisfreikarten entfernen.
+                getSpielfeld().getEreigniskarten().get(spielfeld.getEreigniskartenPointer()).effect();
                 spielfeld.setEreigniskartenPointer((spielfeld.getEreigniskartenPointer()+1)%getSpielfeld().getEreigniskarten().size());
                 gui.setEreigniskartenButtonEnabled(false);
 
@@ -239,6 +263,8 @@ public class Verwalter {
                     gui.addLogMessage(getCurSpieler().getName() + " kaufte " + "\"" + gr.getBezeichnung() + "\"");
                     gui.kaufeFeld();
                     checkAlleFarben();
+                    ((JButton)e.getSource()).setVisible(false);
+                    ((JButton)e.getSource()).setEnabled(false);
                 }else{
                     if(gui.createPopupChoiceDialog("Nicht genug Geld zum kaufen. Jetzt Hypothek aufnehmen?") == JOptionPane.YES_OPTION);
                         setHypothekenauswahl(true, false);
@@ -276,7 +302,7 @@ public class Verwalter {
 	}
 
     public int getSpieleranzahl(){
-        return spieler.size();
+        return spielerliste.size();
     }
 
     public Spielfeld getSpielfeld() {
@@ -312,16 +338,19 @@ public class Verwalter {
         gebäude[0] = 0;
         gebäude[1] = 0;
         for(int i = 0; i < 40; i++){
-            Strasse strasse = (Strasse)spielfeld.getFeld(i);
-            if(strasse != null){
-                if(aktuellerSpieler.equals(aktuellerSpieler)){
-                	if(strasse.getMietePointer()<5){
-                		gebäude[0] += strasse.getMietePointer();
-                	}else{
-                		gebäude[1]++;
-                	}
+        	if(spielfeld.getFeld(i) instanceof Strasse)
+        	{
+        		Strasse strasse = (Strasse)spielfeld.getFeld(i);
+                if(strasse != null){
+                    if(aktuellerSpieler.equals(aktuellerSpieler)){
+                    	if(strasse.getMietePointer()<5){
+                    		gebäude[0] += strasse.getMietePointer();
+                    	}else{
+                    		gebäude[1]++;
+                    	}
+                    }
                 }
-            }
+        	}  
         }
         return gebäude;
     }
@@ -380,7 +409,7 @@ public class Verwalter {
         }
         else{
             if(critical){
-                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine Grundstücke für Hypotheken." );
+                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine GrundstÃ¼cke fÃ¼r Hypotheken." );
                 gui.addLogMessage(getCurSpieler().getName() + " kann seine Schulden nicht mehr bezahlen." );
                 gui.addLogMessage(getCurSpieler().getName() + " scheidet aus dem Spiel aus. (noch zu implementieren)");
             }
@@ -401,7 +430,7 @@ public class Verwalter {
     	spielfeld.printAllEreigniskarten();
     	
     	
-    	switch(typ) {//Das Problem ist, das die Variablen aus dem Falschem Array gelöscht werden
+    	switch(typ) {//Das Problem ist, dass die Variablen aus dem Falschem Array gelöscht werden
 	    	case 0:
 //	    			if(spielfeld.ereigniskarten.isEmpty() == false){
 	    				spielfeld.removeEreigniskarte(spielfeld.getEreigniskartenPointer());

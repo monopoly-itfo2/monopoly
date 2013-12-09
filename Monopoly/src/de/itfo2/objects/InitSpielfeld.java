@@ -34,22 +34,22 @@ public class InitSpielfeld {
 	}
 	public static ArrayList<Karte> getGemeischaftskarten(){
         ArrayList<Karte> gemeinschaftskarten = new ArrayList<Karte>();
-        gemeinschaftskarten.add(new Gemeinschaftskarte01());
-        gemeinschaftskarten.add(new Gemeinschaftskarte02());
-        gemeinschaftskarten.add(new Gemeinschaftskarte03());
-        gemeinschaftskarten.add(new Gemeinschaftskarte04());
-        gemeinschaftskarten.add(new Gemeinschaftskarte05());
-        gemeinschaftskarten.add(new Gemeinschaftskarte06());
-        gemeinschaftskarten.add(new Gemeinschaftskarte07());  // Gefängnisfreikarte
-        gemeinschaftskarten.add(new Gemeinschaftskarte08());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte01());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte02());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte03());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte04());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte05());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte06());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte07());  // Gefängnisfreikarte
+//        gemeinschaftskarten.add(new Gemeinschaftskarte08());
         gemeinschaftskarten.add(new Gemeinschaftskarte09());
-        gemeinschaftskarten.add(new Gemeinschaftskarte10());
-        gemeinschaftskarten.add(new Gemeinschaftskarte11());
-        gemeinschaftskarten.add(new Gemeinschaftskarte12());
-        gemeinschaftskarten.add(new Gemeinschaftskarte13());
-        gemeinschaftskarten.add(new Gemeinschaftskarte14());
-        gemeinschaftskarten.add(new Gemeinschaftskarte15());
-        gemeinschaftskarten.add(new Gemeinschaftskarte16());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte10());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte11());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte12());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte13());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte14());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte15());
+//        gemeinschaftskarten.add(new Gemeinschaftskarte16());
         Collections.shuffle(gemeinschaftskarten);
         return gemeinschaftskarten;
 	}

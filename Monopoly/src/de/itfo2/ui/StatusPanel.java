@@ -5,6 +5,7 @@ import de.itfo2.objects.Spieler;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.util.Observer;
 
 public class StatusPanel extends PicturePanel implements Observer{
 
-    JLabel lab_name, lab_geld;
+    JLabel lab_name, lab_geld, lab_figur;
     BufferedImage img;
 
     public StatusPanel() throws IOException {
@@ -31,32 +32,20 @@ public class StatusPanel extends PicturePanel implements Observer{
         lab_name = new JLabel("");
         lab_name.setBounds(0, 0, 200, 30);
         lab_name.setFont(new Font("Calibri", 0, 15));
-        lab_name.setHorizontalAlignment(JLabel.CENTER);
-        add(lab_name);
+        lab_name.setHorizontalAlignment(JLabel.LEFT);
+        add(lab_name, BorderLayout.NORTH);
 
         lab_geld = new JLabel("");
         lab_geld.setBounds(0, 0, 200, 30);
         lab_geld.setFont(new Font("Calibri", 0, 15));
-        lab_geld.setHorizontalAlignment(JLabel.CENTER);
-        add(lab_geld);
-    }
+        lab_geld.setHorizontalAlignment(JLabel.LEFT);
+        add(lab_geld, BorderLayout.CENTER);
+        
+        lab_figur = new JLabel("");
+        lab_figur.setBounds(0, 0, 200, 30);
+        lab_figur.setHorizontalAlignment(JLabel.CENTER);
+        add(lab_figur, BorderLayout.SOUTH);
 
-    //mit änderungslistener realisieren, sonst stackoverflow!
-    @Override
-    public void repaint(){
-        /*
-        if(this.spieler != null){
-            lab_name.setText(spieler.getName());
-            lab_geld.setText(""+spieler.getKonto());
-            this.setBackground(spieler.getColor());
-            if(img != null)
-                this.setBackgroundImage(img);
-        }
-        else
-        {
-
-        }
-        */
     }
 
 
@@ -65,6 +54,16 @@ public class StatusPanel extends PicturePanel implements Observer{
         Spieler spieler = (Spieler)o;
         //lab_name.setForeground(spieler.getColor());
         lab_name.setText(spieler.getName());
-        lab_geld.setText(""+spieler.getKonto()+"€");
+        lab_geld.setText(""+spieler.getKonto()+"�");
+        BufferedImage img = null;
+		try {
+			img = ImageIO.read(getClass().getResource(spieler.getSpielfigur().getPathBig()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        ImageIcon icon = new ImageIcon(img);
+        if(icon != null)
+        	lab_figur.setIcon(icon);
+        this.setBackgroundImage(ColorChanger.changeColor((BufferedImage) getImage(), Color.WHITE, spieler.getColor()));
     }
 }

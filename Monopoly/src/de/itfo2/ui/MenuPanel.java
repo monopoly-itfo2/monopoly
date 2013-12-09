@@ -86,6 +86,8 @@ public class MenuPanel extends JPanel implements MouseListener{
         img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/haus_hover.jpg"));
         icon = new ImageIcon(img);
         bBuild.setPressedIcon(icon);
+        bBuild.setEnabled(false);
+        bBuild.setVisible(false);
 
         img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/hypothekButton.png"));
         icon = new ImageIcon(img);

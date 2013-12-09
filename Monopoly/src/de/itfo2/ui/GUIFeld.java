@@ -151,10 +151,10 @@ public class GUIFeld extends PicturePanel implements Observer {
         if(gebaut==4){
             for(int i=0;i<=4;i++)
                 labelHaus[i].setVisible(!labelHaus[i].isVisible());
-            gebaut++;
             menuPanel.getbBuild().setEnabled(false);
             menuPanel.getbBuild().setVisible(false);
             labelHaus[gebaut].setVisible(true);
+            gebaut++;
         }
         if(gebaut<=3){
             labelHaus[gebaut].setVisible(true);

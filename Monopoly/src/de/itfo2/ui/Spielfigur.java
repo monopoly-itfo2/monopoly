@@ -8,16 +8,27 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class Spielfigur extends JLabel {
-    Spieler spieler;
-    public Spielfigur(Spieler spieler){
-        BufferedImage image = null;
-        this.spieler = spieler;
-        try {
-            image = ImageIO.read(this.getClass().getResource("/de/itfo2/ui/resources/figur.jpg"));
-        } catch (IOException e) {}
-        ImageIcon spielfigur = new ImageIcon(image);
-        setIcon(spielfigur);
-        setBounds(20, 20, 20, 20);
+public class Spielfigur{
+    private String name;
+    private String path;
+    public Spielfigur(String name, String path){
+    	this.name = name;
+    	this.path = path;
+    }
+    
+    public String getPath(){
+    	return path;
+    }
+    
+    public String getName(){
+    	return name;
+    }
+    
+    public String getPathBig(){
+    	return path.substring(0, path.length()-4) + "_big.gif";
+    }
+    
+    public String getPathBack(){
+    	return path.substring(0, path.length()-4) + "_back.gif";
     }
 }

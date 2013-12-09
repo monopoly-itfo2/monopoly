@@ -19,6 +19,7 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
     Container pane;
     GridBagConstraints c;
     BufferedImage image;
+    SpielfeldOverlay glasspane;
     JLabel testlabel;
     private boolean mouseIsPressed;
     int lastX, lastY;
@@ -42,9 +43,20 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
         }
         scrollPane.addMouseMotionListener(this);
         scrollPane.setViewportView(pane);
+        
+        glasspane = new SpielfeldOverlay();
+        setGlassPane(glasspane);
+        this.getGlassPane().setVisible(true);
+        
+        //this.setResizable(false);
+        
         pack();
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    
+    public SpielfeldOverlay getGlassPane(){
+    	return glasspane;
     }
 
     private void addPanels() throws IOException {
@@ -306,7 +318,7 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
     }
 
     public void addSpieler(int pos, Spieler spieler){
-        setSpielerVisible(0, pos, true);
+        //setSpielerVisible(0, pos, true);
     }
 
     public void setSpielerVisible(int feld, int pos, boolean visible){

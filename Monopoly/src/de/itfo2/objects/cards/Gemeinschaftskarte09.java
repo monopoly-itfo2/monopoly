@@ -6,7 +6,7 @@ import de.itfo2.ui.MonopolyGUI;
 
 public class Gemeinschaftskarte09 extends Karte{
 
-    final String text = "Gehe zurueck nach der Badstrasse";
+    final String text = "Gehe zurueck zur Badstrasse";
 
     public Gemeinschaftskarte09() {
 
@@ -14,11 +14,8 @@ public class Gemeinschaftskarte09 extends Karte{
 
     @Override
     public void effect() {
-    	int aktuellePosition = Verwalter.getInstance().getCurSpieler().getPlatz();
-    	int divPosition = aktuellePosition -1;
-    	Verwalter.getInstance().getCurSpieler().addPlatz(-divPosition);
+    	MonopolyGUI.getInstance().rueckeZurueck(1);
         Verwalter.getInstance().getCurSpieler().setPlatz(1);
-        System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
         MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +": "+ text);
 

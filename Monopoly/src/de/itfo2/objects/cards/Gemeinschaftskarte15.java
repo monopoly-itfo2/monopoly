@@ -26,7 +26,7 @@ public class Gemeinschaftskarte15 extends Karte{
          * 2. Aktuellem SPieler Geld geben, das da wäre: 200 * i
          */
         
-       ArrayList<Spieler> alleSpieler = Verwalter.getInstance().spieler;
+       ArrayList<Spieler> alleSpieler = Verwalter.getInstance().spielerliste;
        Spieler aktuellerSpieler = Verwalter.getInstance().getCurSpieler();
        int i = 0;
        for(Spieler spielerMussZahlen: alleSpieler){

@@ -14,6 +14,7 @@ public class Ereigniskarte15 extends Karte{
 
     @Override
     public void effect() {
+    	MonopolyGUI.getInstance().rueckeZurueck(Verwalter.getInstance().getCurSpieler().getPlatz()-3);
         Verwalter.getInstance().getCurSpieler().setPlatz(Verwalter.getInstance().getCurSpieler().getPlatz()-3);
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
