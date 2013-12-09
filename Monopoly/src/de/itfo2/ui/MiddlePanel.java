@@ -71,44 +71,20 @@ public class MiddlePanel extends JPanel {
         icon = new ImageIcon(getClass().getResource("/de/itfo2/ui/resources/wuerfel.gif"));
         rollDiceButton = ButtonCreator.getIconButton(new ImageIcon(img), icon, icon);
 
-        /*rollDiceButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int wuerfel01 = getRandom();
-                int wuerfel02 = getRandom();
-                //JOptionPane.showMessageDialog(mp, "Blubb");
-                final JOptionPane optionPane = new JOptionPane("Eine " + wuerfel01 + " und eine " + wuerfel02 + " wurde gewürfelt!");
-                final JDialog dialog = new JDialog();
-                dialog.setContentPane(optionPane);
-                optionPane.addPropertyChangeListener(
-                        new PropertyChangeListener() {
-                            public void propertyChange(PropertyChangeEvent e) {
-                                String prop = e.getPropertyName();
-
-                                if (dialog.isVisible()
-                                        && (e.getSource() == optionPane)
-                                        && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
-                                    dialog.dispose();
-                                }
-                            }
-                        });
-                dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-                dialog.pack();
-                dialog.setLocation(mp.getX()+mp.getWidth()/2-dialog.getWidth()/2, mp.getY()+mp.getHeight()/2-dialog.getHeight()/2);
-                dialog.setVisible(true);
-            }
-        });
-        */
         rollDiceButton.setHorizontalAlignment(JButton.CENTER);
         this.add(rollDiceButton, c);
 
+        JPanel actionPanel = new JPanel();
+        actionPanel.setLayout(new BorderLayout());
+        actionPanel.setBackground(Color.WHITE);
+        
         c.gridx = 0;
         c.gridy = 0;
         img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/startbutton.png"));
         icon = new ImageIcon(img);
         startButton = ButtonCreator.getIconButton(icon, icon, icon);
         startButton.setHorizontalAlignment(JButton.CENTER);
-        this.add(startButton, c);
+        actionPanel.add(startButton, BorderLayout.WEST);
 
         c.gridx = 1;
         c.gridy = 0;
@@ -118,7 +94,10 @@ public class MiddlePanel extends JPanel {
         nextButton.setHorizontalAlignment(JButton.CENTER);
         img = ImageIO.read(getClass().getResource("/de/itfo2/ui/resources/sanduhr_inactive.png"));
         nextButton.setDisabledIcon(new ImageIcon(img));
-        this.add(nextButton, c);
+        actionPanel.add(nextButton, BorderLayout.EAST);
+        
+        c.fill = c.HORIZONTAL;
+        this.add(actionPanel, c);
 
         c.gridy = 1;
         c.gridx = 3;

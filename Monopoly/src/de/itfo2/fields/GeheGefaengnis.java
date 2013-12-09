@@ -22,7 +22,7 @@ public class GeheGefaengnis implements Feld {
 
     @Override
     public void handleFieldEffect() {
-        MonopolyGUI.getInstance().rueckeAuf(10);
+        MonopolyGUI.getInstance().rueckeZurueck(10);
         Verwalter.getInstance().getCurSpieler().setPlatz(10);
         Verwalter.getInstance().getCurSpieler().setImGefaengnis(true);
     }

@@ -141,7 +141,9 @@ public class Verwalter {
                 if (pasch == 3) {//TODO spieler.get(spielerAmZug) ersetzen durh curSpieler am Anfang jeder "Schleife"
                     // geheInsGefaengnis
                     spielerliste.get(spielerAmZug).setImGefaengnis(true);
-                    gui.geheInsGefaengnis(spielerAmZug);
+                    gui.rueckeAuf(10);
+                    getCurSpieler().setPlatz(10);
+                    getCurSpieler().setImGefaengnis(true);
                     pasch = 0;
 
                 } else {

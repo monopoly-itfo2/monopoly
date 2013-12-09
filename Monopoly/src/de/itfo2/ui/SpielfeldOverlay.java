@@ -110,28 +110,44 @@ public class SpielfeldOverlay extends JComponent implements Runnable{
 	    		x = -1;
 	    		y = 0;
 	    	}
-	    	if(curLocation.x==spielerX && curLocation.y==40){
-	    		x = 1;
-	    		y = 0;
-	    	}
-	    	else if(curLocation.x==(spielerX+900) && curLocation.y==40){
-	    		x = 0;
-	    		y = 1;
-	    	}
-	    	else if(curLocation.x==(spielerX+900) && curLocation.y==940){
-	    		x = -1;
-	    		y = 0;
-	    	}
-	    	else if(curLocation.x==spielerX && curLocation.y==940){
-	    		x = 0;
-	    		y = -1;
-	    	}
-	    	
 	    	if(felderZuGehen<0){
 	    		x = x*(-1);
 	    		y = y*(-1);
-	    	}
-	    	
+	    		
+	    		if(curLocation.x==spielerX && curLocation.y==40){
+		    		x = 0;
+		    		y = 1;
+		    	}
+		    	else if(curLocation.x==(spielerX+900) && curLocation.y==40){
+		    		x = -1;
+		    		y = 0;
+		    	}
+		    	else if(curLocation.x==(spielerX+900) && curLocation.y==940){
+		    		x = 0;
+		    		y = -1;
+		    	}
+		    	else if(curLocation.x==spielerX && curLocation.y==940){
+		    		x = 1;
+		    		y = 0;
+		    	}
+	    	}else{
+	    		if(curLocation.x==spielerX && curLocation.y==40){
+		    		x = 1;
+		    		y = 0;
+		    	}
+		    	else if(curLocation.x==(spielerX+900) && curLocation.y==40){
+		    		x = 0;
+		    		y = 1;
+		    	}
+		    	else if(curLocation.x==(spielerX+900) && curLocation.y==940){
+		    		x = -1;
+		    		y = 0;
+		    	}
+		    	else if(curLocation.x==spielerX && curLocation.y==940){
+		    		x = 0;
+		    		y = -1;
+		    	}
+	    	}  	
 	    	
 	    	if(y<0 | x>0)
 	    		picPath = curSpieler.getSpielfigur().getPathBack();
