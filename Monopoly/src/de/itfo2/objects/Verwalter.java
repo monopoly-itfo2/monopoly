@@ -145,10 +145,12 @@ public class Verwalter {
 				for (Spieler s : liste) {
 					if (!s.getName().equals(meinSpieler.getName())) {
 						System.out.println("Spieler gefunden: " + s.getName());
-						s.addObserver(gui.getStatusPanel(1));
+						int observerPosition = liste.contains(meinSpieler)?liste.size():liste.size()+1;
+						s.addObserver(gui.getStatusPanel(observerPosition));
+						
 						spielerListe.add(s);
-						gui.addSpieler(1, s);
-						gui.getStatusPanel(1).update(s, null);
+						gui.addSpieler(observerPosition, s);
+						gui.getStatusPanel(observerPosition).update(s, null);
 					}
 				}
 			}

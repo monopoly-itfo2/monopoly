@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +13,9 @@ import de.itfo2.event.EventBus;
 import de.itfo2.event.LoginEvent;
 import de.itfo2.event.MonopolyEvent;
 import de.itfo2.event.UpdateSpielerlisteEvent;
+import de.itfo2.network.server.Server;
+import de.itfo2.network.server.SocketListener;
 import de.itfo2.objects.Spieler;
-import de.itfo2.server.MonopolyServer;
 
 /**
  * 
@@ -33,7 +33,8 @@ public final class Connector {
 	}
 
 	ObjectInputStream in;
-	ObjectOutputStream out;
+	List<ObjectOutputStream> outStreams = new ArrayList<ObjectOutputStream>();
+	private boolean isServer = true;
 	private static List<Spieler> spielerliste = new ArrayList<Spieler>();
 
 	public void login(Spieler spieler) {
@@ -43,59 +44,59 @@ public final class Connector {
 
 	public void ensureConnected() {
 		Socket socket = null;
-		List<Socket> sockets = null;
-		sockets = discoverNetwork();
-		// sockets = new ArrayList<Socket>();
-		// sockets.add(new Socket("10.0.7.12", 28000));
+		List<Socket> sockets = discoverNetwork();
+
 		if (sockets.size() > 0) {
 			socket = sockets.get(0); // nimmt erstmal die erste gefundene
 										// Verbindung
+			isServer = false;
 			ensureIO(socket);
 		} else { // es wird selbst ein Server gestartet
-			MonopolyServer server = new MonopolyServer();
-			server.start();
-			boolean notConnected = true;
-			while (notConnected) { // wartet bis ein Client connected hat und
-									// holt den Socket
-				socket = server.getClientSocket();
-				try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+			isServer = true;
+			Server server = new Server();
+			server.addSocketListener(new SocketListener() {
+				@Override
+				public void newSocketAccepted(Socket s) {
+					System.out.println("Connection Accepted.");
+					ensureIO(s);
 				}
-				if (socket != null) {
-					notConnected = false;
-				}
-			}
-			ensureIO(socket);
+			});
+			server.start(); 
 		}
 	}
 
-	private void ensureIO(Socket socket) { // stellt die input/output
-											// verbindungen sicher
+	protected void ensureIO(final Socket socket) {
 		try {
-			out = new ObjectOutputStream(socket.getOutputStream());
-			in = new ObjectInputStream(socket.getInputStream());
-			Thread reader = new Thread(new Runnable() {
+			final ObjectOutputStream out = new ObjectOutputStream(
+					socket.getOutputStream());
+			outStreams.add(out);
+			Thread reader = new Thread() {
 				@Override
 				public void run() {
-					Object event;
-					while (true) {
-						try {
-							event = in.readObject();
+					try {
+						ObjectInputStream in = new ObjectInputStream(
+								socket.getInputStream());
+						while (true) {
+							Object event = in.readObject();
+							if (isServer) {
+								for (ObjectOutputStream outStr : outStreams) {
+									if (!outStr.equals(out)) {
+										outStr.writeObject(event);
+									}
+								}
+							}
 							EventBus.getInstance().sinkNetworkEvent(event);
-						} catch (SocketException e) {
-							JOptionPane.showMessageDialog(null,
-									"Die Verbindung wurde unterbrochen.",
-									"Verbindung unterbrochen",
-									JOptionPane.OK_CANCEL_OPTION);
-							break;
-						} catch (IOException | ClassNotFoundException e) {
-							e.printStackTrace();
 						}
+					} catch (IOException e) {
+						JOptionPane.showMessageDialog(null,
+								"Die Verbindung wurde unterbrochen.",
+								"Verbindung unterbrochen",
+								JOptionPane.OK_CANCEL_OPTION);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
 					}
 				}
-			});
+			};
 			reader.start();
 		} catch (IOException e) {
 			System.err.println("Error during 'ensureIO' : " + e);
@@ -147,11 +148,13 @@ public final class Connector {
 	}
 
 	public void sentEvent(MonopolyEvent event) {
-		try {
-			out.writeObject(event);
-			out.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
+		for (ObjectOutputStream out : outStreams) {
+			try {
+				out.writeObject(event);
+				out.flush();
+			} catch (IOException e) {
+				System.err.println("Could not write to Outstream");
+			}
 		}
 	}
 
