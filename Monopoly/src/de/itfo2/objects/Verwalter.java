@@ -30,6 +30,8 @@ public class Verwalter {
 	MonopolyGUI gui = MonopolyGUI.getInstance();
 	boolean gewuerfelt;
     boolean hypothekenauswahl = false;
+    int zahl = 0;
+    int würfelnImGefängnis = 0;
 
     //	final EventBus bus = EventBus.getInstance();//temporary disabled
 
@@ -51,6 +53,9 @@ public class Verwalter {
 		ersterWert = wuerfel.getWert();
 		zweiterWert = wuerfel.getWert();
 
+//		ersterWert = 4;
+//		zweiterWert = 4;
+		
 		if (ersterWert == zweiterWert)
 			pasch++;
 		else
@@ -135,6 +140,9 @@ public class Verwalter {
             public void actionPerformed(ActionEvent e) {
 				
                 wuerfeln();
+                if(Verwalter.getInstance().getCurSpieler().isImGefaengnis()) {
+                	würfelnImGefängnis++;
+                }
                 //TODO curSPieler = spieler.get(spielerAmZug);
                 // hier die Rune rein
                 //System.out.println("Sopieler an der Reihe: "+spielerAmZug);
@@ -148,24 +156,23 @@ public class Verwalter {
 
                 } else {
                 	
-	                // Ziehen
-	                	
-	                //testzehen
-					int zahl = 0;
-					if(zahl %2==0) {
-						gui.rueckeAuf(7);
-						spielerliste.get(spielerAmZug).setPlatz(2);
-					} else {
-						gui.rueckeAuf(7);
-						spielerliste.get(spielerAmZug).setPlatz(2);
-					}
-	
-	                //eigentliches Ziehen
-					
+                	//Ziehen
+//                	System.out.println(pasch);
+                	if(!Verwalter.getInstance().getCurSpieler().isImGefaengnis()) {
+	                	gui.rueckeVor(wuerfelZahl);
+						spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
+                	
 //                    gui.rueckeVor(wuerfelZahl);
 //                    spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
-                    
-
+                	} else if (pasch <0) {
+                		MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +" hat einen Pasch und wird aus dem Gefängnis entlassen");
+                		gui.rueckeVor(wuerfelZahl);
+                		spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
+                	} else if (würfelnImGefängnis == 3){
+                		MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +" musste €500 Kaution zahlen.");
+                		Verwalter.getInstance().getCurSpieler().addGeld(-500);
+                		Verwalter.getInstance().getCurSpieler().setImGefaengnis(false);
+                	}
                     // Feld behandeln
 
                     int actualPlayerPosition = spielerliste.get(spielerAmZug)

@@ -25,5 +25,6 @@ public class GeheGefaengnis implements Feld {
         MonopolyGUI.getInstance().rueckeZurueck(10);
         Verwalter.getInstance().getCurSpieler().setPlatz(10);
         Verwalter.getInstance().getCurSpieler().setImGefaengnis(true);
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +" ist im Gefängnis ");
     }
 }
