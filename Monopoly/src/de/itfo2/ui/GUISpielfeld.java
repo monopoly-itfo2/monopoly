@@ -29,6 +29,7 @@ public class GUISpielfeld extends JFrame implements MouseMotionListener{
 
     public GUISpielfeld(Spielfeld spielfeld){
         this.spielfeld = spielfeld;
+        this.setResizable(false);
         scrollPane = new JScrollPane();
         setContentPane(scrollPane);
         scrollPane.setBackground(Color.WHITE);

@@ -84,7 +84,7 @@ public class SpielfeldOverlay extends JComponent implements Runnable{
 	    int i = 30*felderZuGehenBetrag;
 	    Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
 	    int spielerAmZug = Verwalter.getInstance().getSpielerAmZug();
-	    int spielerX = ((figuren[spielerAmZug].getLocation().x%90));
+	    int spielerX = 21*spielerAmZug;
 	    System.out.println("spielerX: "+spielerX);
 	    String oldDirection = "";
 	    String picPath = "";
