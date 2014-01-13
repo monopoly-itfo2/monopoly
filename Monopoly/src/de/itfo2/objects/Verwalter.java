@@ -413,7 +413,7 @@ public class Verwalter {
 
     public void checkIfHypothekVerfuegbar(boolean critical){
         boolean verfuegbar = false;
-        String nochVerfuegbar = "Noch verfÃ¼gbar: ";
+        String nochVerfuegbar = "Noch verfügbar: ";
         for(int i=0;i<40;i++){
             if(spielfeld.getFeld(i) instanceof Grundstueck){
                 Grundstueck gr = (Grundstueck) spielfeld.getFeld(i);
@@ -433,12 +433,12 @@ public class Verwalter {
         }
         else{
             if(critical){
-                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine GrundstÃ¼cke fÃ¼r Hypotheken." );
+                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine Grundstücke für Hypotheken." );
                 gui.addLogMessage(getCurSpieler().getName() + " kann seine Schulden nicht mehr bezahlen." );
                 gui.addLogMessage(getCurSpieler().getName() + " scheidet aus dem Spiel aus. (noch zu implementieren)");
             }
             else{
-                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine GrundstÃ¼cke fÃ¼r Hypotheken." );
+                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine Grundstücke für Hypotheken." );
                 setHypothekenauswahl(false, false);
             }
 
