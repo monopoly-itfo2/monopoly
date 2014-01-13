@@ -61,7 +61,8 @@ public final class Connector {
 					ensureIO(s);
 				}
 			});
-			server.start(); 
+			server.start();
+			System.out.println("Server gestartet!");
 		}
 	}
 

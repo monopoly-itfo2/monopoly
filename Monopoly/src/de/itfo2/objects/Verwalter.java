@@ -29,18 +29,18 @@ import de.itfo2.network.Connector;
 import de.itfo2.ui.MonopolyGUI;
 
 public class Verwalter {
-	private int					wuerfelZahl;
-	public int					pasch				= 0;
-	public boolean				spielAmLaufen		= true;
-	public List<Spieler>		spielerListe		= new ArrayList<Spieler>();
-	private static Verwalter	instance			= null;
-	boolean						meinZug				= false;
-	Spielfeld					spielfeld;
-	MonopolyGUI					gui					= MonopolyGUI.getInstance();
-	boolean						gewuerfelt;
-	boolean						hypothekenauswahl	= false;
-	private Spieler				meinSpieler;
-	private Spieler				spielerAmZug;
+	private int wuerfelZahl;
+	public int pasch = 0;
+	public boolean spielAmLaufen = true;
+	public List<Spieler> spielerListe = new ArrayList<Spieler>();
+	private static Verwalter instance = null;
+	boolean meinZug = false;
+	Spielfeld spielfeld;
+	MonopolyGUI gui = MonopolyGUI.getInstance();
+	boolean gewuerfelt;
+	boolean hypothekenauswahl = false;
+	private Spieler meinSpieler;
+	private Spieler spielerAmZug;
 
 	public Verwalter() {
 		init();
@@ -145,9 +145,10 @@ public class Verwalter {
 				for (Spieler s : liste) {
 					if (!s.getName().equals(meinSpieler.getName())) {
 						System.out.println("Spieler gefunden: " + s.getName());
-						int observerPosition = liste.contains(meinSpieler)?liste.size():liste.size()+1;
+						int observerPosition = liste.contains(meinSpieler) ? liste
+								.size() : liste.size() + 1;
 						s.addObserver(gui.getStatusPanel(observerPosition));
-						
+
 						spielerListe.add(s);
 						gui.addSpieler(observerPosition, s);
 						gui.getStatusPanel(observerPosition).update(s, null);
@@ -158,18 +159,18 @@ public class Verwalter {
 		bus.addUpdateGeldEventListener(new UpdateGeldEventListener() {
 			@Override
 			public void onEvent(UpdateGeldEvent event) {
-				if(spielerAmZug.getName().equals(event.getSpielername())){
+				if (spielerAmZug.getName().equals(event.getSpielername())) {
 					spielerAmZug.addGUIGeld(event.getGeldVeraenderung());
 				}
 			}
 		});
 		bus.addUpdateGUISperrenEventListener(new UpdateGUISperrenEventListener() {
-			
+
 			@Override
 			public void onEvent(UpdateGUISperrenEvent event) {
-				for(Spieler s : spielerListe){
-					if(s.getName().equals(event.getName())){
-//						gui.sperren(s);
+				for (Spieler s : spielerListe) {
+					if (s.getName().equals(event.getName())) {
+						// gui.sperren(s);
 					}
 				}
 			}
@@ -511,8 +512,8 @@ public class Verwalter {
 		gui.addLogMessage("Connected");
 		gui.createLoginDialog();
 	}
-	
-	public Spieler getMeinSpieler(){
+
+	public Spieler getMeinSpieler() {
 		return meinSpieler;
 	}
 }

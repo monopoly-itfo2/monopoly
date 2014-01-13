@@ -29,19 +29,18 @@ public class NetworkTest {
 		final JTextField tbx = new JTextField("Marco");
 		JButton btn = new JButton("login");
 		final JTextArea area = new JTextArea();
-		tbx.setColumns(10);
-		area.setColumns(20);
-		area.setRows(20);
+		tbx.setColumns(5);
+		area.setColumns(5);
+		area.setRows(6);
 		pnl.add(tbx);
 		pnl.add(area);
 		pnl.add(btn);
 		testramen.add(pnl);
-		testramen.setSize(800, 600);
+		testramen.setSize(200, 200);
 		testramen.setVisible(true);
 		testramen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		con.ensureConnected();
-		System.out.println("connected");
 		
 		
 		btn.addMouseListener(new MouseAdapter() {
