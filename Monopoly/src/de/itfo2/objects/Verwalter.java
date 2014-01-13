@@ -140,6 +140,7 @@ public class Verwalter {
             public void actionPerformed(ActionEvent e) {
 				
                 wuerfeln();
+                System.out.println("Würfel im gefängsi:"+würfelnImGefängnis);
                 System.out.println(getCurSpieler().getKonto());
                 if(Verwalter.getInstance().getCurSpieler().isImGefaengnis()) {
                 	würfelnImGefängnis++;
@@ -170,6 +171,7 @@ public class Verwalter {
                 		gui.rueckeVor(wuerfelZahl);
                 		spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
                 	} else if (würfelnImGefängnis == 3){
+                		würfelnImGefängnis = 0;
                 		MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +" musste €500 Kaution zahlen.");
                 		Verwalter.getInstance().getCurSpieler().addGeld(-500);
                 		Verwalter.getInstance().getCurSpieler().setImGefaengnis(false);
