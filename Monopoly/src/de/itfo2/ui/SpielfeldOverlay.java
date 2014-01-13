@@ -155,10 +155,10 @@ public class SpielfeldOverlay extends JComponent implements Runnable{
 	    		picPath = curSpieler.getSpielfigur().getPathBig();
 	    	}
 	    	
-	    	System.out.println("x: "+x+"; y: "+y+";");
-	    	System.out.println("curLocation x: "+(curLocation.x) +"  "+ "curLocation y: "+(curLocation.y));
+//	    	System.out.println("x: "+x+"; y: "+y+";");
+//	    	System.out.println("curLocation x: "+(curLocation.x) +"  "+ "curLocation y: "+(curLocation.y));
 	    	
-	        System.out.println("i: "+i);
+//	        System.out.println("i: "+i);
 	    	
 	    	this.repaint();
 			this.revalidate();

@@ -140,6 +140,7 @@ public class Verwalter {
             public void actionPerformed(ActionEvent e) {
 				
                 wuerfeln();
+                System.out.println(getCurSpieler().getKonto());
                 if(Verwalter.getInstance().getCurSpieler().isImGefaengnis()) {
                 	würfelnImGefängnis++;
                 }
