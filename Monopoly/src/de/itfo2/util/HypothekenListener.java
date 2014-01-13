@@ -24,7 +24,7 @@ public class HypothekenListener implements ActionListener {
         MonopolyGUI gui = MonopolyGUI.getInstance();
         Grundstueck gr = (Grundstueck) guifeld.getFeld();
         if(spieler.getKonto() >= gr.getHypothek()+(gr.getHypothek()/10*11)){
-            spieler.addGeld(-gr.getHypothek() + (gr.getHypothek() / 10*11));
+            spieler.addGeld(-(gr.getHypothek() / 10*11));
             gui.addLogMessage(spieler.getName() +" bezahlte die Hypothek fuer " + gr.getBezeichnung());
             gr.setBelastet(false);
             guifeld.getMenuPanel().getbHypothek().setVisible(false);

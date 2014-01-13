@@ -147,7 +147,7 @@ public class Verwalter {
                 }
                 //TODO curSPieler = spieler.get(spielerAmZug);
                 // hier die Rune rein
-                //System.out.println("Sopieler an der Reihe: "+spielerAmZug);
+                //System.out.println("Spieler an der Reihe: "+spielerAmZug);
                 if (pasch == 3) {//TODO spieler.get(spielerAmZug) ersetzen durh curSpieler am Anfang jeder "Schleife"
                     // geheInsGefaengnis
                     spielerliste.get(spielerAmZug).setImGefaengnis(true);
