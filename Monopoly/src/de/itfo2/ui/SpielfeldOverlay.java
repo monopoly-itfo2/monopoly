@@ -1,18 +1,14 @@
 package de.itfo2.ui;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Verwalter;
@@ -208,6 +204,15 @@ public class SpielfeldOverlay extends JComponent implements Runnable{
 	    }
 	    oldDirection = picPath;
 	    correctPosition(spielerX);
+	    
+	    Verwalter.getInstance().updateRollDiceAndNextVisibility();
+	    MonopolyGUI.getInstance().updateBuyVisibility();
+	    
+	    try {
+			Verwalter.getInstance().getSpielfeld().getFeld(curSpieler.getPlatz()).handleFieldEffect();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}    
    }
    
    public void correctPosition(int spielerX){

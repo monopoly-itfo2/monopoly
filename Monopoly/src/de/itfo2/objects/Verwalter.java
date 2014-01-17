@@ -3,21 +3,18 @@ package de.itfo2.objects;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import de.itfo2.event.EventBus;
-import de.itfo2.fields.*;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
+import de.itfo2.fields.Ereignisfeld;
+import de.itfo2.fields.Gemeinschaftsfeld;
+import de.itfo2.fields.Grundstueck;
+import de.itfo2.fields.Strasse;
 import de.itfo2.objects.cards.Karte;
 import de.itfo2.ui.MonopolyGUI;
-import de.itfo2.ui.SpielfeldOverlay;
-import de.itfo2.ui.SpielfigurList;
 import de.itfo2.ui.SpielstartFenster;
-import de.itfo2.util.GuiFeldMouseListener;
-
-import javax.swing.*;
 
 public class Verwalter {
 	private int wuerfelZahl;
@@ -30,8 +27,6 @@ public class Verwalter {
 	MonopolyGUI gui = MonopolyGUI.getInstance();
 	boolean gewuerfelt;
     boolean hypothekenauswahl = false;
-    int zahl = 0;
-    int würfelnImGefängnis = 0;
 
     //	final EventBus bus = EventBus.getInstance();//temporary disabled
 
@@ -53,9 +48,6 @@ public class Verwalter {
 		ersterWert = wuerfel.getWert();
 		zweiterWert = wuerfel.getWert();
 
-//		ersterWert = 4;
-//		zweiterWert = 4;
-		
 		if (ersterWert == zweiterWert)
 			pasch++;
 		else
@@ -63,7 +55,7 @@ public class Verwalter {
 
 		wuerfelZahl = ersterWert + zweiterWert;
 		//wuerfelZahl = 17;
-        gui.addLogMessage(getCurSpieler().getName() + " hat eine " + wuerfelZahl + " gewÃ¼rfelt. (" + ersterWert + " + " + zweiterWert + ")");
+        gui.addLogMessage(getCurSpieler().getName() + " hat eine " + wuerfelZahl + " gewuerfelt. (" + ersterWert + " + " + zweiterWert + ")");
         gewuerfelt = true;
         gui.setRollDiceButtonEnabled(false);
 	}
@@ -138,16 +130,11 @@ public class Verwalter {
 		gui.setRollDiceButtonActionListener(new ActionListener() {
 			@Override
             public void actionPerformed(ActionEvent e) {
-				
+				MonopolyGUI.getInstance().disableBuyButton(getCurSpieler());
                 wuerfeln();
-                System.out.println("Würfel im gefängsi:"+würfelnImGefängnis);
-                System.out.println(getCurSpieler().getKonto());
-                if(Verwalter.getInstance().getCurSpieler().isImGefaengnis()) {
-                	würfelnImGefängnis++;
-                }
                 //TODO curSPieler = spieler.get(spielerAmZug);
                 // hier die Rune rein
-                //System.out.println("Spieler an der Reihe: "+spielerAmZug);
+                //System.out.println("Sopieler an der Reihe: "+spielerAmZug);
                 if (pasch == 3) {//TODO spieler.get(spielerAmZug) ersetzen durh curSpieler am Anfang jeder "Schleife"
                     // geheInsGefaengnis
                     spielerliste.get(spielerAmZug).setImGefaengnis(true);
@@ -157,25 +144,13 @@ public class Verwalter {
                     pasch = 0;
 
                 } else {
-                	
-                	//Ziehen
-//                	System.out.println(pasch);
-                	if(!Verwalter.getInstance().getCurSpieler().isImGefaengnis()) {
-	                	gui.rueckeVor(wuerfelZahl);
-						spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
-                	
-//                    gui.rueckeVor(wuerfelZahl);
-//                    spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
-                	} else if (pasch <0) {
-                		MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +" hat einen Pasch und wird aus dem Gefängnis entlassen");
-                		gui.rueckeVor(wuerfelZahl);
-                		spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
-                	} else if (würfelnImGefängnis == 3){
-                		würfelnImGefängnis = 0;
-                		MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() +" musste €500 Kaution zahlen.");
-                		Verwalter.getInstance().getCurSpieler().addGeld(-500);
-                		Verwalter.getInstance().getCurSpieler().setImGefaengnis(false);
-                	}
+
+                    // Ziehen
+                    gui.rueckeVor(wuerfelZahl);
+                    spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
+                    //spieler.get(spielerAmZug).setPlatz(7);
+//                    spieler.get(spielerAmZug).setPlatz(wuerfelZahl);
+
                     // Feld behandeln
 
                     int actualPlayerPosition = spielerliste.get(spielerAmZug)
@@ -193,19 +168,8 @@ public class Verwalter {
 
                     // wenn ein Pasch gewuerfelt wurde
                 }
-                if(spielfeld.getFeld(getCurSpieler().getPlatz()) instanceof Ereignisfeld || spielfeld.getFeld(getCurSpieler().getPlatz()) instanceof Gemeinschaftsfeld){
-                    gui.setNextButtonEnabled(false);
-                    gui.setRollDiceButtonEnabled(false);
-                } else {
-                    if (pasch != 0) {
-                        gui.setNextButtonEnabled(false);
-                        gui.setRollDiceButtonEnabled(true);
-                    } else {
-                        gui.setNextButtonEnabled(true);
-                        gui.setRollDiceButtonEnabled(false);
-                    }
-                }
-
+                gui.setRollDiceButtonEnabled(false);
+                gui.setNextButtonEnabled(false);
             }
         });
         gui.setRollDiceButtonEnabled(false);
@@ -325,7 +289,22 @@ public class Verwalter {
         gui.setGrundstueckMouseListener();
 	}
 
-    public int getSpieleranzahl(){
+    public void updateRollDiceAndNextVisibility() {
+		if(spielfeld.getFeld(getCurSpieler().getPlatz()) instanceof Ereignisfeld || spielfeld.getFeld(getCurSpieler().getPlatz()) instanceof Gemeinschaftsfeld){
+	        gui.setNextButtonEnabled(false);
+	        gui.setRollDiceButtonEnabled(false);
+	    } else {
+	        if (pasch != 0) {
+	            gui.setNextButtonEnabled(false);
+	            gui.setRollDiceButtonEnabled(true);
+	        } else {
+	            gui.setNextButtonEnabled(true);
+	            gui.setRollDiceButtonEnabled(false);
+	        }
+	    }
+	}
+
+	public int getSpieleranzahl(){
         return spielerliste.size();
     }
 
@@ -413,7 +392,7 @@ public class Verwalter {
 
     public void checkIfHypothekVerfuegbar(boolean critical){
         boolean verfuegbar = false;
-        String nochVerfuegbar = "Noch verfügbar: ";
+        String nochVerfuegbar = "Noch verfÃ¼gbar: ";
         for(int i=0;i<40;i++){
             if(spielfeld.getFeld(i) instanceof Grundstueck){
                 Grundstueck gr = (Grundstueck) spielfeld.getFeld(i);
@@ -433,12 +412,12 @@ public class Verwalter {
         }
         else{
             if(critical){
-                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine Grundstücke für Hypotheken." );
+                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine GrundstÃ¼cke fÃ¼r Hypotheken." );
                 gui.addLogMessage(getCurSpieler().getName() + " kann seine Schulden nicht mehr bezahlen." );
                 gui.addLogMessage(getCurSpieler().getName() + " scheidet aus dem Spiel aus. (noch zu implementieren)");
             }
             else{
-                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine Grundstücke für Hypotheken." );
+                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine GrundstÃ¼cke fÃ¼r Hypotheken." );
                 setHypothekenauswahl(false, false);
             }
 

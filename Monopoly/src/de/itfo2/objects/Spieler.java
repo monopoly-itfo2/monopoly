@@ -1,6 +1,6 @@
 package de.itfo2.objects;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Observable;
@@ -42,10 +42,11 @@ public class Spieler extends Observable implements Serializable{
         if((anzahl+platz)>=40)
             addGeld(4000);
 		platz = (anzahl+platz)%40;
-		try {
-			Verwalter.getInstance().getSpielfeld().getFeld(platz).handleFieldEffect();    
-        } catch (IOException e1) {
-        }
+
+//		try {
+//			Verwalter.getInstance().getSpielfeld().getFeld(platz).handleFieldEffect();    
+//        } catch (IOException e1) {
+//        }
 	}
 
 	public String getName() {

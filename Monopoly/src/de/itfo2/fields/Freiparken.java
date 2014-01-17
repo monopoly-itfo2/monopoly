@@ -42,9 +42,10 @@ public class Freiparken extends Observable implements Feld{
 
 	@Override
 	public void handleFieldEffect() {
-        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() + " erhaelt " + geldImPott + "â‚¬");
+        MonopolyGUI.getInstance().addLogMessage(Verwalter.getInstance().getCurSpieler().getName() + " erhaelt " + geldImPott + " €");
         Verwalter.getInstance().getCurSpieler().addGeld(geldImPott);
         geldImPott = 0;
+        setBezeichnung("0€ im Pott");
         notifyObservers();
         setChanged();
     }

@@ -1,18 +1,14 @@
 package de.itfo2.ui;
 
+import java.awt.event.ActionListener;
+
 import de.itfo2.fields.Grundstueck;
-import de.itfo2.objects.InitSpielfeld;
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Spielfeld;
 import de.itfo2.objects.Verwalter;
 import de.itfo2.util.DialogCreator;
 import de.itfo2.util.GuiFeldMouseListener;
 import de.itfo2.util.HypothekenListener;
-
-import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
-import java.io.IOException;
 
 public class MonopolyGUI implements MonopolyGUIInterface {
 
@@ -36,40 +32,28 @@ public class MonopolyGUI implements MonopolyGUIInterface {
 
     @Override
     public void rueckeVor(int anzahl){
-        Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
         //spielfeld.setSpielerVisible(curSpieler.getPlatz(), Verwalter.getInstance().getSpielerAmZug(), false);
         //spielfeld.setSpielerVisible(curSpieler.getPlatz()+anzahl, Verwalter.getInstance().getSpielerAmZug(), true);
         moveFigur(anzahl);
+    }
+
+	public void updateBuyVisibility() {
+		Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
+		disableBuyButton(curSpieler);
         if(spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel()!=null){
-            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setVisible(false);
-            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setEnabled(false);
-        }
-        if(spielfeld.getFeld(curSpieler.getPlatz()+anzahl).getMenuPanel()!=null){
-            Grundstueck gr = (Grundstueck)spielfeld.getFeld(curSpieler.getPlatz()+anzahl).getFeld();
+            Grundstueck gr = (Grundstueck)spielfeld.getFeld(curSpieler.getPlatz()).getFeld();
             if(gr.getBesitzer()==null){
-                spielfeld.getFeld(curSpieler.getPlatz()+anzahl).getMenuPanel().getbBuy().setVisible(true);
-                spielfeld.getFeld(curSpieler.getPlatz()+anzahl).getMenuPanel().getbBuy().setEnabled(true);
+                spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setVisible(true);
+                spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setEnabled(true);
             }
         }
-    }
+	}
 
     @Override
     public void rueckeAuf(int platz){
-        Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
         //spielfeld.setSpielerVisible(curSpieler.getPlatz(), Verwalter.getInstance().getSpielerAmZug(), false);
         //spielfeld.setSpielerVisible(platz, Verwalter.getInstance().getSpielerAmZug(), true);
         moveFigur(Verwalter.getInstance().calculateToGo(platz));
-        if(spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel()!=null){
-            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setVisible(false);
-            spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setEnabled(false);
-        }
-        if(spielfeld.getFeld(platz).getMenuPanel()!=null){
-            Grundstueck gr = (Grundstueck)spielfeld.getFeld(platz).getFeld();
-            if(gr.getBesitzer()==null){
-                spielfeld.getFeld(platz).getMenuPanel().getbBuy().setVisible(true);
-                spielfeld.getFeld(platz).getMenuPanel().getbBuy().setEnabled(true);
-            }
-        }
     }
     
     public void rueckeZurueck(int platz){
@@ -91,13 +75,16 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     }
 
     public void naechsterSpieler(){
-        Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
+        disableBuyButton(Verwalter.getInstance().getCurSpieler());
+        setNextButtonEnabled(false);
+    }
+
+	public void disableBuyButton(Spieler curSpieler) {
         if(spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel()!=null){
             spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setVisible(false);
             spielfeld.getFeld(curSpieler.getPlatz()).getMenuPanel().getbBuy().setEnabled(false);
         }
-        setNextButtonEnabled(false);
-    }
+	}
 
     public void updateHypothekButtons(){
         for(int i=0;i<spielfeld.getFelder().size();i++){
