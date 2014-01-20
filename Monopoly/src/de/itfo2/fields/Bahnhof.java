@@ -92,7 +92,7 @@ public class Bahnhof implements Grundstueck
                     if(curSpieler.getKonto() >= miete * inBesitz){
                         besitzer.addGeld(miete * inBesitz);
                         curSpieler.addGeld(-miete * inBesitz);
-                        gui.addLogMessage(curSpieler.getName() + " hat blubb " + (miete*inBesitz) + "â‚¬ bezahlt.");
+                        gui.addLogMessage(curSpieler.getName() + " hat " + (miete*inBesitz) + "€ bezahlt.");
                     }
                     else{
                         //2. Fall - Spieler kann nicht bezahlen

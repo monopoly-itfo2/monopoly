@@ -3,6 +3,8 @@ package de.itfo2.objects;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -13,6 +15,7 @@ import de.itfo2.fields.Gemeinschaftsfeld;
 import de.itfo2.fields.Grundstueck;
 import de.itfo2.fields.Strasse;
 import de.itfo2.objects.cards.Karte;
+import de.itfo2.ui.MessageBox;
 import de.itfo2.ui.MonopolyGUI;
 import de.itfo2.ui.SpielstartFenster;
 
@@ -26,9 +29,9 @@ public class Verwalter {
 	Spielfeld spielfeld;
 	MonopolyGUI gui = MonopolyGUI.getInstance();
 	boolean gewuerfelt;
-    boolean hypothekenauswahl = false;
+	boolean hypothekenauswahl = false;
 
-    //	final EventBus bus = EventBus.getInstance();//temporary disabled
+	//	final EventBus bus = EventBus.getInstance();//temporary disabled
 
 	public Verwalter() {
 		play();
@@ -55,16 +58,16 @@ public class Verwalter {
 
 		wuerfelZahl = ersterWert + zweiterWert;
 		//wuerfelZahl = 17;
-        gui.addLogMessage(getCurSpieler().getName() + " hat eine " + wuerfelZahl + " gewuerfelt. (" + ersterWert + " + " + zweiterWert + ")");
-        gewuerfelt = true;
-        gui.setRollDiceButtonEnabled(false);
+		gui.addLogMessage(getCurSpieler().getName() + " hat eine " + wuerfelZahl + " gewuerfelt. (" + ersterWert + " + " + zweiterWert + ")");
+		gewuerfelt = true;
+		gui.setRollDiceButtonEnabled(false);
 	}
 
 	public void play() {
 
 		init();
 
-        initGuiButtonFunctions();
+		initGuiButtonFunctions();
 	}
 
 	private void init() {
@@ -75,7 +78,7 @@ public class Verwalter {
 		// Spieler spieler1 = new Spieler("Spieler 1", 10000,
 		// Color.getHSBColor(269f, 35f, 96f));
 
-        /*//Spieler 1
+		/*//Spieler 1
 		Spieler spieler1 = new Spieler("Spieler 1", 500000, Color.getHSBColor(
 				0.9f, 0.1f, 0.7f), SpielfigurList.getInstance().getSpielfigurByName("kokowei"));
 		gui.setFigurLabel(0, spieler1);
@@ -93,9 +96,9 @@ public class Verwalter {
 		spielerliste.add(spieler2);
 		gui.addSpieler(1, spieler2);
         gui.getStatusPanel(1).update(spieler2, null);
-		*/
+		 */
 	}
-	
+
 	public void addSpieler(ArrayList<Spieler> spielerdaten){
 		int i = 0;
 		Color[]colors = {Color.getHSBColor(0.9f, 0.1f, 0.7f), Color.getHSBColor(0.3f, 0.1f, 0.9f), Color.getHSBColor(0.5f, 0.5f, 0.5f), Color.getHSBColor(0.3f, 0.9f, 0.1f)}; 
@@ -104,9 +107,9 @@ public class Verwalter {
 			gui.setFigurLabel(i, tempSpieler);
 			tempSpieler.setColor(colors[i]);
 			tempSpieler.addObserver(gui.getStatusPanel(i));
-		    spielerliste.add(tempSpieler);
-		    gui.addSpieler(i,  tempSpieler);
-		    gui.getStatusPanel(i).update(tempSpieler, null);
+			spielerliste.add(tempSpieler);
+			gui.addSpieler(i,  tempSpieler);
+			gui.getStatusPanel(i).update(tempSpieler, null);
 			i++;
 		}
 	}
@@ -114,9 +117,9 @@ public class Verwalter {
 	public Spieler getCurSpieler() {
 		return spielerliste.get(spielerAmZug);
 	}
-    public Spieler getNextSpieler() {
-        return spielerliste.get((spielerAmZug+1)%getSpieleranzahl());
-    }
+	public Spieler getNextSpieler() {
+		return spielerliste.get((spielerAmZug+1)%getSpieleranzahl());
+	}
 
 	public int getSpielerAmZug() {
 		return spielerAmZug;
@@ -124,336 +127,350 @@ public class Verwalter {
 
 	public void initGuiButtonFunctions() {
 
-        /*****************************************************
+		/*****************************************************
         Regelt, was beim w√ºrfeln passiert
-        *****************************************************/
+		 *****************************************************/
 		gui.setRollDiceButtonActionListener(new ActionListener() {
 			@Override
-            public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				MonopolyGUI.getInstance().disableBuyButton(getCurSpieler());
-                wuerfeln();
-                //TODO curSPieler = spieler.get(spielerAmZug);
-                // hier die Rune rein
-                //System.out.println("Sopieler an der Reihe: "+spielerAmZug);
-                if (pasch == 3) {//TODO spieler.get(spielerAmZug) ersetzen durh curSpieler am Anfang jeder "Schleife"
-                    // geheInsGefaengnis
-                    spielerliste.get(spielerAmZug).setImGefaengnis(true);
-                    gui.rueckeAuf(10);
-                    getCurSpieler().setPlatz(10);
-                    getCurSpieler().setImGefaengnis(true);
-                    pasch = 0;
+				wuerfeln();
 
-                } else {
+				if(getCurSpieler().isImGefaengnis()) {
+					if(pasch > 0) {
+						getCurSpieler().setImGefaengnis(false);
+					}
+					else if(getCurSpieler().getGefaengnisfreiKarten().size() > 0) {
+						// MSG Box
+						MessageBox msg = new MessageBox("Wollen Sie eine Gefaengnisfrei Karte nutzen?");
+						msg.setTitle("Gefaengnisfrei Karte");
+						JButton buttonNEIN = msg.addOption("Nein");
+						JButton buttonJA = msg.addOption("Ja");
+						
+						buttonJA.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								getCurSpieler().setImGefaengnis(false);
+								getCurSpieler().removeGefaengnisfreiKarte();
+							}
+						});
+						buttonNEIN.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								
+							}
+						});
+						
+						msg.show();
+					}
+					gui.setNextButtonEnabled(true);
+				}
+				if(!getCurSpieler().isImGefaengnis()){
+					//TODO curSPieler = spieler.get(spielerAmZug);
+					// hier die Rune rein
+					//System.out.println("Sopieler an der Reihe: "+spielerAmZug);
+					if (pasch == 3) {//TODO spieler.get(spielerAmZug) ersetzen durh curSpieler am Anfang jeder "Schleife"
+						// geheInsGefaengnis
+						spielerliste.get(spielerAmZug).setImGefaengnis(true);
+						gui.rueckeAuf(10);
+						getCurSpieler().setPlatz(10);
+						getCurSpieler().setImGefaengnis(true);
+						pasch = 0;
 
-                    // Ziehen
-                    gui.rueckeVor(wuerfelZahl);
-                    spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
-                    //spieler.get(spielerAmZug).setPlatz(7);
-//                    spieler.get(spielerAmZug).setPlatz(wuerfelZahl);
+					} else {
+						// Ziehen
+						gui.rueckeVor(wuerfelZahl);
+						spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
+						int actualPlayerPosition = spielerliste.get(spielerAmZug)
+								.getPlatz();
+					}
+					gui.setRollDiceButtonEnabled(false);
+					gui.setNextButtonEnabled(false);
+				}
+			}
+		});
+		gui.setRollDiceButtonEnabled(false);
 
-                    // Feld behandeln
-
-                    int actualPlayerPosition = spielerliste.get(spielerAmZug)
-                            .getPlatz();
-
-//                    try {
-//                        spielfeld.getFeld(actualPlayerPosition).handleFieldEffect();
-//
-//                    } catch (IOException e1) {
-//                    }
-
-                    // MainPhase
-
-                    // Spieler-wechsel
-
-                    // wenn ein Pasch gewuerfelt wurde
-                }
-                gui.setRollDiceButtonEnabled(false);
-                gui.setNextButtonEnabled(false);
-            }
-        });
-        gui.setRollDiceButtonEnabled(false);
-
-        /*****************************************************
+		/*****************************************************
          Startet das Spiel
-         *****************************************************/
-        gui.setStartButtonActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	SpielstartFenster sf = new SpielstartFenster();
-                gui.addLogMessage("Spiel gestartet!");
-                spielerAmZug = 0;
-                gui.setRollDiceButtonEnabled(true);
-                gui.setStartButtonEnabled(false);
-            }
-        });
+		 *****************************************************/
+		gui.setStartButtonActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SpielstartFenster sf = new SpielstartFenster();
+				gui.addLogMessage("Spiel gestartet!");
+				spielerAmZug = 0;
+				gui.setRollDiceButtonEnabled(true);
+				gui.setStartButtonEnabled(false);
+			}
+		});
 
-        /*****************************************************
+		/*****************************************************
          N√§chster Spieler an der Reihe
-         *****************************************************/
-        gui.setNextButtonActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gui.naechsterSpieler();
-                spielerAmZug = (spielerAmZug+1)%getSpieleranzahl();
-                gui.updateHypothekButtons();
-                gui.setRollDiceButtonEnabled(true);
-                gui.addLogMessage(getCurSpieler().getName() + " ist jetzt am Zug.");
-                if(pasch != 0)
-                    gui.setNextButtonEnabled(true);
-                else
-                    gui.setRollDiceButtonEnabled(true);
-            }
-        });
-        gui.setNextButtonEnabled(false);
+		 *****************************************************/
+		gui.setNextButtonActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gui.naechsterSpieler();
+				spielerAmZug = (spielerAmZug+1)%getSpieleranzahl();
+				gui.updateHypothekButtons();
+				gui.setRollDiceButtonEnabled(true);
+				gui.addLogMessage(getCurSpieler().getName() + " ist jetzt am Zug.");
+				if(pasch != 0)
+					gui.setNextButtonEnabled(true);
+				else
+					gui.setRollDiceButtonEnabled(true);
+			}
+		});
+		gui.setNextButtonEnabled(false);
 		gui.setEreigniskartenButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//An dieser Stelle n‰ˆhste Woche weitermachen, wir wollen die Ereigniskarten in Reinfolge bringen ( f¸r ALLE SPieler) und die Gef‰ngisfreikarten entfernen.
-                getSpielfeld().getEreigniskarten().get(spielfeld.getEreigniskartenPointer()).effect();
-                spielfeld.setEreigniskartenPointer((spielfeld.getEreigniskartenPointer()+1)%getSpielfeld().getEreigniskarten().size());
-                gui.setEreigniskartenButtonEnabled(false);
+				getSpielfeld().getEreigniskarten().get(spielfeld.getEreigniskartenPointer()).effect();
+				spielfeld.setEreigniskartenPointer((spielfeld.getEreigniskartenPointer()+1)%getSpielfeld().getEreigniskarten().size());
+				gui.setEreigniskartenButtonEnabled(false);
 
-                if(pasch != 0)
-                    gui.setRollDiceButtonEnabled(true);
-                else
-                    gui.setNextButtonEnabled(true);
+				if(pasch != 0)
+					gui.setRollDiceButtonEnabled(true);
+				else
+					gui.setNextButtonEnabled(true);
 
-            }
+			}
 		});
-        gui.setEreigniskartenButtonEnabled(false);
+		gui.setEreigniskartenButtonEnabled(false);
 
 		gui.setGemeinschaftskartenButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-                spielfeld.getGemeinschaftskarten().get(spielfeld.getGemeinschaftskartenPointer()).effect();
-                spielfeld.setGemeinschaftskartenPointer((spielfeld.getGemeinschaftskartenPointer()+1)%getSpielfeld().getGemeinschaftskarten().size());
-                gui.setGemeinschaftskartenButtonEnabled(false);
+				spielfeld.getGemeinschaftskarten().get(spielfeld.getGemeinschaftskartenPointer()).effect();
+				spielfeld.setGemeinschaftskartenPointer((spielfeld.getGemeinschaftskartenPointer()+1)%getSpielfeld().getGemeinschaftskarten().size());
+				gui.setGemeinschaftskartenButtonEnabled(false);
 
-                if(pasch != 0)
-                    gui.setRollDiceButtonEnabled(true);
-                else
-                    gui.setNextButtonEnabled(true);
-            }
+				if(pasch != 0)
+					gui.setRollDiceButtonEnabled(true);
+				else
+					gui.setNextButtonEnabled(true);
+			}
 		});
-        gui.setGemeinschaftskartenButtonEnabled(false);
+		gui.setGemeinschaftskartenButtonEnabled(false);
 
-        /*****************************************************
+		/*****************************************************
          Grundst¸ck kaufen
-         *****************************************************/
+		 *****************************************************/
 		gui.setBuyButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-                Grundstueck gr = (Grundstueck) spielfeld.getFeld(getCurSpieler().getPlatz());
-                if(getCurSpieler().getKonto() >= gr.getPreis()){
-                    getCurSpieler().addGeld(-gr.getPreis());
-                    gr.setBesitzer(getCurSpieler());
-                    gui.addLogMessage(getCurSpieler().getName() + " kaufte " + "\"" + gr.getBezeichnung() + "\"");
-                    gui.kaufeFeld();
-                    checkAlleFarben();
-                    ((JButton)e.getSource()).setVisible(false);
-                    ((JButton)e.getSource()).setEnabled(false);
-                }else{
-                    if(gui.createPopupChoiceDialog("Nicht genug Geld zum kaufen. Jetzt Hypothek aufnehmen?") == JOptionPane.YES_OPTION);
-                        setHypothekenauswahl(true, false);
-                }
+				Grundstueck gr = (Grundstueck) spielfeld.getFeld(getCurSpieler().getPlatz());
+				if(getCurSpieler().getKonto() >= gr.getPreis()){
+					getCurSpieler().addGeld(-gr.getPreis());
+					gr.setBesitzer(getCurSpieler());
+					gui.addLogMessage(getCurSpieler().getName() + " kaufte " + "\"" + gr.getBezeichnung() + "\"");
+					gui.kaufeFeld();
+					checkAlleFarben();
+					((JButton)e.getSource()).setVisible(false);
+					((JButton)e.getSource()).setEnabled(false);
+				}else{
+					if(gui.createPopupChoiceDialog("Nicht genug Geld zum kaufen. Jetzt Hypothek aufnehmen?") == JOptionPane.YES_OPTION);
+					setHypothekenauswahl(true, false);
+				}
 			}
 		});
 
-        /*****************************************************
+		/*****************************************************
          Haus auf aktueller Stra√üe kaufen
-         *****************************************************/
+		 *****************************************************/
 		gui.setBuildHouseButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-                Strasse st = (Strasse)spielfeld.getFeld(getCurSpieler().getPlatz());
-                if(getCurSpieler().getKonto() >= st.getHausKosten()){
-                    getCurSpieler().addGeld(-st.getHausKosten());
-                    st.addMietePointer();
-                    gui.addLogMessage(getCurSpieler().getName() +" kaufte ein Haus auf " + st.getBezeichnung());
-                    gui.baueHaus();
-                }else{
-                    gui.createPopupDialog("Geh halt arbeiten!");
-                }
+				Strasse st = (Strasse)spielfeld.getFeld(getCurSpieler().getPlatz());
+				if(getCurSpieler().getKonto() >= st.getHausKosten()){
+					getCurSpieler().addGeld(-st.getHausKosten());
+					st.addMietePointer();
+					gui.addLogMessage(getCurSpieler().getName() +" kaufte ein Haus auf " + st.getBezeichnung());
+					gui.baueHaus();
+				}else{
+					gui.createPopupDialog("Geh halt arbeiten!");
+				}
 			}
 		});
 
-        /*****************************************************
+		/*****************************************************
          Hypothek zur√ºckzahlen
-         *****************************************************/
-        gui.setHypothekButtonActionListener();
+		 *****************************************************/
+		gui.setHypothekButtonActionListener();
 
-        /*****************************************************
+		/*****************************************************
          Hypothekenauswahl, falls man nicht bezahlen kann
-         *****************************************************/
-        gui.setGrundstueckMouseListener();
+		 *****************************************************/
+		gui.setGrundstueckMouseListener();
 	}
 
-    public void updateRollDiceAndNextVisibility() {
+	public void updateRollDiceAndNextVisibility() {
 		if(spielfeld.getFeld(getCurSpieler().getPlatz()) instanceof Ereignisfeld || spielfeld.getFeld(getCurSpieler().getPlatz()) instanceof Gemeinschaftsfeld){
-	        gui.setNextButtonEnabled(false);
-	        gui.setRollDiceButtonEnabled(false);
-	    } else {
-	        if (pasch != 0) {
-	            gui.setNextButtonEnabled(false);
-	            gui.setRollDiceButtonEnabled(true);
-	        } else {
-	            gui.setNextButtonEnabled(true);
-	            gui.setRollDiceButtonEnabled(false);
-	        }
-	    }
+			gui.setNextButtonEnabled(false);
+			gui.setRollDiceButtonEnabled(false);
+		} else {
+			if (pasch != 0) {
+				gui.setNextButtonEnabled(false);
+				gui.setRollDiceButtonEnabled(true);
+			} else {
+				gui.setNextButtonEnabled(true);
+				gui.setRollDiceButtonEnabled(false);
+			}
+		}
 	}
 
 	public int getSpieleranzahl(){
-        return spielerliste.size();
-    }
+		return spielerliste.size();
+	}
 
-    public Spielfeld getSpielfeld() {
-        return spielfeld;
-    }
+	public Spielfeld getSpielfeld() {
+		return spielfeld;
+	}
 
-    public int getLastWuerfelZahl() {
-        return wuerfelZahl;
-    }
+	public int getLastWuerfelZahl() {
+		return wuerfelZahl;
+	}
 
-    public boolean isHypothekenauswahl() {
-        return hypothekenauswahl;
-    }
+	public boolean isHypothekenauswahl() {
+		return hypothekenauswahl;
+	}
 
-    public void setHypothekenauswahl(boolean hypothekenauswahl, boolean critical) {
-        this.hypothekenauswahl = hypothekenauswahl;
-        if(hypothekenauswahl){
-            checkIfHypothekVerfuegbar(critical);
-        }
-    }
+	public void setHypothekenauswahl(boolean hypothekenauswahl, boolean critical) {
+		this.hypothekenauswahl = hypothekenauswahl;
+		if(hypothekenauswahl){
+			checkIfHypothekVerfuegbar(critical);
+		}
+	}
 
-    public int calculateToGo(int feldPosition){
-        int aktuellePosition = getCurSpieler().getPlatz();
-        if(aktuellePosition > feldPosition){
-            return((39-aktuellePosition) + feldPosition);
-        } else {
-            return(feldPosition-aktuellePosition);
-        }
-    }
+	public int calculateToGo(int feldPosition){
+		int aktuellePosition = getCurSpieler().getPlatz();
+		if(aktuellePosition > feldPosition){
+			return((39-aktuellePosition) + feldPosition);
+		} else {
+			return(feldPosition-aktuellePosition);
+		}
+	}
 
-    public int[] getAlleHaeuser(Spieler aktuellerSpieler) {
-        int[] geb‰ude = new int[2];//0 sind h‰user, 1 sind hotels
-        geb‰ude[0] = 0;
-        geb‰ude[1] = 0;
-        for(int i = 0; i < 40; i++){
-        	if(spielfeld.getFeld(i) instanceof Strasse)
-        	{
-        		Strasse strasse = (Strasse)spielfeld.getFeld(i);
-                if(strasse != null){
-                    if(aktuellerSpieler.equals(aktuellerSpieler)){
-                    	if(strasse.getMietePointer()<5){
-                    		geb‰ude[0] += strasse.getMietePointer();
-                    	}else{
-                    		geb‰ude[1]++;
-                    	}
-                    }
-                }
-        	}  
-        }
-        return geb‰ude;
-    }
+	public int[] getAlleHaeuser(Spieler aktuellerSpieler) {
+		int[] geb‰ude = new int[2];//0 sind h‰user, 1 sind hotels
+		geb‰ude[0] = 0;
+		geb‰ude[1] = 0;
+		for(int i = 0; i < 40; i++){
+			if(spielfeld.getFeld(i) instanceof Strasse)
+			{
+				Strasse strasse = (Strasse)spielfeld.getFeld(i);
+				if(strasse != null){
+					if(aktuellerSpieler.equals(aktuellerSpieler)){
+						if(strasse.getMietePointer()<5){
+							geb‰ude[0] += strasse.getMietePointer();
+						}else{
+							geb‰ude[1]++;
+						}
+					}
+				}
+			}  
+		}
+		return geb‰ude;
+	}
 
-    public void checkAlleFarben(){
-        Color farbe = null;
-        boolean alleFarben = true;
-        for(int i=0;i<40;i++){
-            if(spielfeld.getFeld(i) instanceof Strasse){
-                Strasse st = (Strasse) spielfeld.getFeld(i);
-                if(farbe != null){
-                    if(!farbe.equals(st.getFarbe())){
-                        if(alleFarben){
-                            for(int j=0;j>=40;j++){
-                                Strasse stTemp = (Strasse) spielfeld.getFeld(i);
-                                if(stTemp.getFarbe().equals(farbe))
-                                    stTemp.setAlleFarben(true);
-                            }
-                        }
-                        alleFarben = true;
-                    }else{
-                        if(((Strasse) spielfeld.getFeld(i)).getBesitzer()==null){
-                            alleFarben = false;
-                        }
-                        if(((Strasse) spielfeld.getFeld(i)).getBesitzer()!=null){
-                            if(!((Strasse) spielfeld.getFeld(i)).getBesitzer().equals(getCurSpieler())){
-                                alleFarben = false;
-                            }
-                        }
-                    }
-                }
-                farbe = st.getFarbe();
-            }
-        }
-    }
+	public void checkAlleFarben(){
+		Color farbe = null;
+		boolean alleFarben = true;
+		for(int i=0;i<40;i++){
+			if(spielfeld.getFeld(i) instanceof Strasse){
+				Strasse st = (Strasse) spielfeld.getFeld(i);
+				if(farbe != null){
+					if(!farbe.equals(st.getFarbe())){
+						if(alleFarben){
+							for(int j=0;j>=40;j++){
+								Strasse stTemp = (Strasse) spielfeld.getFeld(i);
+								if(stTemp.getFarbe().equals(farbe))
+									stTemp.setAlleFarben(true);
+							}
+						}
+						alleFarben = true;
+					}else{
+						if(((Strasse) spielfeld.getFeld(i)).getBesitzer()==null){
+							alleFarben = false;
+						}
+						if(((Strasse) spielfeld.getFeld(i)).getBesitzer()!=null){
+							if(!((Strasse) spielfeld.getFeld(i)).getBesitzer().equals(getCurSpieler())){
+								alleFarben = false;
+							}
+						}
+					}
+				}
+				farbe = st.getFarbe();
+			}
+		}
+	}
 
-    public void checkIfHypothekVerfuegbar(boolean critical){
-        boolean verfuegbar = false;
-        String nochVerfuegbar = "Noch verf√ºgbar: ";
-        for(int i=0;i<40;i++){
-            if(spielfeld.getFeld(i) instanceof Grundstueck){
-                Grundstueck gr = (Grundstueck) spielfeld.getFeld(i);
-                if(gr.getBesitzer() != null){
-                    if(gr.getBesitzer().equals(getCurSpieler())){
-                        if(!gr.isBelastet()){
-                            verfuegbar = true;
-                            nochVerfuegbar += gr.getBezeichnung() + ", ";
-                        }
-                    }
-                }
-            }
-        }
-        if(verfuegbar){
-            nochVerfuegbar = nochVerfuegbar.substring(0, nochVerfuegbar.length()-2);
-            gui.addLogMessage(nochVerfuegbar);
-        }
-        else{
-            if(critical){
-                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine Grundst√ºcke f√ºr Hypotheken." );
-                gui.addLogMessage(getCurSpieler().getName() + " kann seine Schulden nicht mehr bezahlen." );
-                gui.addLogMessage(getCurSpieler().getName() + " scheidet aus dem Spiel aus. (noch zu implementieren)");
-            }
-            else{
-                gui.addLogMessage(getCurSpieler().getName() + " Du hast keine Grundst√ºcke f√ºr Hypotheken." );
-                setHypothekenauswahl(false, false);
-            }
+	public void checkIfHypothekVerfuegbar(boolean critical){
+		boolean verfuegbar = false;
+		String nochVerfuegbar = "Noch verf√ºgbar: ";
+		for(int i=0;i<40;i++){
+			if(spielfeld.getFeld(i) instanceof Grundstueck){
+				Grundstueck gr = (Grundstueck) spielfeld.getFeld(i);
+				if(gr.getBesitzer() != null){
+					if(gr.getBesitzer().equals(getCurSpieler())){
+						if(!gr.isBelastet()){
+							verfuegbar = true;
+							nochVerfuegbar += gr.getBezeichnung() + ", ";
+						}
+					}
+				}
+			}
+		}
+		if(verfuegbar){
+			nochVerfuegbar = nochVerfuegbar.substring(0, nochVerfuegbar.length()-2);
+			gui.addLogMessage(nochVerfuegbar);
+		}
+		else{
+			if(critical){
+				gui.addLogMessage(getCurSpieler().getName() + " Du hast keine Grundst√ºcke f√ºr Hypotheken." );
+				gui.addLogMessage(getCurSpieler().getName() + " kann seine Schulden nicht mehr bezahlen." );
+				gui.addLogMessage(getCurSpieler().getName() + " scheidet aus dem Spiel aus. (noch zu implementieren)");
+			}
+			else{
+				gui.addLogMessage(getCurSpieler().getName() + " Du hast keine Grundst√ºcke f√ºr Hypotheken." );
+				setHypothekenauswahl(false, false);
+			}
 
-        }
-    }
-    
-    public void disableGef‰ngnisFrei(int typ) {
+		}
+	}
 
-    	
-//    	System.out.println("Typ "+typ);
-//    	spielfeld.ereigniskarten.remove(0);
-    	// Lˆscht erst beim zweiten mal
-    	spielfeld.printAllEreigniskarten();
-    	
-    	
-    	switch(typ) {//Das Problem ist, dass die Variablen aus dem Falschem Array gelˆscht werden
-	    	case 0:
-//	    			if(spielfeld.ereigniskarten.isEmpty() == false){
-	    				spielfeld.removeEreigniskarte(spielfeld.getEreigniskartenPointer());
-//	    			}
-	    			System.out.println(spielfeld.getEreigniskartenPointer());
-	    			break;
-	    	case 1: spielfeld.gemeinschaftskarten.remove(spielfeld.getGemeinschaftskartenPointer());
-	    			break;
-	    	default:System.out.println("nur eins oder zwei, du depp!");
-    	}
-    	
-    	
-    	
-    }
-    public void testGef‰ngnisFrei ()
+	public void disableGef‰ngnisFrei(int typ) {
+
+
+		//    	System.out.println("Typ "+typ);
+		//    	spielfeld.ereigniskarten.remove(0);
+		// Lˆscht erst beim zweiten mal
+		spielfeld.printAllEreigniskarten();
+
+
+		switch(typ) {//Das Problem ist, dass die Variablen aus dem Falschem Array gelˆscht werden
+		case 0:
+			//	    			if(spielfeld.ereigniskarten.isEmpty() == false){
+			spielfeld.removeEreigniskarte(spielfeld.getEreigniskartenPointer());
+			//	    			}
+			System.out.println(spielfeld.getEreigniskartenPointer());
+			break;
+		case 1: spielfeld.gemeinschaftskarten.remove(spielfeld.getGemeinschaftskartenPointer());
+		break;
+		default:System.out.println("nur eins oder zwei, du depp!");
+		}
+
+
+
+	}
+	public void testGef‰ngnisFrei ()
 	{
-    	for(Karte karte:spielfeld.ereigniskarten){
-    		System.out.println("###############");
-    		System.out.println(karte.getText());
-    	}
-    	
+		for(Karte karte:spielfeld.ereigniskarten){
+			System.out.println("###############");
+			System.out.println(karte.getText());
+		}
+
 	}
 }

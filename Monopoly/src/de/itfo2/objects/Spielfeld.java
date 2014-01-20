@@ -3,6 +3,7 @@ package de.itfo2.objects;
 import de.itfo2.fields.Bahnhof;
 import de.itfo2.fields.Feld;
 import de.itfo2.fields.Freiparken;
+import de.itfo2.fields.Gemeinschaftsfeld;
 import de.itfo2.objects.cards.Karte;
 
 import java.util.ArrayList;
@@ -28,6 +29,10 @@ public class Spielfeld {
         return gemeinschaftskarten;
     }
     
+    public void addGemeinschaftskarte(Karte gemeinschaftskarte) {
+    	gemeinschaftskarten.add(gemeinschaftskarte);
+    }
+    
     public void removeGemeinschaftsskarte(int pointer) {
     	gemeinschaftskarten.remove(pointer);
     }
@@ -36,6 +41,10 @@ public class Spielfeld {
         return ereigniskarten;
     }
     
+    public void addEreigniskarte(Karte ereigniskarte) {
+    	ereigniskarten.add(ereigniskarte);
+    }
+
     public void removeEreigniskarte(int pointer) {
     	ereigniskarten.remove(pointer);
     }
