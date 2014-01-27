@@ -2,7 +2,9 @@ package de.itfo2.ui;
 
 import java.awt.event.ActionListener;
 
+import de.itfo2.fields.Feld;
 import de.itfo2.fields.Grundstueck;
+import de.itfo2.fields.Strasse;
 import de.itfo2.objects.Spieler;
 import de.itfo2.objects.Spielfeld;
 import de.itfo2.objects.Verwalter;
@@ -173,6 +175,10 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     public void setEreigniskartenButtonEnabled(boolean enabled){
         spielfeld.getMiddlePanel().getEreigniskartenButton().setEnabled(enabled);
     }
+    
+    public void setBuildHouseButtonEnabled(boolean enabled, int platz){
+    	spielfeld.getFelder().get(platz).getMenuPanel().getbBuild().setEnabled(enabled);
+    }
 
     public void setBuyButtonActionListener(ActionListener listener){
         for(int i=0;i<spielfeld.getFelder().size();i++){
@@ -237,4 +243,17 @@ public class MonopolyGUI implements MonopolyGUIInterface {
     public void setFigurLabel(int pos, Spieler spieler){
     	spielfeld.getGlassPane().setFigurLabel(pos, spieler);
     }
+
+	public void updateBuildVisibility() {
+		Spieler curSpieler = Verwalter.getInstance().getCurSpieler();
+		int platz = curSpieler.getPlatz();
+		
+		if(spielfeld.getFeld(platz).getMenuPanel()!=null){
+            Grundstueck gr = (Grundstueck)spielfeld.getFeld(platz).getFeld();
+            if(gr.getBesitzer()!=null){
+                spielfeld.getFeld(platz).getMenuPanel().getbBuild().setVisible(true);
+                spielfeld.getFeld(platz).getMenuPanel().getbBuild().setEnabled(true);
+            }
+        }
+	}
 }
