@@ -121,7 +121,7 @@ public class Strasse implements Grundstueck {
                         if(curSpieler.getKonto() >= miete[mietePointer]*2){
                             besitzer.addGeld(miete[mietePointer]*2);
                             curSpieler.addGeld(-miete[mietePointer]*2);
-                            gui.addLogMessage(curSpieler.getName() + " hat blubb " + miete[mietePointer]*2 + "â‚¬ bezahlt.");
+                            gui.addLogMessage(curSpieler.getName() + " hat blubb " + miete[mietePointer]*2 + "€ bezahlt.");
                         }
                         else{
                             //2. Fall - Spieler kann nicht bezahlen
@@ -132,7 +132,7 @@ public class Strasse implements Grundstueck {
                         if(curSpieler.getKonto() >= miete[mietePointer]){
                             besitzer.addGeld(miete[mietePointer]);
                             curSpieler.addGeld(miete[mietePointer]);
-                            gui.addLogMessage(curSpieler.getName() + " hat blubb " + miete[mietePointer]*2 + "â‚¬ bezahlt.");
+                            gui.addLogMessage(curSpieler.getName() + " hat blubb " + miete[mietePointer]*2 + "€ bezahlt.");
                         }
                         else{
                             //2. Fall - Spieler kann nicht bezahlen
