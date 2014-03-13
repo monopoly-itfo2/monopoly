@@ -19,6 +19,7 @@ public class Spieler extends Observable implements Serializable{
 	private List<Karte> gefaengnisfreiKarten = new ArrayList<Karte>();
 	private Color color;
 	private Spielfigur spielfigur;
+	private int rundenImGefaengnis = 0;
 
 	public Spieler(String name, int konto, Color color, Spielfigur spielfigur) {
 		this.name = name;
@@ -109,5 +110,11 @@ public class Spieler extends Observable implements Serializable{
 				Verwalter.getInstance().spielfeld.addGemeinschaftskarte(karte);
 			}
 		}
+	}
+	public int getRundenImGefaengnis() {
+		return rundenImGefaengnis;
+	}
+	public void setRundenImGefaengnis(int rundenImGefaengnis) {
+		this.rundenImGefaengnis = rundenImGefaengnis;
 	}
 }

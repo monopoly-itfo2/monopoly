@@ -1,6 +1,7 @@
 package de.itfo2.objects;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -139,6 +140,7 @@ public class Verwalter {
 				if(getCurSpieler().isImGefaengnis()) {
 					if(pasch > 0) {
 						getCurSpieler().setImGefaengnis(false);
+						getCurSpieler().setRundenImGefaengnis(0);
 					}
 					else if(getCurSpieler().getGefaengnisfreiKarten().size() > 0) {
 						// MSG Box
@@ -152,6 +154,7 @@ public class Verwalter {
 							public void mouseClicked(MouseEvent e) {
 								getCurSpieler().setImGefaengnis(false);
 								getCurSpieler().removeGefaengnisfreiKarte();
+								getCurSpieler().setRundenImGefaengnis(0);
 							}
 						});
 						buttonNEIN.addMouseListener(new MouseAdapter() {
@@ -162,6 +165,14 @@ public class Verwalter {
 						});
 						
 						msg.show();
+					} else {
+						if(getCurSpieler().getRundenImGefaengnis() == 3) {
+							getCurSpieler().setImGefaengnis(false);
+							getCurSpieler().setRundenImGefaengnis(0);
+							getCurSpieler().addGeld(-1000);
+						} else {
+							getCurSpieler().setRundenImGefaengnis(getCurSpieler().getRundenImGefaengnis() + 1);
+						}
 					}
 					gui.setNextButtonEnabled(true);
 				}

@@ -16,6 +16,7 @@ public class Ereigniskarte04 extends Karte{
     public void effect() {
     	MonopolyGUI.getInstance().rueckeAuf(10);
         Verwalter.getInstance().getCurSpieler().setPlatz(10); 
+        Verwalter.getInstance().getCurSpieler().setImGefaengnis(true);
         
         System.out.println(text);
         MonopolyGUI.getInstance().createPopupDialog(text);
