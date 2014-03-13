@@ -102,7 +102,7 @@ public class Verwalter {
 
 	public void addSpieler(ArrayList<Spieler> spielerdaten){
 		int i = 0;
-		Color[]colors = {Color.getHSBColor(0.9f, 0.1f, 0.7f), Color.getHSBColor(0.3f, 0.1f, 0.9f), Color.getHSBColor(0.5f, 0.5f, 0.5f), Color.getHSBColor(0.3f, 0.9f, 0.1f)}; 
+		Color[]colors = {Color.getHSBColor(0.31f, 0.7f, 0.1f), Color.getHSBColor(1.0f, 0.7f, 0.1f), Color.getHSBColor(0.6f, 0.9f, 0.1f), Color.getHSBColor(0.15f, 0.9f, 0.1f)}; 
 		for(Spieler spieler : spielerdaten){
 			Spieler tempSpieler = spieler;
 			gui.setFigurLabel(i, tempSpieler);
@@ -177,6 +177,7 @@ public class Verwalter {
 					gui.setNextButtonEnabled(true);
 				}
 				if(!getCurSpieler().isImGefaengnis()){
+					
 					//TODO curSPieler = spieler.get(spielerAmZug);
 					// hier die Rune rein
 					//System.out.println("Sopieler an der Reihe: "+spielerAmZug);
@@ -192,8 +193,7 @@ public class Verwalter {
 						// Ziehen
 						gui.rueckeVor(wuerfelZahl);
 						spielerliste.get(spielerAmZug).addPlatz(wuerfelZahl);
-						int actualPlayerPosition = spielerliste.get(spielerAmZug)
-								.getPlatz();
+						int actualPlayerPosition = spielerliste.get(spielerAmZug).getPlatz();
 					}
 					gui.setRollDiceButtonEnabled(false);
 					gui.setNextButtonEnabled(false);

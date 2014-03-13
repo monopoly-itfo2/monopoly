@@ -80,7 +80,7 @@ public class Werk implements Grundstueck
                     if(curSpieler.getKonto() >= 200 * Verwalter.getInstance().getLastWuerfelZahl()){
                         besitzer.addGeld(200 * Verwalter.getInstance().getLastWuerfelZahl());
                         curSpieler.addGeld(-200 * Verwalter.getInstance().getLastWuerfelZahl());
-                        gui.addLogMessage(curSpieler.getName() + " hat blubb " + (Verwalter.getInstance().getLastWuerfelZahl()) + "â‚¬ bezahlt.");
+                        gui.addLogMessage(curSpieler.getName() + " hat blubb " + (Verwalter.getInstance().getLastWuerfelZahl()) + "€ bezahlt.");
                     }
                     else{
                         //2. Fall - Spieler kann nicht bezahlen

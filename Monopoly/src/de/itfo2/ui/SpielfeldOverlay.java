@@ -206,7 +206,9 @@ public class SpielfeldOverlay extends JComponent implements Runnable{
 	    correctPosition(spielerX);
 	    
 	    Verwalter.getInstance().updateRollDiceAndNextVisibility();
-	    MonopolyGUI.getInstance().updateBuyVisibility();
+	    MonopolyGUI monopolyGUI = MonopolyGUI.getInstance();
+		monopolyGUI.updateBuyVisibility();
+	    monopolyGUI.updateBuildVisibility();
 	    
 	    try {
 			Verwalter.getInstance().getSpielfeld().getFeld(curSpieler.getPlatz()).handleFieldEffect();
